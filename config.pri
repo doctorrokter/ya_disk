@@ -50,6 +50,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_doctype_video.png) \
         $$quote($$BASEDIR/assets/images/ic_doctype_xls.png) \
         $$quote($$BASEDIR/assets/images/ic_folder.png) \
+        $$quote($$BASEDIR/assets/images/ic_rename.png) \
         $$quote($$BASEDIR/assets/images/ic_upload.png) \
         $$quote($$BASEDIR/assets/images/ic_uploads.png) \
         $$quote($$BASEDIR/assets/images/ic_view_grid.png) \

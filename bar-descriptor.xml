@@ -123,6 +123,7 @@
     <permission system="true">_sys_run_headless</permission>
     <permission>post_notification</permission>
     <permission>access_notify_settings_control</permission>
+    <permission>run_when_backgrounded</permission>
     <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
     
     <invoke-target id="chachkouski.YaDisk.card.edit.uri">

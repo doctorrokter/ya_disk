@@ -255,7 +255,7 @@ void FileController::onUploadFinished() {
     file["lastModified"] = QDateTime::currentDateTime();
     QStringList filenameParts = filename.split(".");
     if (filenameParts.size() > 1) {
-        file["ext"] = filenameParts[1];
+        file["ext"] = filenameParts[filenameParts.size() - 1];
     } else {
         file["ext"] = "";
     }
@@ -304,4 +304,46 @@ void FileController::startUpload(const QString& remoteUri) {
             qDebug () << "FileController ===>>> File does not exists: " << sourceFilePath << endl;
         #endif
     }
+}
+
+void FileController::rename(const QString& currentName, const QString& currentPath, const QString& newName, const bool& isDir, const QString& ext) {
+    QString destPath;
+    QString currPath = currentPath;
+    QString fullNewName = newName;
+
+    if (isDir) {
+        destPath = currPath.replace(currentName + "/", "").append(newName).append("/");
+    } else {
+        fullNewName.append(".").append(ext.toLower());
+        destPath = currPath.replace(currentName, "", Qt::CaseInsensitive).append(fullNewName);
+    }
+
+    QNetworkReply* reply = m_pWebdav->move(currentPath, destPath);
+    reply->setProperty("prevName", currentName);
+    reply->setProperty("prevPath", currentPath);
+    reply->setProperty("newName", fullNewName);
+    reply->setProperty("newPath", destPath);
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onFileRenamed()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+    m_replies.append(reply);
+}
+
+void FileController::onFileRenamed() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "FileController ===>>> file rename result: " << reply->readAll().data() << endl;
+    #endif
+
+    emit fileRenamed(
+            reply->property("prevName").toString(),
+            reply->property("prevPath").toString(),
+            reply->property("newName").toString(),
+            reply->property("newPath").toString()
+    );
+
+    m_replies.removeAll(reply);
+    reply->deleteLater();
 }

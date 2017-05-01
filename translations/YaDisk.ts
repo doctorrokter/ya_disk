@@ -84,6 +84,17 @@
     </message>
 </context>
 <context>
+    <name>GridListItem</name>
+    <message>
+        <source>Enter new name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -103,6 +114,17 @@
     </message>
     <message>
         <source>Don&apos;t ask before deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StackListItem</name>
+    <message>
+        <source>Enter new name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

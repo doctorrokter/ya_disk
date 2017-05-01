@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE void requestDeletion(const QString& name, const QString& currentPath);
     Q_INVOKABLE void deleteFileOrDir(const QString& name, const QString& currentPath);
     Q_INVOKABLE void upload(const QString& sourceFilePath, const QString& targetPath);
+    Q_INVOKABLE void rename(const QString& currentName, const QString& currentPath, const QString& newName, const bool& isDir, const QString& ext = "");
     Q_INVOKABLE QVariantList getQueue();
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
@@ -46,6 +47,7 @@ public:
         void uploadProgress(const QString& remoteUri, qint64 sent, qint64 total);
         void uploadFinished(const QString& remoteUri);
         void fileUploaded(const QString targetPath, const QVariantMap file);
+        void fileRenamed(const QString& prevName, const QString& prevPath, const QString& newName, const QString& namePath);
         void queueChanged(const QVariantList& queue);
 
     private slots:
@@ -55,6 +57,7 @@ public:
         void onFileOrDirDeleted();
         void onUploadProgress(qint64 sent, qint64 total);
         void onUploadFinished();
+        void onFileRenamed();
 private:
     QWebdav* m_pWebdav;
     QWebdavDirParser* m_pParser;

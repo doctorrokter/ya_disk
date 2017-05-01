@@ -298,6 +298,7 @@ Page {
         _fileController.deletionRequested.connect(root.onDeletionRequested);
         _fileController.fileOrDirDeleted.connect(root.deleteFileOrDir);
         _fileController.fileUploaded.connect(root.onFileUploaded);
+        _fileController.fileRenamed.connect(root.onFileRenamed);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
 //        var data = [];
@@ -350,7 +351,6 @@ Page {
     function deleteSelectedFiles() {
         spinner.start();
         root.selectedFiles.forEach(function(file) {
-            console.debug("Delete: ", file.name, ", ", file.path);
             _fileController.deleteFileOrDir(file.name, file.path);
         });
         root.selectedFiles = [];
@@ -399,6 +399,22 @@ Page {
         }
     }
     
+    function onFileRenamed(prevName, prevPath, newName, newPath) {
+        spinner.stop();
+        for (var i = 0; i < dataModel.size(); i++) {
+            var data = dataModel.value(i);
+            if (data.path === prevPath) {
+                var newData = {};
+                newData.ext = data.ext;
+                newData.name = newName;
+                newData.path = newPath;
+                newData.lastModified = new Date();
+                newData.dir = data.dir;
+                dataModel.replace(i, newData);
+            }
+        }
+    }
+    
     function cleanUp() {
         _fileController.fileLoaded.disconnect(root.stopSpinner);
         _fileController.fileOpened.disconnect(root.stopSpinner);
@@ -406,6 +422,7 @@ Page {
         _fileController.deletionRequested.disconnect(root.onDeletionRequested);
         _fileController.fileOrDirDeleted.disconnect(root.deleteFileOrDir);
         _fileController.fileUploaded.disconnect(root.onFileUploaded);
+        _fileController.fileRenamed.disconnect(root.onFileRenamed);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

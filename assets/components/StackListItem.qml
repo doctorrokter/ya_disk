@@ -1,18 +1,57 @@
 import bb.cascades 1.4
+import bb.system 1.2
 
 CustomListItem {
     id: listListItem
     
     opacity: listListItem.ListItem.selected ? 0.5 : 1.0
     
+    attachedObjects: [
+        SystemPrompt {
+            id: renamePrompt
+            
+            title: qsTr("Enter new name") + Retranslate.onLocaleOrLanguageChanged
+            dismissAutomatically: true
+            
+            onFinished: {
+                if (value === 2) {
+                    var newName = renamePrompt.inputFieldTextEntry();
+                    _fileController.rename(ListItemData.name, ListItemData.path, newName, ListItemData.dir, ListItemData.ext);
+                }
+            }    
+        }
+    ]
+    
     contextActions: [
         ActionSet {
-            DeleteActionItem {
-                onTriggered: {
-                    var data = ListItemData;
-                    _fileController.requestDeletion(data.name, data.path);
+            
+            actions: [
+                DeleteActionItem {
+                    onTriggered: {
+                        var data = ListItemData;
+                        _fileController.requestDeletion(data.name, data.path);
+                    }
+                },
+                
+                ActionItem {
+                    id: renameAction
+                    title: qsTr("Rename") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_rename.png"
+                    
+                    onTriggered: {
+                        if (!ListItemData.dir) {
+                            var ext = "." + ListItemData.ext.toLowerCase();
+                            var regEx = new RegExp(ext, "ig");
+                            var name = ListItemData.name.replace(regEx, "");
+                            renamePrompt.inputField.defaultText = name;
+                        } else {
+                            renamePrompt.inputField.defaultText = ListItemData.name;
+                        }
+                        renamePrompt.show();
+                    }
                 }
-            }
+            ]
+            
         }
     ]
     
