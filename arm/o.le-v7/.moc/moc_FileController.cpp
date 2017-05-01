@@ -22,12 +22,12 @@ static const uint qt_meta_data_FileController[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
-       1,  159, // properties
+      40,   14, // methods
+       3,  214, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      11,       // signalCount
+      14,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       21,   16,   15,   15, 0x05,
@@ -40,35 +40,50 @@ static const uint qt_meta_data_FileController[] = {
      320,  310,   15,   15, 0x05,
      360,  344,   15,   15, 0x05,
      429,  394,   15,   15, 0x05,
-     480,  474,   15,   15, 0x05,
+     518,  474,   15,   15, 0x05,
+     580,  574,   15,   15, 0x05,
+     621,  607,   15,   15, 0x05,
+     668,  656,   15,   15, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     507,   15,   15,   15, 0x08,
-     516,   15,   15,   15, 0x08,
-     531,   15,   15,   15, 0x08,
-     546,   15,   15,   15, 0x08,
-     578,  567,   15,   15, 0x08,
-     610,   15,   15,   15, 0x08,
-     629,   15,   15,   15, 0x08,
+     696,   15,   15,   15, 0x08,
+     705,   15,   15,   15, 0x08,
+     720,   15,   15,   15, 0x08,
+     735,   15,   15,   15, 0x08,
+     767,  756,   15,   15, 0x08,
+     799,   15,   15,   15, 0x08,
+     818,   15,   15,   15, 0x08,
+     834,   15,   15,   15, 0x08,
 
  // methods: signature, parameters, type, tag, flags
-     650,  645,   15,   15, 0x02,
-     668,   15,   15,   15, 0x22,
-     679,   46,   15,   15, 0x02,
-     705,   46,   15,   15, 0x02,
-     751,  731,   15,   15, 0x02,
-     778,  165,   15,   15, 0x02,
-     811,  165,   15,   15, 0x02,
-     870,  844,   15,   15, 0x02,
-     936,  894,   15,   15, 0x02,
-    1019,  981,   15,   15, 0x22,
-    1069,   15, 1056,   15, 0x02,
+     853,  848,   15,   15, 0x02,
+     871,   15,   15,   15, 0x22,
+     882,   46,   15,   15, 0x02,
+     908,   46,   15,   15, 0x02,
+     954,  934,   15,   15, 0x02,
+     981,  165,   15,   15, 0x02,
+    1014,  165,   15,   15, 0x02,
+    1073, 1047,   15,   15, 0x02,
+    1139, 1097,   15,   15, 0x02,
+    1222, 1184,   15,   15, 0x22,
+    1290, 1259,   15,   15, 0x02,
+    1360, 1333,   15,   15, 0x22,
+    1408,   15, 1395,   15, 0x02,
+    1419,   15, 1395,   15, 0x02,
+    1443, 1438,   15,   15, 0x02,
+    1467,   15,   15,   15, 0x02,
+    1488,   15,   15,   15, 0x02,
+    1505,  656,   15,   15, 0x02,
 
  // properties: name, type, flags
-     474, 1056, 0x09495001,
+     574, 1395, 0x09495001,
+     607, 1395, 0x09495001,
+     656, 1529, 0x0a495103,
 
  // properties: notify_signal_id
-      10,
+      11,
+      12,
+      13,
 
        0        // eod
 };
@@ -86,13 +101,17 @@ static const char qt_meta_stringdata_FileController[] = {
     "targetPath,file\0fileUploaded(QString,QVariantMap)\0"
     "prevName,prevPath,newName,namePath\0"
     "fileRenamed(QString,QString,QString,QString)\0"
+    "name,prevPath,newPath,currentPath,isDir,ext\0"
+    "fileMoved(QString,QString,QString,QString,bool,QString)\0"
     "queue\0queueChanged(QVariantList)\0"
+    "selectedFiles\0selectedFilesChanged(QVariantList)\0"
+    "currentPath\0currentPathChanged(QString)\0"
     "onLoad()\0onFileLoaded()\0onDirCreated()\0"
     "onFileOrDirDeleted()\0sent,total\0"
     "onUploadProgress(qint64,qint64)\0"
     "onUploadFinished()\0onFileRenamed()\0"
-    "path\0loadPath(QString)\0loadPath()\0"
-    "loadFile(QString,QString)\0"
+    "onFileMoved()\0path\0loadPath(QString)\0"
+    "loadPath()\0loadFile(QString,QString)\0"
     "openFile(QString,QString)\0dirname,currentPath\0"
     "createDir(QString,QString)\0"
     "requestDeletion(QString,QString)\0"
@@ -103,7 +122,14 @@ static const char qt_meta_stringdata_FileController[] = {
     "rename(QString,QString,QString,bool,QString)\0"
     "currentName,currentPath,newName,isDir\0"
     "rename(QString,QString,QString,bool)\0"
-    "QVariantList\0getQueue()\0"
+    "name,fromPath,toPath,isDir,ext\0"
+    "move(QString,QString,QString,bool,QString)\0"
+    "name,fromPath,toPath,isDir\0"
+    "move(QString,QString,QString,bool)\0"
+    "QVariantList\0getQueue()\0getSelectedFiles()\0"
+    "file\0selectFile(QVariantMap)\0"
+    "clearSelectedFiles()\0getCurrentPath()\0"
+    "setCurrentPath(QString)\0QString\0"
 };
 
 void FileController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -122,26 +148,38 @@ void FileController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 7: _t->uploadFinished((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 8: _t->fileUploaded((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QVariantMap(*)>(_a[2]))); break;
         case 9: _t->fileRenamed((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
-        case 10: _t->queueChanged((*reinterpret_cast< const QVariantList(*)>(_a[1]))); break;
-        case 11: _t->onLoad(); break;
-        case 12: _t->onFileLoaded(); break;
-        case 13: _t->onDirCreated(); break;
-        case 14: _t->onFileOrDirDeleted(); break;
-        case 15: _t->onUploadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
-        case 16: _t->onUploadFinished(); break;
-        case 17: _t->onFileRenamed(); break;
-        case 18: _t->loadPath((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 19: _t->loadPath(); break;
-        case 20: _t->loadFile((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 21: _t->openFile((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 22: _t->createDir((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 23: _t->requestDeletion((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 24: _t->deleteFileOrDir((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 25: _t->upload((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 26: _t->rename((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
-        case 27: _t->rename((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4]))); break;
-        case 28: { QVariantList _r = _t->getQueue();
+        case 10: _t->fileMoved((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const bool(*)>(_a[5])),(*reinterpret_cast< const QString(*)>(_a[6]))); break;
+        case 11: _t->queueChanged((*reinterpret_cast< const QVariantList(*)>(_a[1]))); break;
+        case 12: _t->selectedFilesChanged((*reinterpret_cast< const QVariantList(*)>(_a[1]))); break;
+        case 13: _t->currentPathChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 14: _t->onLoad(); break;
+        case 15: _t->onFileLoaded(); break;
+        case 16: _t->onDirCreated(); break;
+        case 17: _t->onFileOrDirDeleted(); break;
+        case 18: _t->onUploadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
+        case 19: _t->onUploadFinished(); break;
+        case 20: _t->onFileRenamed(); break;
+        case 21: _t->onFileMoved(); break;
+        case 22: _t->loadPath((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 23: _t->loadPath(); break;
+        case 24: _t->loadFile((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 25: _t->openFile((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 26: _t->createDir((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 27: _t->requestDeletion((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 28: _t->deleteFileOrDir((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 29: _t->upload((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 30: _t->rename((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
+        case 31: _t->rename((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4]))); break;
+        case 32: _t->move((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
+        case 33: _t->move((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const bool(*)>(_a[4]))); break;
+        case 34: { QVariantList _r = _t->getQueue();
             if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
+        case 35: { QVariantList _r = _t->getSelectedFiles();
+            if (_a[0]) *reinterpret_cast< QVariantList*>(_a[0]) = _r; }  break;
+        case 36: _t->selectFile((*reinterpret_cast< const QVariantMap(*)>(_a[1]))); break;
+        case 37: _t->clearSelectedFiles(); break;
+        case 38: _t->getCurrentPath(); break;
+        case 39: _t->setCurrentPath((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -179,31 +217,37 @@ int FileController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 40)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 40;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< QVariantList*>(_v) = getQueue(); break;
+        case 1: *reinterpret_cast< QVariantList*>(_v) = getSelectedFiles(); break;
+        case 2: *reinterpret_cast< QString*>(_v) = getCurrentPath(); break;
         }
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::WriteProperty) {
-        _id -= 1;
+        void *_v = _a[0];
+        switch (_id) {
+        case 2: setCurrentPath(*reinterpret_cast< QString*>(_v)); break;
+        }
+        _id -= 3;
     } else if (_c == QMetaObject::ResetProperty) {
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 3;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -280,9 +324,30 @@ void FileController::fileRenamed(const QString & _t1, const QString & _t2, const
 }
 
 // SIGNAL 10
+void FileController::fileMoved(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4, const bool & _t5, const QString & _t6)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)), const_cast<void*>(reinterpret_cast<const void*>(&_t6)) };
+    QMetaObject::activate(this, &staticMetaObject, 10, _a);
+}
+
+// SIGNAL 11
 void FileController::queueChanged(const QVariantList & _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 10, _a);
+    QMetaObject::activate(this, &staticMetaObject, 11, _a);
+}
+
+// SIGNAL 12
+void FileController::selectedFilesChanged(const QVariantList & _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 12, _a);
+}
+
+// SIGNAL 13
+void FileController::currentPathChanged(const QString & _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 13, _a);
 }
 QT_END_MOC_NAMESPACE

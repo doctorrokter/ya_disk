@@ -14,7 +14,7 @@ Page {
     
     property string dirName: "Root"
     property variant data: undefined
-    property string path: "/"
+    property string path: "/Music/"
     property string fileOrDirToDelete: ""
     property string pathToDelete: ""
     property variant selectedFiles: []
@@ -32,48 +32,51 @@ Page {
         
         layout: DockLayout {}
         
-        Header {
-            id: header
-            visible: path !== "/"
-            title: path
-            verticalAlignment: VerticalAlignment.Top
+        Container {
+            verticalAlignment: VerticalAlignment.Center
             
-            attachedObjects: [
-                LayoutUpdateHandler {
-                    id: headerLUH
-                }
-            ]
-        }
-        
-        ListView {
-            id: listView
-            scrollRole: ScrollRole.Main
-            
-            verticalAlignment: VerticalAlignment.Bottom
-            
-            margin.leftOffset: ui.du(0.5)
-            margin.topOffset: header.visible ? headerLUH.layoutFrame.height : 0
-            margin.rightOffset: ui.du(0.5)
-            
-            dataModel: ArrayDataModel {
-                id: dataModel
+            Header {
+                id: header
+                visible: path !== "/"
+                title: path
+                
+                attachedObjects: [
+                    LayoutUpdateHandler {
+                        id: headerLUH
+                    }
+                ]
             }
             
-            layout: gridListLayout
+            FilesMover {}
             
-            multiSelectAction: MultiSelectActionItem {}
-            
-            multiSelectHandler {
-                status: "0 " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged)
-                actions: [
-                    DeleteActionItem {
-                        id: multiDeleteAction
-                        
-                        onTriggered: {
-                            var data = [];
-                            listView.selectionList().forEach(function(indexPath) {
-                                    data.push(dataModel.data(indexPath));
-                            });
+            ListView {
+                id: listView
+                scrollRole: ScrollRole.Main
+                
+                verticalAlignment: VerticalAlignment.Bottom
+                
+                margin.leftOffset: ui.du(0.5)
+                margin.rightOffset: ui.du(0.5)
+                
+                dataModel: ArrayDataModel {
+                    id: dataModel
+                }
+                
+                layout: gridListLayout
+                
+                multiSelectAction: MultiSelectActionItem {}
+                
+                multiSelectHandler {
+                    status: "0 " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged)
+                    actions: [
+                        DeleteActionItem {
+                            id: multiDeleteAction
+                            
+                            onTriggered: {
+                                var data = [];
+                                listView.selectionList().forEach(function(indexPath) {
+                                        data.push(dataModel.data(indexPath));
+                                });
                             root.selectedFiles = data;
                             
                             var doNotAsk = _appConfig.get("do_not_ask_before_deleting");
@@ -82,50 +85,64 @@ Page {
                             } else {
                                 deleteMultipleDialog.show();
                             }
+                            }
+                        },
+                        
+                        ActionItem {
+                            id: moveAction
+                            title: qsTr("Move") + Retranslate.onLocaleOrLanguageChanged
+                            imageSource: "asset:///images/ic_forward.png"
+                            
+                            onTriggered: {
+                                _fileController.currentPath = root.path;
+                                listView.selectionList().forEach(function(indexPath) {
+                                    _fileController.selectFile(dataModel.data(indexPath));
+                                });
+                            }
                         }
+                    ]
+                }
+                
+                onSelectionChanged: {
+                    if (selectionList().length > 1) {
+                        multiSelectHandler.status = selectionList().length + " " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged);
+                    } else if (selectionList().length == 1) {
+                        multiSelectHandler.status = "1 " + (qsTr("file") + Retranslate.onLocaleOrLanguageChanged);
+                    } else {
+                        multiSelectHandler.status = qsTr("None selected") + Retranslate.onLocaleOrLanguageChanged;
+                    }
+                }
+                
+                onTriggered: {
+                    var data = dataModel.data(indexPath);
+                    if (data.dir) {
+                        loadPath(data.name, data.path);
+                    } else {
+                        spinner.start();
+                        openFile(data.name, data.path);
+                    }
+                }
+                
+                function itemType(data, indexPath) {
+                    if (layout.objectName === "stackListLayout") {
+                        return "listItem";
+                    } else {
+                        return "gridItem";
+                    }
+                }
+                
+                listItemComponents: [
+                    ListItemComponent {
+                        type: "listItem"
+                        StackListItem {}
+                    },
+                    
+                    ListItemComponent {
+                        type: "gridItem"
+                        GridListItem {}
                     }
                 ]
             }
-            
-            onSelectionChanged: {
-                if (selectionList().length > 1) {
-                    multiSelectHandler.status = selectionList().length + " " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged);
-                } else if (selectionList().length == 1) {
-                    multiSelectHandler.status = "1 " + (qsTr("file") + Retranslate.onLocaleOrLanguageChanged);
-                } else {
-                    multiSelectHandler.status = qsTr("None selected") + Retranslate.onLocaleOrLanguageChanged;
-                }
-            }
-            
-            onTriggered: {
-                var data = dataModel.data(indexPath);
-                if (data.dir) {
-                    loadPath(data.name, data.path);
-                } else {
-                    spinner.start();
-                    openFile(data.name, data.path);
-                }
-            }
-            
-            function itemType(data, indexPath) {
-                if (layout.objectName === "stackListLayout") {
-                    return "listItem";
-                } else {
-                    return "gridItem";
-                }
-            }
-            
-            listItemComponents: [
-                ListItemComponent {
-                    type: "listItem"
-                    StackListItem {}
-                },
-                
-                ListItemComponent {
-                    type: "gridItem"
-                    GridListItem {}
-                }
-            ]
         }
         
         ActivityIndicator {
@@ -299,6 +316,7 @@ Page {
         _fileController.fileOrDirDeleted.connect(root.deleteFileOrDir);
         _fileController.fileUploaded.connect(root.onFileUploaded);
         _fileController.fileRenamed.connect(root.onFileRenamed);
+        _fileController.fileMoved.connect(root.onFileMoved);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
 //        var data = [];
@@ -415,6 +433,26 @@ Page {
         }
     }
     
+    function onFileMoved(name, prevPath, newPath, currentPath, isDir, ext) {
+        if (root.path === currentPath) {
+            var data = {};
+            data.name = name;
+            data.path = newPath;
+            data.ext = ext;
+            data.dir = isDir;
+            data.lastModified = new Date();
+            dataModel.append(data);
+        }
+        
+        if (root.path === _fileController.currentPath) {
+            for (var i = 0; i < dataModel.size(); i++) {
+                if (dataModel.value(i).path === prevPath) {
+                    dataModel.removeAt(i);
+                }
+            }
+        }
+    }
+    
     function cleanUp() {
         _fileController.fileLoaded.disconnect(root.stopSpinner);
         _fileController.fileOpened.disconnect(root.stopSpinner);
@@ -423,6 +461,7 @@ Page {
         _fileController.fileOrDirDeleted.disconnect(root.deleteFileOrDir);
         _fileController.fileUploaded.disconnect(root.onFileUploaded);
         _fileController.fileRenamed.disconnect(root.onFileRenamed);
+        _fileController.fileMoved.disconnect(root.onFileMoved);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

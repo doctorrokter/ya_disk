@@ -56,7 +56,6 @@
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
-    <buildId>1</buildId>
 
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!-- <versionLabel></versionLabel> -->
@@ -79,6 +78,7 @@
     </splashScreens>
     <authorId>gYAAgJBERbiwoSHtjskM8WvopKU</authorId>
     <author>Mikhail Chachkouski</author>
+    <buildIdFile>buildnum</buildIdFile>
 
     <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
     <!-- <authorId>ABC1234YjsnUk235h</authorId> -->

@@ -347,3 +347,65 @@ void FileController::onFileRenamed() {
     m_replies.removeAll(reply);
     reply->deleteLater();
 }
+
+void FileController::move(const QString& name, const QString& fromPath, const QString& toPath, const bool& isDir, const QString& ext) {
+    QString newPath = toPath + name;
+
+    qDebug() << "Move to: " << newPath << endl;
+
+    QNetworkReply* reply = m_pWebdav->move(fromPath, newPath, true);
+    reply->setProperty("prevPath", fromPath);
+    reply->setProperty("newPath", newPath);
+    reply->setProperty("currentPath", toPath);
+    reply->setProperty("name", name);
+    reply->setProperty("dir", isDir);
+    reply->setProperty("ext", ext);
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onFileMoved()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+    m_replies.append(reply);
+}
+
+void FileController::onFileMoved() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "FileController ===>>> file move result: " << reply->readAll().data() << endl;
+    #endif
+
+    emit fileMoved(
+            reply->property("name").toString(),
+            reply->property("prevPath").toString(),
+            reply->property("newPath").toString(),
+            reply->property("currentPath").toString(),
+            reply->property("dir").toBool(),
+            reply->property("ext").toString()
+    );
+
+    m_replies.removeAll(reply);
+    reply->deleteLater();
+}
+
+QVariantList FileController::getSelectedFiles() const {
+    return m_selectedFiles;
+}
+
+void FileController::selectFile(const QVariantMap& file) {
+    m_selectedFiles.append(file);
+    emit selectedFilesChanged(m_selectedFiles);
+}
+
+void FileController::clearSelectedFiles() {
+    m_selectedFiles.clear();
+    emit selectedFilesChanged(m_selectedFiles);
+}
+
+const QString& FileController::getCurrentPath() const {
+    return m_currentPath;
+}
+
+void FileController::setCurrentPath(const QString& currentPath) {
+    m_currentPath = currentPath;
+    emit currentPathChanged(m_currentPath);
+}

@@ -4,6 +4,22 @@
 <context>
     <name>DirPage</name>
     <message>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Enter folder name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,6 +40,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Uploads</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33,22 +53,6 @@
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -80,6 +84,21 @@
     </message>
     <message>
         <source>Select a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilesMover</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
