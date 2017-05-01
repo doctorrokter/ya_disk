@@ -24,10 +24,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Upload to Disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uploads</source>
         <translation type="unfinished"></translation>
     </message>
@@ -37,6 +33,22 @@
     </message>
     <message>
         <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

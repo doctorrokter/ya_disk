@@ -1,5 +1,7 @@
 1
-23
+25
+components/GridListItem.qml
+components/StackListItem.qml
 images/ic_add.png
 images/ic_add_folder.png
 images/ic_deselect_all.png

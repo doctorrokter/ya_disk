@@ -130,7 +130,6 @@ Sheet {
         function startUpload(selectedFiles) {
             sheet.uploadStarted();
             selectedFiles.forEach(function(f) {
-                console.debug(f);
                 _fileController.upload(f, targetPath);
             });
         }

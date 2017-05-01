@@ -36,6 +36,8 @@ simulator {
 
 config_pri_assets {
     OTHER_FILES += \
+        $$quote($$BASEDIR/assets/components/GridListItem.qml) \
+        $$quote($$BASEDIR/assets/components/StackListItem.qml) \
         $$quote($$BASEDIR/assets/images/ic_add.png) \
         $$quote($$BASEDIR/assets/images/ic_add_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_deselect_all.png) \
@@ -120,6 +122,9 @@ lupdate_inclusion {
         $$quote($$BASEDIR/../assets/*.qml) \
         $$quote($$BASEDIR/../assets/*.js) \
         $$quote($$BASEDIR/../assets/*.qs) \
+        $$quote($$BASEDIR/../assets/components/*.qml) \
+        $$quote($$BASEDIR/../assets/components/*.js) \
+        $$quote($$BASEDIR/../assets/components/*.qs) \
         $$quote($$BASEDIR/../assets/images/*.qml) \
         $$quote($$BASEDIR/../assets/images/*.js) \
         $$quote($$BASEDIR/../assets/images/*.qs) \

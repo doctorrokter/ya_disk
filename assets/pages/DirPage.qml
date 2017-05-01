@@ -1,6 +1,7 @@
 import bb.cascades 1.4
 import bb.device 1.4
 import bb.system 1.2
+import "../components"
 
 Page {
     id: root
@@ -16,6 +17,7 @@ Page {
     property string path: "/"
     property string fileOrDirToDelete: ""
     property string pathToDelete: ""
+    property variant selectedFiles: []
     
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     actionBarVisibility: ChromeVisibility.Overlay
@@ -59,9 +61,44 @@ Page {
             
             layout: gridListLayout
             
+            multiSelectAction: MultiSelectActionItem {}
+            
+            multiSelectHandler {
+                status: "0 " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged)
+                actions: [
+                    DeleteActionItem {
+                        id: multiDeleteAction
+                        
+                        onTriggered: {
+                            var data = [];
+                            listView.selectionList().forEach(function(indexPath) {
+                                    data.push(dataModel.data(indexPath));
+                            });
+                            root.selectedFiles = data;
+                            
+                            var doNotAsk = _appConfig.get("do_not_ask_before_deleting");
+                            if (doNotAsk && doNotAsk === "true") {
+                                deleteSelectedFiles();
+                            } else {
+                                deleteMultipleDialog.show();
+                            }
+                        }
+                    }
+                ]
+            }
+            
+            onSelectionChanged: {
+                if (selectionList().length > 1) {
+                    multiSelectHandler.status = selectionList().length + " " + (qsTr("files") + Retranslate.onLocaleOrLanguageChanged);
+                } else if (selectionList().length == 1) {
+                    multiSelectHandler.status = "1 " + (qsTr("file") + Retranslate.onLocaleOrLanguageChanged);
+                } else {
+                    multiSelectHandler.status = qsTr("None selected") + Retranslate.onLocaleOrLanguageChanged;
+                }
+            }
+            
             onTriggered: {
                 var data = dataModel.data(indexPath);
-                console.debug("OPEN: ", data.path);
                 if (data.dir) {
                     loadPath(data.name, data.path);
                 } else {
@@ -81,220 +118,12 @@ Page {
             listItemComponents: [
                 ListItemComponent {
                     type: "listItem"
-                    CustomListItem {
-                        id: listListItem
-                        
-                        function getImage() {
-                            if (!ListItemData.dir) {
-                                var ext = ListItemData.ext.toLowerCase();
-                                if (_file.isImage(ext)) {
-                                    return "asset:///images/ic_doctype_picture.png";
-                                } else if (_file.isVideo(ext)) {
-                                    return "asset:///images/ic_doctype_video.png";
-                                } else if (_file.isAudio(ext)) {
-                                    return "asset:///images/ic_doctype_music.png";
-                                } else if (_file.isPdf(ext)) {
-                                    return "asset:///images/ic_doctype_pdf.png";
-                                } else if (_file.isDoc(ext)) {
-                                    return "asset:///images/ic_doctype_doc.png";
-                                } else if (_file.isSpreadSheet(ext)) {
-                                    return "asset:///images/ic_doctype_xls.png";
-                                } else if (_file.isPresentation(ext)) {
-                                    return "asset:///images/ic_doctype_ppt.png";
-                                } else {
-                                    return "asset:///images/ic_doctype_generic.png";
-                                }
-                            }
-                            return "asset:///images/ic_folder.png";
-                        }
-                        
-                        function filterColor() {
-                            if (!ListItemData.dir) {
-                                return ui.palette.background;
-                            }
-                            return ui.palette.primary;
-                        }
-                        
-                        Container {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            
-                            layout: StackLayout {
-                                orientation: LayoutOrientation.LeftToRight
-                            }
-                            
-                            Container {
-                                background: ui.palette.plain
-                                ImageView {
-                                    imageSource: listListItem.getImage();
-                                    filterColor: listListItem.filterColor();
-                                    
-                                    opacity: ListItemData.dir ? 0.25 : 1.0
-                                    preferredWidth: ui.du(11)
-                                    preferredHeight: ui.du(11)
-                                }
-                            }                            
-                            
-                            Container {
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                
-                                leftPadding: ui.du(1)
-                                topPadding: {
-                                    if (!ListItemData.dir) {
-                                        return ui.du(1);
-                                    }
-                                }
-                                bottomPadding: {
-                                    if (!ListItemData.dir) {
-                                        return ui.du(1);
-                                    }
-                                }
-                                
-                                verticalAlignment: {
-                                    if (ListItemData.dir) {
-                                        return VerticalAlignment.Center
-                                    }
-                                    return VerticalAlignment.Fill
-                                }
-                                
-                                layout: DockLayout {}
-                                
-                                Label {
-                                    text: ListItemData.name
-                                    verticalAlignment: VerticalAlignment.Top
-                                }
-                                
-                                Label {
-                                    visible: !ListItemData.dir
-                                    verticalAlignment: VerticalAlignment.Bottom
-                                    text: Qt.formatDateTime(ListItemData.lastModified, "dd.MM.yyyy, HH:mm")
-                                    textStyle.base: SystemDefaults.TextStyles.SubtitleText
-                                }
-                            }
-                        }
-                    }
+                    StackListItem {}
                 },
                 
                 ListItemComponent {
                     type: "gridItem"
-                    CustomListItem {
-                        id: listItem
-                        
-                        function getTextStyle() {
-                            if (displayInfo.pixelSize.width === 1440) {
-                                return SystemDefaults.TextStyles.BodyText;
-                            }
-                            return SystemDefaults.TextStyles.SubtitleText;
-                        }
-                        
-                        function getImage() {
-                            if (!ListItemData.dir) {
-                                var ext = ListItemData.ext.toLowerCase();
-                                if (_file.isImage(ext)) {
-                                    return "asset:///images/ic_doctype_picture.png";
-                                } else if (_file.isVideo(ext)) {
-                                    return "asset:///images/ic_doctype_video.png";
-                                } else if (_file.isAudio(ext)) {
-                                    return "asset:///images/ic_doctype_music.png";
-                                } else if (_file.isPdf(ext)) {
-                                    return "asset:///images/ic_doctype_pdf.png";
-                                } else if (_file.isDoc(ext)) {
-                                    return "asset:///images/ic_doctype_doc.png";
-                                } else if (_file.isSpreadSheet(ext)) {
-                                    return "asset:///images/ic_doctype_xls.png";
-                                } else if (_file.isPresentation(ext)) {
-                                    return "asset:///images/ic_doctype_ppt.png";
-                                } else {
-                                    return "asset:///images/ic_doctype_generic.png";
-                                }
-                            }
-                            return "asset:///images/ic_folder.png";
-                        }
-                        
-                        function filterColor() {
-                            if (!ListItemData.dir) {
-                                return ui.palette.background;
-                            }
-                            return ui.palette.primary;
-                        }
-                        
-                        Container {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            
-                            background: ui.palette.plain
-                            
-                            layout: DockLayout {}
-                            
-                            ImageView {
-                                imageSource: listItem.getImage();
-                                filterColor: listItem.filterColor();
-                                
-                                opacity: ListItemData.dir ? 0.25 : 1.0
-                                preferredWidth: ListItemData.dir ? listItemLUH.layoutFrame.width : ui.du(20)
-                                preferredHeight: ListItemData.dir ? listItemLUH.layoutFrame.height - ui.du(2) : ui.du(20)
-                                verticalAlignment: ListItemData.dir ? VerticalAlignment.Bottom : VerticalAlignment.Center
-                                horizontalAlignment: ListItemData.dir ? HorizontalAlignment.Fill : HorizontalAlignment.Center
-                            }
-                            
-                            ImageView {
-                                visible: !ListItemData.dir
-                                imageSource: "asset:///images/opac_bg.png"
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                verticalAlignment: VerticalAlignment.Bottom
-                                opacity: 0.5
-                            }
-                            
-                            Label {
-                                verticalAlignment: VerticalAlignment.Bottom
-                                text: ListItemData.name
-                                textStyle.base: SystemDefaults.TextStyles.SubtitleText
-                                
-                                margin.leftOffset: ui.du(1);
-                                margin.bottomOffset: ListItemData.dir ? ui.du(5.5) : ui.du(4)
-                                
-                                textStyle.color: ListItemData.dir ? ui.palette.textOnPlain : ui.palette.textOnPrimary
-                            }
-                            
-                            Label {
-                                visible: !ListItemData.dir
-                                
-                                text: Qt.formatDateTime(ListItemData.lastModified, "dd.MM.yyyy, HH:mm")
-                                verticalAlignment: VerticalAlignment.Bottom
-                                textStyle.color: ui.palette.textOnPrimary
-                                textStyle.base: SystemDefaults.TextStyles.SmallText
-                                textStyle.fontWeight: FontWeight.W100
-                                
-                                margin.leftOffset: ui.du(1);
-                                margin.bottomOffset: ui.du(1)
-                            }
-                            
-                            attachedObjects: [
-                                LayoutUpdateHandler {
-                                    id: listItemLUH
-                                }
-                            ]
-                        }
-                        
-                        attachedObjects: [
-                            DisplayInfo {
-                                id: displayInfo
-                            }
-                        ]
-                        
-                        contextActions: [
-                            ActionSet {
-                                DeleteActionItem {
-                                    id: deleteAction
-                                    
-                                    onTriggered: {
-                                        var data = ListItemData;
-                                        _fileController.requestDeletion(data.name, data.path);
-                                    }
-                                }
-                            }
-                        ]
-                    }
+                    GridListItem {}
                 }
             ]
         }
@@ -367,6 +196,29 @@ Page {
                     root.fileOrDirToDelete = "";
                 }
             }
+        },
+        
+        SystemDialog {
+            id: deleteMultipleDialog
+            
+            title: qsTr("Confirm the deleting") + Retranslate.onLocaleOrLanguageChanged
+            body: qsTr("This action cannot be undone. Continue?") + Retranslate.onLocaleOrLanguageChanged
+            
+            includeRememberMe: true
+            rememberMeText: qsTr("Don't ask again") + Retranslate.onLocaleOrLanguageChanged
+            rememberMeChecked: {
+                var dontAsk = _appConfig.get("do_not_ask_before_deleting");
+                return dontAsk !== "" && dontAsk === "true";
+            }
+            
+            onFinished: {
+                if (value === 2) {
+                    _appConfig.set("do_not_ask_before_deleting", deleteDialog.rememberMeSelection() + "");
+                    deleteSelectedFiles();
+                } else {
+                    root.selectedFiles = [];
+                }
+            }
         }
     ]
     
@@ -384,7 +236,7 @@ Page {
         
         ActionItem {
             id: uploadAction
-            title: qsTr("Upload to Disk") + Retranslate.onLocaleOrLanguageChanged
+            title: qsTr("Upload") + Retranslate.onLocaleOrLanguageChanged
             imageSource: "asset:///images/ic_upload.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
@@ -492,6 +344,16 @@ Page {
                 deleteDialog.show();
             }
         }
+    }
+    
+    function deleteSelectedFiles() {
+        spinner.start();
+        root.selectedFiles.forEach(function(file) {
+            console.debug("Delete: ", file.name, ", ", file.path);
+            _fileController.deleteFileOrDir(file.name, file.path);
+        });
+        root.selectedFiles = [];
+        spinner.stop();
     }
     
     function deleteFileOrDir(name, path) {
