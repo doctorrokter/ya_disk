@@ -62,7 +62,7 @@ Page {
                         }
                         
                         function updateProgress(remoteUri, sent, total) {
-                            if (ListItemData.remoteUri === remoteUri) {
+                            if (ListItemData !== undefined && ListItemData.remoteUri === remoteUri) {
                                 progress.value = sent;
                                 if (progress.toValue === 0) {
                                     progress.toValue = total;
@@ -71,7 +71,7 @@ Page {
                         }
                         
                         function finishUpload(remoteUri) {
-                            if (ListItemData.remoteUri === remoteUri) {
+                            if (ListItemData !== undefined && ListItemData.remoteUri === remoteUri) {
                                 var dataModel = listItem.ListItem.view.dataModel;
                                 dataModel.remove(ListItemData);
                             }

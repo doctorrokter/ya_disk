@@ -247,6 +247,20 @@ void FileController::onUploadFinished() {
         }
     }
 
+    QVariantMap file;
+    QString filename = m_pFileUtil->filename(remoteUri);
+    file["path"] = remoteUri;
+    file["name"] = filename;
+    file["dir"] = false;
+    file["lastModified"] = QDateTime::currentDateTime();
+    QStringList filenameParts = filename.split(".");
+    if (filenameParts.size() > 1) {
+        file["ext"] = filenameParts[1];
+    } else {
+        file["ext"] = "";
+    }
+    emit fileUploaded(reply->property("targetPath").toString(), file);
+
     m_uploadReplies.removeAll(reply);
     reply->deleteLater();
 

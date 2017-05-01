@@ -13,13 +13,10 @@
 #include <QVariantMap>
 #include <QList>
 #include <QNetworkReply>
-#include <bb/cascades/ProgressIndicator>
 #include "../webdav/qwebdav.h"
 #include "../webdav/qwebdavdirparser.h"
 #include "../Common.hpp"
 #include "../util/FileUtil.hpp"
-
-using namespace bb::cascades;
 
 class FileController: public QObject {
     Q_OBJECT
@@ -48,6 +45,7 @@ public:
         void fileOrDirDeleted(const QString& name, const QString& currentPath);
         void uploadProgress(const QString& remoteUri, qint64 sent, qint64 total);
         void uploadFinished(const QString& remoteUri);
+        void fileUploaded(const QString targetPath, const QVariantMap file);
         void queueChanged(const QVariantList& queue);
 
     private slots:

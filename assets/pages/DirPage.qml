@@ -297,6 +297,7 @@ Page {
         _fileController.dirCreated.connect(root.onDirCreated);
         _fileController.deletionRequested.connect(root.onDeletionRequested);
         _fileController.fileOrDirDeleted.connect(root.deleteFileOrDir);
+        _fileController.fileUploaded.connect(root.onFileUploaded);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
 //        var data = [];
@@ -384,12 +385,27 @@ Page {
         deleteDialog.rememberMeChecked = dontAskBool;
     }
     
+    function onFileUploaded(targetPath, file) {
+        if (root.path === targetPath) {
+            var exists = false;
+            for (var i = 0; i < dataModel.size(); i++) {
+                if (dataModel.value(i).path === file.path) {
+                    exists = true;
+                }
+            }
+            if (!exists) {
+                dataModel.append(file);
+            }
+        }
+    }
+    
     function cleanUp() {
         _fileController.fileLoaded.disconnect(root.stopSpinner);
         _fileController.fileOpened.disconnect(root.stopSpinner);
         _fileController.dirCreated.disconnect(root.onDirCreated);
         _fileController.deletionRequested.disconnect(root.onDeletionRequested);
         _fileController.fileOrDirDeleted.disconnect(root.deleteFileOrDir);
+        _fileController.fileUploaded.disconnect(root.onFileUploaded);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }
