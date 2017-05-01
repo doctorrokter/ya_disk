@@ -39,12 +39,6 @@ Page {
                 id: header
                 visible: path !== "/"
                 title: path
-                
-                attachedObjects: [
-                    LayoutUpdateHandler {
-                        id: headerLUH
-                    }
-                ]
             }
             
             FilesMover {}
@@ -52,6 +46,8 @@ Page {
             ListView {
                 id: listView
                 scrollRole: ScrollRole.Main
+                
+                property string currentPath: root.path
                 
                 verticalAlignment: VerticalAlignment.Bottom
                 
@@ -62,7 +58,13 @@ Page {
                     id: dataModel
                 }
                 
-                layout: gridListLayout
+                layout: {
+                    var view = _appConfig.get("files_view");
+                    if (view === "grid") {
+                        return gridListLayout;
+                    }
+                    return stackListLayout;
+                }
                 
                 multiSelectAction: MultiSelectActionItem {}
                 
@@ -134,12 +136,16 @@ Page {
                 listItemComponents: [
                     ListItemComponent {
                         type: "listItem"
-                        StackListItem {}
+                        StackListItem {
+                            currentPath: ListItem.view.currentPath
+                        }
                     },
                     
                     ListItemComponent {
                         type: "gridItem"
-                        GridListItem {}
+                        GridListItem {
+                            currentPath: ListItem.view.currentPath
+                        }
                     }
                 ]
             }
@@ -294,14 +300,8 @@ Page {
                 var view = _appConfig.get("files_view");
                 if (view === "" || view === "grid") {
                     _appConfig.set("files_view", "list");
-                    viewActionItem.imageSource = "asset:///images/ic_view_grid.png";
-                    viewActionItem.title = qsTr("Grid") + Retranslate.onLocaleOrLanguageChanged
-                    listView.layout = stackListLayout;
                 } else {
                     _appConfig.set("files_view", "grid");
-                    viewActionItem.imageSource = "asset:///images/ic_view_list.png";
-                    viewActionItem.title = qsTr("List") + Retranslate.onLocaleOrLanguageChanged
-                    listView.layout = gridListLayout;
                 }
             }
         }
@@ -401,6 +401,24 @@ Page {
         var dontAsk = _appConfig.get("do_not_ask_before_deleting");
         var dontAskBool = dontAsk !== "" && dontAsk === "true";
         deleteDialog.rememberMeChecked = dontAskBool;
+        
+        var view = _appConfig.get("files_view");
+        var allItems = [];
+        for (var i = 0; i < dataModel.size(); i++) {
+            allItems.push(dataModel.value(i));
+        }
+        dataModel.clear();
+        
+        if (view === "grid") {
+            viewActionItem.imageSource = "asset:///images/ic_view_list.png";
+            viewActionItem.title = qsTr("List") + Retranslate.onLocaleOrLanguageChanged
+            listView.layout = gridListLayout;
+        } else {
+            viewActionItem.imageSource = "asset:///images/ic_view_grid.png";
+            viewActionItem.title = qsTr("Grid") + Retranslate.onLocaleOrLanguageChanged
+            listView.layout = stackListLayout;
+        }
+        dataModel.append(allItems);
     }
     
     function onFileUploaded(targetPath, file) {

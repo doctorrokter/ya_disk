@@ -4,11 +4,11 @@
 <context>
     <name>DirPage</name>
     <message>
-        <source>Move</source>
+        <source>files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>files</source>
+        <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -112,6 +112,10 @@
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -144,6 +148,10 @@
     </message>
     <message>
         <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

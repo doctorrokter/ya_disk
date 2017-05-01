@@ -4,6 +4,8 @@ import bb.system 1.2
 CustomListItem {
     id: listListItem
     
+    property string currentPath: "/"
+    
     opacity: listListItem.ListItem.selected ? 0.5 : 1.0
     
     attachedObjects: [
@@ -48,6 +50,18 @@ CustomListItem {
                             renamePrompt.inputField.defaultText = ListItemData.name;
                         }
                         renamePrompt.show();
+                    }
+                },
+                
+                ActionItem {
+                    id: moveAction
+                    title: qsTr("Move") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_forward.png"
+                    
+                    onTriggered: {
+                        _fileController.currentPath = listListItem.currentPath;
+                        _fileController.clearSelectedFiles();
+                        _fileController.selectFile(ListItemData);
                     }
                 }
             ]
@@ -108,6 +122,10 @@ CustomListItem {
         
         Container {
             horizontalAlignment: HorizontalAlignment.Fill
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
             
             leftPadding: ui.du(1)
             topPadding: {
