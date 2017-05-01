@@ -1,1 +1,1 @@
-# Qt/C++ client to Yandex.Disk for BlackBerry 10
+# Qt/C++ client for Yandex.Disk for BlackBerry 10
