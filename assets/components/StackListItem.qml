@@ -95,7 +95,7 @@ CustomListItem {
     
     function filterColor() {
         if (!ListItemData.dir) {
-            return ui.palette.background;
+            return ui.palette.textOnPlain;
         }
         return ui.palette.primary;
     }
@@ -110,11 +110,25 @@ CustomListItem {
         
         Container {
             background: ui.palette.plain
+            
+            layout: DockLayout {
+                
+            }
+            
             ImageView {
                 imageSource: listListItem.getImage();
                 filterColor: listListItem.filterColor();
                 
                 opacity: ListItemData.dir ? 0.25 : 1.0
+                preferredWidth: ui.du(11)
+                preferredHeight: ui.du(11)
+            }
+            
+            ImageView {
+                visible: !ListItemData.dir
+                imageSource: "asset:///images/opac_bg.png"
+                
+                opacity: 0.5
                 preferredWidth: ui.du(11)
                 preferredHeight: ui.du(11)
             }
@@ -158,6 +172,7 @@ CustomListItem {
                 verticalAlignment: VerticalAlignment.Bottom
                 text: Qt.formatDateTime(ListItemData.lastModified, "dd.MM.yyyy, HH:mm")
                 textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                textStyle.fontWeight: FontWeight.W100
             }
         }
     }

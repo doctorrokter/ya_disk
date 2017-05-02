@@ -42,7 +42,7 @@ CustomListItem {
     
     function filterColor() {
         if (!ListItemData.dir) {
-            return ui.palette.background;
+            return ui.palette.textOnPlain;
         }
         return ui.palette.primary;
     }
