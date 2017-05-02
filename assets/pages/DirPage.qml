@@ -60,7 +60,7 @@ Page {
                 
                 layout: {
                     var view = _appConfig.get("files_view");
-                    if (view === "grid") {
+                    if (view ==="" || view === "grid") {
                         return gridListLayout;
                     }
                     return stackListLayout;
@@ -255,6 +255,16 @@ Page {
             onTriggered: {
                 createDirPrompt.show();
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
+                    
+                    onTriggered: {
+                        createDirAction.triggered();
+                    }
+                }
+            ]
         },
         
         ActionItem {
@@ -266,6 +276,16 @@ Page {
             onTriggered: {
                 upload(root.path);
             }
+            
+            shortcuts: [
+                Shortcut {
+                    key: "u"
+                    
+                    onTriggered: {
+                        uploadAction.triggered();
+                    }
+                }
+            ]
         },
         
         ActionItem {
@@ -304,6 +324,16 @@ Page {
                     _appConfig.set("files_view", "grid");
                 }
             }
+            
+            shortcuts: [
+                Shortcut {
+                    key: "v"
+                    
+                    onTriggered: {
+                        viewActionItem.triggered();
+                    }
+                }
+            ]
         }
     ]
     

@@ -135,6 +135,16 @@ CustomListItem {
                         var data = ListItemData;
                         _fileController.requestDeletion(data.name, data.path);
                     }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "d"
+                            
+                            onTriggered: {
+                                deleteAction.triggered();
+                            }
+                        }
+                    ]
                 },
                 
                 ActionItem {
@@ -153,6 +163,16 @@ CustomListItem {
                         }
                         renamePrompt.show();
                     }
+                    
+                    shortcuts: [
+                        SystemShortcut {
+                            type: SystemShortcuts.Edit
+                            
+                            onTriggered: {
+                                renameAction.triggered();
+                            }
+                        }
+                    ]
                 },
                 
                 ActionItem {
@@ -165,6 +185,16 @@ CustomListItem {
                         _fileController.clearSelectedFiles();
                         _fileController.selectFile(ListItemData);
                     }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "m"
+                            
+                            onTriggered: {
+                                moveAction.triggered();
+                            }
+                        }
+                    ]
                 }
             ]
         }
