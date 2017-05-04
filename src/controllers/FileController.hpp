@@ -42,6 +42,8 @@ public:
     Q_INVOKABLE void clearSelectedFiles();
     Q_INVOKABLE const QString& getCurrentPath() const;
     Q_INVOKABLE void setCurrentPath(const QString& currentPath);
+    Q_INVOKABLE void showProps(const QVariantMap& fileMap);
+    Q_INVOKABLE void loadPreview(const QString& filename, const QString& path);
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -60,6 +62,8 @@ public:
         void queueChanged(const QVariantList& queue);
         void selectedFilesChanged(const QVariantList& selectedFiles);
         void currentPathChanged(const QString& currentPath);
+        void propsPageRequested(const QVariantMap& fileMap);
+        void previewLoaded(const QString& path, const QString& localPreviewPath);
 
     private slots:
         void onLoad();
@@ -70,6 +74,7 @@ public:
         void onUploadFinished();
         void onFileRenamed();
         void onFileMoved();
+        void onPreviewLoaded();
 private:
     QWebdav* m_pWebdav;
     QWebdavDirParser* m_pParser;
@@ -77,11 +82,14 @@ private:
     FileUtil* m_pFileUtil;
     QList<QNetworkReply*> m_replies;
     QList<QNetworkReply*> m_uploadReplies;
+    QList<QNetworkReply*> m_previewReplies;
     QVariantList m_queue;
     QVariantList m_selectedFiles;
+    QVariantList m_previewsQueue;
     QString m_currentPath;
 
     void startUpload(const QString& remoteUri);
+    void startLoadPreview(const QString& filename, const QString& path);
 };
 
 #endif /* FILECONTROLLER_HPP_ */

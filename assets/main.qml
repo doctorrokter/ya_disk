@@ -45,6 +45,7 @@ NavigationPane {
             oauth.open();
         }
         _fileController.dataLoaded.connect(newPage);
+        _fileController.propsPageRequested.connect(showProps);
     }
     
     attachedObjects: [
@@ -77,6 +78,16 @@ NavigationPane {
         },
         
         ComponentDefinition {
+            id: propsPage
+            PropertiesPage {
+                
+                onPropertiesDone: {
+                    navPane.pop();
+                }
+            }    
+        },
+        
+        ComponentDefinition {
             id: dirPage
             DirPage {
                 onLoadPath: {
@@ -106,6 +117,16 @@ NavigationPane {
             }
         }
     ]
+    
+    function showProps(file) {
+        var pp = propsPage.createObject();
+        pp.ext = file.ext;
+        pp.name = file.name;
+        pp.dir = file.dir;
+        pp.size = file.size;
+        pp.path = file.path;
+        navPane.push(pp);
+    }
     
     function newPage(data) {
         if (navPane.count() === 0) {

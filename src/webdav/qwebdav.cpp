@@ -340,8 +340,7 @@ QNetworkReply* QWebdav::search(const QString& path, const QString& q )
     return this->createRequest("SEARCH", req, query);
 }
 
-QNetworkReply* QWebdav::get(const QString& path)
-{
+QNetworkReply* QWebdav::get(const QString& path) {
     QNetworkRequest req;
     req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
 
@@ -387,6 +386,23 @@ QNetworkReply* QWebdav::get(const QString& path, QIODevice* data, quint64 fromRa
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(replyError(QNetworkReply::NetworkError)));
 
     return reply;
+}
+
+QNetworkReply* QWebdav::preview(const QString& path, const QString& size) {
+    QNetworkRequest req;
+    req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
+
+    QUrl reqUrl(m_baseUrl);
+    reqUrl.setPath(absolutePath(path));
+    reqUrl.addQueryItem("preview", "");
+    reqUrl.addQueryItem("size", size);
+    req.setUrl(reqUrl);
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "QWebdav::get() url = " << req.url().toString(QUrl::RemoveUserInfo);
+    #endif
+
+    return QNetworkAccessManager::get(req);
 }
 
 QNetworkReply* QWebdav::put(const QString& path, QIODevice* data)

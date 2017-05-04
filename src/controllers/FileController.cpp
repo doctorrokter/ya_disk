@@ -50,7 +50,9 @@ void FileController::loadFile(const QString& filename, const QString& path) {
     reply->setProperty("path", path);
     m_replies.append(reply);
 
-    qDebug() << "FileController ===>>>  Load file: " << path << endl;
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "FileController ===>>>  Load file: " << path << endl;
+    #endif
 
     bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onFileLoaded()));
     Q_ASSERT(res);
@@ -58,7 +60,7 @@ void FileController::loadFile(const QString& filename, const QString& path) {
 }
 
 void FileController::openFile(const QString& filename, const QString& path) {
-    QString fullUrl = QDir::currentPath() + "/data" + path;
+    QString fullUrl = QDir::currentPath() + TEMP_DIR + path;
     QFile file(fullUrl);
 
     if (!file.exists()) {
@@ -101,24 +103,15 @@ void FileController::onLoad() {
     QVariantList dataList;
     QWebdavItem item;
     foreach(item, list) {
-        QVariantMap m;
-        m["path"] = item.path();
-        m["name"] = item.name();
-        m["ext"] = item.ext();
-        m["dir"] = item.isDir();
-        m["createdAt"] = item.createdAt();
-        m["createdAtStr"] = item.createdAtStr();
-        m["lastModified"] = item.lastModified();
-        m["lastModifiedStr"] = item.lastModifiedStr();
-        m["mimeType"] = item.mimeType();
-
-        #ifdef DEBUG_WEBDAV
-            qDebug() << m << endl;
-        #endif
-
-        dataList.append(m);
+        dataList.append(item.toMap());
     }
     emit dataLoaded(dataList);
+
+    foreach(item, list) {
+        if (m_pFileUtil->isImage(item.ext())) {
+            loadPreview(item.name(), item.path());
+        }
+    }
 }
 
 void FileController::onFileLoaded() {
@@ -132,13 +125,13 @@ void FileController::onFileLoaded() {
         qDebug() << "FileController ===>>>  File loaded: " << filename << " " << path << endl;
     #endif
 
-    QString tempDir = QDir::currentPath() + "/data" + pathCopy.replace(QString("/").append(filename), "");
+    QString tempDir = QDir::currentPath() + TEMP_DIR + pathCopy.replace(QString("/").append(filename), "");
     QDir dir(tempDir);
     if (!dir.exists()) {
         dir.mkpath(tempDir);
     }
 
-    QString filePath = QDir::currentPath() + "/data" + path;
+    QString filePath = QDir::currentPath() + TEMP_DIR + path;
     QFile file(filePath);
     QByteArray bytes = reply->readAll();
 
@@ -221,7 +214,7 @@ void FileController::upload(const QString& sourceFilePath, const QString& target
 
     emit queueChanged(m_queue);
 
-    if (m_uploadReplies.size() < 2) {
+    if (m_uploadReplies.size() < UPLOADS_QUEUE_SIZE) {
         startUpload(remoteUri);
     }
 }
@@ -252,6 +245,7 @@ void FileController::onUploadFinished() {
     file["path"] = remoteUri;
     file["name"] = filename;
     file["dir"] = false;
+    file["size"] = reply->property("size").toUInt();
     file["lastModified"] = QDateTime::currentDateTime();
     QStringList filenameParts = filename.split(".");
     if (filenameParts.size() > 1) {
@@ -264,14 +258,15 @@ void FileController::onUploadFinished() {
     m_uploadReplies.removeAll(reply);
     reply->deleteLater();
 
-    if (m_queue.size() > 1) {
-        startUpload(m_queue.at(0).toMap().value("remoteUri").toString());
-        startUpload(m_queue.at(1).toMap().value("remoteUri").toString());
-    } else if (m_queue.size() == 1) {
+    if (m_queue.size() > 0) {
         startUpload(m_queue.at(0).toMap().value("remoteUri").toString());
     }
 
     emit uploadFinished(remoteUri);
+
+    if (m_pFileUtil->isImage(file["ext"].toString())) {
+        loadPreview(filename, remoteUri);
+    }
 }
 
 QVariantList FileController::getQueue() {
@@ -291,6 +286,7 @@ void FileController::startUpload(const QString& remoteUri) {
         reply->setProperty("filename", map.value("filename").toString());
         reply->setProperty("remoteUri", remoteUri);
         reply->setProperty("targetPath", map.value("targetPath").toString());
+        reply->setProperty("size", file.size());
 
         bool res = QObject::connect(reply, SIGNAL(uploadProgress(qint64,qint64)), this, SLOT(onUploadProgress(qint64,qint64)));
         Q_ASSERT(true);
@@ -351,8 +347,6 @@ void FileController::onFileRenamed() {
 void FileController::move(const QString& name, const QString& fromPath, const QString& toPath, const bool& isDir, const QString& ext) {
     QString newPath = toPath + name;
 
-    qDebug() << "Move to: " << newPath << endl;
-
     QNetworkReply* reply = m_pWebdav->move(fromPath, newPath, true);
     reply->setProperty("prevPath", fromPath);
     reply->setProperty("newPath", newPath);
@@ -408,4 +402,81 @@ const QString& FileController::getCurrentPath() const {
 void FileController::setCurrentPath(const QString& currentPath) {
     m_currentPath = currentPath;
     emit currentPathChanged(m_currentPath);
+}
+
+void FileController::showProps(const QVariantMap& fileMap) {
+    emit propsPageRequested(fileMap);
+}
+
+void FileController::loadPreview(const QString& filename, const QString& path) {
+    QString previewLocalPath = QDir::currentPath() + PREVIEWS_DIR + path;
+    QFile preview(previewLocalPath);
+    if (preview.exists()) {
+        emit previewLoaded(path, previewLocalPath);
+    } else {
+        QVariantMap previewMap;
+        previewMap["filename"] = filename;
+        previewMap["path"] = path;
+        m_previewsQueue.append(previewMap);
+        if (m_previewsQueue.size() < PREVIEWS_QUEUE_SIZE) {
+            startLoadPreview(filename, path);
+        }
+    }
+}
+
+void FileController::onPreviewLoaded() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QByteArray bytes = reply->readAll();
+
+    QString filename = reply->property("filename").toString();
+    QString path = reply->property("path").toString();
+
+    for (int i = 0; i< m_previewsQueue.size(); i++) {
+        QVariantMap previewMap = m_previewsQueue.at(i).toMap();
+        if (previewMap.value("filename").toString().compare(filename) == 0 && previewMap.value("path").toString().compare(path) == 0) {
+            m_previewsQueue.removeAt(i);
+        }
+    }
+
+    if (bytes.size() != 0) {
+        QString pathCopy = QString(path);
+
+        QString previewsDir = QDir::currentPath() + PREVIEWS_DIR + pathCopy.replace(QString("/").append(filename), "");
+        QDir dir(previewsDir);
+        if (!dir.exists()) {
+            dir.mkpath(previewsDir);
+        }
+
+        QString filePath = QDir::currentPath() + PREVIEWS_DIR + path;
+        QFile file(filePath);
+
+        if (file.open(QIODevice::WriteOnly)) {
+            file.write(bytes);
+            file.close();
+
+            #ifdef DEBUG_WEBDAV
+                qDebug() << "FileController ===>>>  Preview saved to " << filePath << ", size: " << file.size() << endl;
+            #endif
+        }
+        emit previewLoaded(path, filePath);
+    }
+
+    m_previewReplies.removeAll(reply);
+    reply->deleteLater();
+
+    if (m_previewsQueue.size() > 0) {
+        QVariantMap previewMap = m_previewsQueue.at(0).toMap();
+        startLoadPreview(previewMap.value("filename").toString(), previewMap.value("path").toString());
+    }
+}
+
+void FileController::startLoadPreview(const QString& filename, const QString& path) {
+    QNetworkReply* reply = m_pWebdav->preview(path, "XS");
+    reply->setProperty("filename", filename);
+    reply->setProperty("path", path);
+    m_previewReplies.append(reply);
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPreviewLoaded()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
 }

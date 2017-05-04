@@ -210,4 +210,28 @@ bool QWebdavItem::operator <(const QWebdavItem &other) const
     return QNaturalSort::naturalCompare(m_name.toLower(), other.name().toLower() ) < 0;
 }
 
+QVariantMap QWebdavItem::toMap() const {
+    QVariantMap map;
+    map["name"] = name();
+    map["dir"] = isDir();
+    map["ext"] = ext();
+    map["path"] = path();
+    map["lastModified"] = lastModified();
+    map["lastModifiedStr"] = lastModifiedStr();
+    map["size"] = size();
+
+    #ifdef QWEBDAVITEM_EXTENDED_PROPERTIES
+        map["displayName"] = displayName();
+        map["createdAt"] = createdAt();
+        map["createdAtStr"] = createdAtStr();
+        map["contentLanguage"] = contentLanguage();
+        map["entityTag"] = entityTag();
+        map["mimeType"] = mimeType();
+        map["executable"] = isExecutable();
+        map["source"] = source();
+    #endif
+
+    return map;
+}
+
 

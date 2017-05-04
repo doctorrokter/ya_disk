@@ -38,7 +38,9 @@ config_pri_assets {
     OTHER_FILES += \
         $$quote($$BASEDIR/assets/components/FilesMover.qml) \
         $$quote($$BASEDIR/assets/components/GridListItem.qml) \
+        $$quote($$BASEDIR/assets/components/PropListItem.qml) \
         $$quote($$BASEDIR/assets/components/StackListItem.qml) \
+        $$quote($$BASEDIR/assets/images/bb_screen.jpg) \
         $$quote($$BASEDIR/assets/images/ic_add.png) \
         $$quote($$BASEDIR/assets/images/ic_add_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_deselect_all.png) \
@@ -52,6 +54,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_doctype_xls.png) \
         $$quote($$BASEDIR/assets/images/ic_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_forward.png) \
+        $$quote($$BASEDIR/assets/images/ic_properties.png) \
         $$quote($$BASEDIR/assets/images/ic_rename.png) \
         $$quote($$BASEDIR/assets/images/ic_upload.png) \
         $$quote($$BASEDIR/assets/images/ic_uploads.png) \
@@ -60,6 +63,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/opac_bg.png) \
         $$quote($$BASEDIR/assets/main.qml) \
         $$quote($$BASEDIR/assets/pages/DirPage.qml) \
+        $$quote($$BASEDIR/assets/pages/PropertiesPage.qml) \
         $$quote($$BASEDIR/assets/pages/SettingsPage.qml) \
         $$quote($$BASEDIR/assets/pages/UploadsPage.qml) \
         $$quote($$BASEDIR/assets/sheets/FilePickersSheet.qml) \

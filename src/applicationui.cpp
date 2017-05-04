@@ -34,10 +34,11 @@ ApplicationUI::ApplicationUI() : QObject() {
     QCoreApplication::setOrganizationName("mikhail.chachkouski");
     QCoreApplication::setApplicationName("YaDisk");
 
-    QDir dataDir(QDir::currentPath() + "/data");
+    QDir dataDir(QDir::currentPath() + TEMP_DIR);
     dataDir.setNameFilters(QStringList() << "*.*");
     dataDir.setFilter(QDir::Files);
     foreach(QString dirFile, dataDir.entryList()) {
+        qDebug() << "ApplicationUI ===>>> remove temp file: " << dirFile << endl;
         dataDir.remove(dirFile);
     }
 

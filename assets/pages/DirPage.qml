@@ -56,6 +56,10 @@ Page {
                 
                 dataModel: ArrayDataModel {
                     id: dataModel
+                    
+                    onItemAdded: {
+                        root.loadPreview(data(indexPath));
+                    }
                 }
                 
                 layout: {
@@ -324,16 +328,6 @@ Page {
                     _appConfig.set("files_view", "grid");
                 }
             }
-            
-            shortcuts: [
-                Shortcut {
-                    key: "v"
-                    
-                    onTriggered: {
-                        viewActionItem.triggered();
-                    }
-                }
-            ]
         }
     ]
     
@@ -347,23 +341,44 @@ Page {
         _fileController.fileUploaded.connect(root.onFileUploaded);
         _fileController.fileRenamed.connect(root.onFileRenamed);
         _fileController.fileMoved.connect(root.onFileMoved);
+        _fileController.previewLoaded.connect(root.setPreview);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
-        
+//        
 //        var data = [];
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
-//        data.push({path: "sdfsdfsdf/sdfsdf/dfsdfsdfsdf.pdf", name: "dfsdfsdfsdf.pdf", ext: "pdf", dir: false, lastModified: new Date()});
+//        data.push({path: "sdfsdfsdf/sdfsdf/dfsdfsdfsdf.pdf", name: "dfsdfsdfsdf.jpg", ext: "jpg", dir: false, lastModified: new Date()});
 //        dataModel.append(data);
     }
     
     onDataChanged: {
         dataModel.clear();
         if (data) {
-            dataModel.append(data);
+            data.forEach(function(f) {
+                dataModel.append(f);
+            });
         }
         spinner.stop();
+    }
+    
+    function loadPreview(file) {
+        if (!file.dir && _file.isImage(file.ext.toLowerCase())) {
+            _fileController.loadPreview(file.name, file.path);
+        }
+    }
+    
+    function setPreview(path, localPath) {
+        for (var i = 0; i < dataModel.size(); i++) {
+            var f = dataModel.value(i);
+            if (_file.isImage(f.ext)) {
+                if (f.path === path && localPath.indexOf(f.name) !== -1) {
+                    f.previewPath = "file://" + localPath;
+                    dataModel.replace(i, f);
+                }
+            }
+        }
     }
     
     function stopSpinner() {
@@ -439,7 +454,7 @@ Page {
         }
         dataModel.clear();
         
-        if (view === "grid") {
+        if (view === "" || view === "grid") {
             viewActionItem.imageSource = "asset:///images/ic_view_list.png";
             viewActionItem.title = qsTr("List") + Retranslate.onLocaleOrLanguageChanged
             listView.layout = gridListLayout;
@@ -510,6 +525,7 @@ Page {
         _fileController.fileUploaded.disconnect(root.onFileUploaded);
         _fileController.fileRenamed.disconnect(root.onFileRenamed);
         _fileController.fileMoved.disconnect(root.onFileMoved);
+        _fileController.previewLoaded.disconnect(root.setPreview);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

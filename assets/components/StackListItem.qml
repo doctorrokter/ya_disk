@@ -95,6 +95,26 @@ CustomListItem {
                             }
                         }
                     ]
+                },
+                
+                ActionItem {
+                    id: propsAction
+                    title: qsTr("Properties") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_properties.png"
+                    
+                    onTriggered: {
+                        _fileController.showProps(ListItemData);
+                    }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "p"
+                            
+                            onTriggered: {
+                                propsAction.triggered();
+                            }
+                        }
+                    ]
                 }
             ]
             
@@ -105,6 +125,9 @@ CustomListItem {
         if (!ListItemData.dir) {
             var ext = ListItemData.ext.toLowerCase();
             if (_file.isImage(ext)) {
+                if (ListItemData.previewPath !== undefined) {
+                    return ListItemData.previewPath;
+                }
                 return "asset:///images/ic_doctype_picture.png";
             } else if (_file.isVideo(ext)) {
                 return "asset:///images/ic_doctype_video.png";
@@ -157,7 +180,7 @@ CustomListItem {
             }
             
             ImageView {
-                visible: !ListItemData.dir
+                visible: !ListItemData.dir && ListItemData.previewPath === undefined
                 imageSource: "asset:///images/opac_bg.png"
                 
                 opacity: 0.5

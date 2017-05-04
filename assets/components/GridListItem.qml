@@ -5,7 +5,7 @@ import bb.system 1.2
 CustomListItem {
     id: listItem
     
-    property string currentPath: "/"
+    property string currentPath: ""
     
     opacity: listItem.ListItem.selected ? 0.5 : 1.0
     
@@ -20,6 +20,9 @@ CustomListItem {
         if (!ListItemData.dir) {
             var ext = ListItemData.ext.toLowerCase();
             if (_file.isImage(ext)) {
+                if (ListItemData.previewPath) {
+                    return ListItemData.previewPath;
+                }
                 return "asset:///images/ic_doctype_picture.png";
             } else if (_file.isVideo(ext)) {
                 return "asset:///images/ic_doctype_video.png";
@@ -41,10 +44,13 @@ CustomListItem {
     }
     
     function filterColor() {
-        if (!ListItemData.dir) {
-            return ui.palette.textOnPlain;
+        if (!ListItemData.previewPath) {
+            if (!ListItemData.dir) {
+                return ui.palette.textOnPlain;
+            }
+            return ui.palette.primary;
         }
-        return ui.palette.primary;
+        return 0;
     }
     
     Container {
@@ -56,21 +62,49 @@ CustomListItem {
         layout: DockLayout {}
         
         ImageView {
+            id: preview
             imageSource: listItem.getImage();
             filterColor: listItem.filterColor();
             
             opacity: ListItemData.dir ? 0.25 : 1.0
-            preferredWidth: ListItemData.dir ? listItemLUH.layoutFrame.width : ui.du(20)
-            preferredHeight: ListItemData.dir ? listItemLUH.layoutFrame.height - ui.du(2) : ui.du(20)
-            verticalAlignment: ListItemData.dir ? VerticalAlignment.Bottom : VerticalAlignment.Center
+            preferredWidth: ListItemData.dir || (ListItemData.previewPath !== undefined) ? listItemLUH.layoutFrame.width : ui.du(20)
+            preferredHeight: {
+                if (ListItemData.dir) {
+                    return listItemLUH.layoutFrame.height - ui.du(2);
+                } else if (ListItemData.previewPath !== undefined) {
+                    return listItemLUH.layoutFrame.height;
+                } else {
+                    return ui.du(20);
+                } 
+            }
+            verticalAlignment: {
+                if (ListItemData.dir) {
+                    return VerticalAlignment.Bottom;
+                } else if (ListItemData.previewPath !== undefined) {
+                    return VerticalAlignment.Fill;
+                } else {
+                    return VerticalAlignment.Center;
+                }
+            }
             horizontalAlignment: ListItemData.dir ? HorizontalAlignment.Fill : HorizontalAlignment.Center
         }
         
         ImageView {
-            visible: !ListItemData.dir
+            visible: !ListItemData.dir && ListItemData.previewPath === undefined
             imageSource: "asset:///images/opac_bg.png"
             horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
+            opacity: 0.5
+        }
+        
+        Container {
+            visible: !ListItemData.dir && ListItemData.previewPath !== undefined
+            horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Bottom
+            
+            background: Color.Black
+            preferredHeight: ui.du(8)
+            
             opacity: 0.5
         }
         
@@ -192,6 +226,26 @@ CustomListItem {
                             
                             onTriggered: {
                                 moveAction.triggered();
+                            }
+                        }
+                    ]
+                },
+                
+                ActionItem {
+                    id: propsAction
+                    title: qsTr("Properties") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_properties.png"
+                    
+                    onTriggered: {
+                        _fileController.showProps(ListItemData);
+                    }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "p"
+                            
+                            onTriggered: {
+                                propsAction.triggered();
                             }
                         }
                     ]

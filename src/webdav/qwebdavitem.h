@@ -52,6 +52,7 @@
 #define QWEBDAVFILE_H
 
 #include "qwebdav_global.h"
+#include <QVariantMap>
 
 #include <QDateTime>
 
@@ -93,6 +94,7 @@ public:
 #endif
 
     bool operator <(const QWebdavItem &other) const;
+    QVariantMap toMap() const;
 
 protected:
     bool m_dirOrFile;

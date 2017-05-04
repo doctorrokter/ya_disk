@@ -20,7 +20,7 @@ FileUtil::~FileUtil() {}
 
 bool FileUtil::isImage(const QString& ext) {
     foreach(QString e, m_imagesList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -29,7 +29,7 @@ bool FileUtil::isImage(const QString& ext) {
 
 bool FileUtil::isVideo(const QString& ext) {
     foreach(QString e, m_videoList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -38,7 +38,7 @@ bool FileUtil::isVideo(const QString& ext) {
 
 bool FileUtil::isAudio(const QString& ext) {
     foreach(QString e, m_audioList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -47,7 +47,7 @@ bool FileUtil::isAudio(const QString& ext) {
 
 bool FileUtil::isDoc(const QString& ext) {
     foreach(QString e, m_docList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -56,7 +56,7 @@ bool FileUtil::isDoc(const QString& ext) {
 
 bool FileUtil::isSpreadSheet(const QString& ext) {
     foreach(QString e, m_xlsList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -65,7 +65,7 @@ bool FileUtil::isSpreadSheet(const QString& ext) {
 
 bool FileUtil::isPresentation(const QString& ext) {
     foreach(QString e, m_pptList) {
-        if (e.compare(ext) == 0) {
+        if (e.toLower().compare(ext.toLower()) == 0) {
             return true;
         }
     }
@@ -73,7 +73,7 @@ bool FileUtil::isPresentation(const QString& ext) {
 }
 
 bool FileUtil::isPdf(const QString& ext) {
-    return ext.compare("pdf") == 0;
+    return ext.toLower().compare("pdf") == 0;
 }
 
 QString FileUtil::filename(const QString& filepath) {

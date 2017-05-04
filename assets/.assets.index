@@ -1,8 +1,10 @@
 1
-28
+32
 components/FilesMover.qml
 components/GridListItem.qml
+components/PropListItem.qml
 components/StackListItem.qml
+images/bb_screen.jpg
 images/ic_add.png
 images/ic_add_folder.png
 images/ic_deselect_all.png
@@ -16,6 +18,7 @@ images/ic_doctype_video.png
 images/ic_doctype_xls.png
 images/ic_folder.png
 images/ic_forward.png
+images/ic_properties.png
 images/ic_rename.png
 images/ic_upload.png
 images/ic_uploads.png
@@ -24,6 +27,7 @@ images/ic_view_list.png
 images/opac_bg.png
 main.qml
 pages/DirPage.qml
+pages/PropertiesPage.qml
 pages/SettingsPage.qml
 pages/UploadsPage.qml
 sheets/FilePickersSheet.qml
