@@ -253,5 +253,9 @@
         <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Send feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

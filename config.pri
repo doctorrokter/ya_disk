@@ -53,6 +53,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_doctype_ppt.png) \
         $$quote($$BASEDIR/assets/images/ic_doctype_video.png) \
         $$quote($$BASEDIR/assets/images/ic_doctype_xls.png) \
+        $$quote($$BASEDIR/assets/images/ic_feedback.png) \
         $$quote($$BASEDIR/assets/images/ic_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_forward.png) \
         $$quote($$BASEDIR/assets/images/ic_properties.png) \

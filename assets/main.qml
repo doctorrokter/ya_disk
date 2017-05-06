@@ -15,6 +15,7 @@
  */
 
 import bb.cascades 1.4
+import bb.system 1.2
 import "sheets"
 import "pages"
 
@@ -29,6 +30,17 @@ NavigationPane {
                 Application.menuEnabled = false;
             }
         }
+        
+        actions: [
+            ActionItem {
+                title: qsTr("Send feedback") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: "asset:///images/ic_feedback.png"
+                
+                onTriggered: {
+                    invokeFeedback.trigger(invokeFeedback.query.invokeActionId);
+                }
+            }
+        ]
     }
     
     onPopTransitionEnded: {
@@ -85,6 +97,15 @@ NavigationPane {
                     navPane.pop();
                 }
             }    
+        },
+        
+        Invocation {
+            id: invokeFeedback
+            query {
+                uri: "mailto:yadisk.bbapp@gmail.com?subject=Ya%20Disk:%20Feedback"
+                invokeActionId: "bb.action.SENDEMAIL"
+                invokeTargetId: "sys.pim.uib.email.hybridcomposer"
+            }
         },
         
         ComponentDefinition {

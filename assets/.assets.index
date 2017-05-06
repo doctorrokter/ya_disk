@@ -1,5 +1,5 @@
 1
-33
+34
 components/FilesMover.qml
 components/FilesUploader.qml
 components/GridListItem.qml
@@ -17,6 +17,7 @@ images/ic_doctype_picture.png
 images/ic_doctype_ppt.png
 images/ic_doctype_video.png
 images/ic_doctype_xls.png
+images/ic_feedback.png
 images/ic_folder.png
 images/ic_forward.png
 images/ic_properties.png

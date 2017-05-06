@@ -314,9 +314,14 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="136"/>
+        <location filename="../assets/main.qml" line="36"/>
+        <source>Send feedback</source>
+        <translation type="unfinished">Обратная связь</translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="157"/>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Корень</translation>
     </message>
 </context>
 </TS>

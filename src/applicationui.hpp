@@ -50,7 +50,7 @@ class ApplicationUI : public QObject {
     Q_OBJECT
 public:
     ApplicationUI();
-    virtual ~ApplicationUI() {}
+    virtual ~ApplicationUI();
 
     Q_INVOKABLE void setToken(const QString& token, const int& expiresIn);
     Q_INVOKABLE bool hasToken();

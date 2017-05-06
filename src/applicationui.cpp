@@ -85,17 +85,17 @@ ApplicationUI::ApplicationUI() : QObject() {
             }
 }
 
-//ApplicationUI::~ApplicationUI() {
-//    m_pAppConfig->deleteLater();
-//    m_pFileController->deleteLater();
-//    m_pFileUtil->deleteLater();
-//    m_pUserController->deleteLater();
-//    m_pInvokeManager->deleteLater();
-//    m_pLocaleHandler->deleteLater();
-//    m_pParser->deleteLater();
-//    m_pTranslator->deleteLater();
-//    m_pWebdav->deleteLater();
-//}
+ApplicationUI::~ApplicationUI() {
+    m_pAppConfig->deleteLater();
+    m_pFileController->deleteLater();
+    m_pFileUtil->deleteLater();
+    m_pUserController->deleteLater();
+    m_pInvokeManager->deleteLater();
+    m_pLocaleHandler->deleteLater();
+    m_pParser->deleteLater();
+    m_pTranslator->deleteLater();
+    m_pWebdav->deleteLater();
+}
 
 void ApplicationUI::onSystemLanguageChanged() {
     QCoreApplication::instance()->removeTranslator(m_pTranslator);
