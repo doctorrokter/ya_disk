@@ -65,6 +65,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/opac_bg.png) \
         $$quote($$BASEDIR/assets/main.qml) \
         $$quote($$BASEDIR/assets/pages/DirPage.qml) \
+        $$quote($$BASEDIR/assets/pages/HelpPage.qml) \
         $$quote($$BASEDIR/assets/pages/PropertiesPage.qml) \
         $$quote($$BASEDIR/assets/pages/SettingsPage.qml) \
         $$quote($$BASEDIR/assets/pages/UploadsPage.qml) \

@@ -31,6 +31,14 @@ NavigationPane {
             }
         }
         
+        helpAction: HelpActionItem {
+            onTriggered: {
+                var hp = helpPage.createObject();
+                navPane.push(hp);
+                Application.menuEnabled = false;
+            }
+        }
+        
         actions: [
             ActionItem {
                 title: qsTr("Send feedback") + Retranslate.onLocaleOrLanguageChanged
@@ -106,6 +114,11 @@ NavigationPane {
                 invokeActionId: "bb.action.SENDEMAIL"
                 invokeTargetId: "sys.pim.uib.email.hybridcomposer"
             }
+        },
+        
+        ComponentDefinition {
+            id: helpPage
+            HelpPage {}    
         },
         
         ComponentDefinition {

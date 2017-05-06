@@ -190,6 +190,34 @@
     </message>
 </context>
 <context>
+    <name>HelpPage</name>
+    <message>
+        <location filename="../assets/pages/HelpPage.qml" line="10"/>
+        <source>Help</source>
+        <translation type="unfinished">Помощь</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/HelpPage.qml" line="54"/>
+        <source>App name: </source>
+        <translation type="unfinished">Название приложения: </translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/HelpPage.qml" line="58"/>
+        <source>App version: </source>
+        <translation type="unfinished">Версия приложения: </translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/HelpPage.qml" line="62"/>
+        <source>OS version: </source>
+        <translation type="unfinished">Версия ОС: </translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/HelpPage.qml" line="32"/>
+        <source>Author: </source>
+        <translation type="unfinished">Автор: </translation>
+    </message>
+</context>
+<context>
     <name>PropertiesPage</name>
     <message>
         <location filename="../assets/pages/PropertiesPage.qml" line="18"/>
@@ -314,12 +342,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="36"/>
+        <location filename="../assets/main.qml" line="44"/>
         <source>Send feedback</source>
         <translation type="unfinished">Обратная связь</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="157"/>
+        <location filename="../assets/main.qml" line="170"/>
         <source>Root</source>
         <translation type="unfinished">Корень</translation>
     </message>

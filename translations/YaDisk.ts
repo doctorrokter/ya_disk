@@ -148,6 +148,29 @@
     </message>
 </context>
 <context>
+    <name>HelpPage</name>
+    <message>
+        <source>App name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>App version: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OS version: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PropertiesPage</name>
     <message>
         <source>Properties</source>
