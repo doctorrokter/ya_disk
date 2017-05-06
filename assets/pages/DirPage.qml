@@ -32,7 +32,7 @@ Page {
                 verticalAlignment: VerticalAlignment.Fill
                 
                 leftPadding: ui.du(1)
-                topPadding: ui.du(1)
+                topPadding: ui.du(0.5)
                 rightPadding: ui.du(1)
                 bottomPadding: ui.du(1)
                 

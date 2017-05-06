@@ -47,7 +47,10 @@
 
     <!-- The name that is displayed in the BlackBerry 10 application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
-    <name>Ya Disk</name>
+    <name>
+       Ya Disk
+       <text xml:lang="ru">Ya Disk</text>
+    </name>
 
     <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade.
          Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
@@ -67,7 +70,10 @@
     <!-- <copyright></copyright> -->
 
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
-    <description>Connect to Yandex.Disk</description>
+    <description>
+       Connect to Yandex.Disk
+       <text xml:lang="ru">Connect to Yandex.Disk</text>
+    </description>
     <splashScreens>
        <image>splash_1440_x_1440.png</image>
        <image>splash_720_x_720.png</image>
@@ -79,6 +85,7 @@
     <authorId>gYAAgJBERbiwoSHtjskM8WvopKU</authorId>
     <author>Mikhail Chachkouski</author>
     <buildIdFile>buildnum</buildIdFile>
+    <packageLocale>ru</packageLocale>
 
     <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
     <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
