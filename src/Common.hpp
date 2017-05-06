@@ -16,5 +16,6 @@
 #define UPLOADS_QUEUE_SIZE 1
 #define PROVIDER_ID "external"
 #define ACCOUNT_ID 150
+#define INVOKE_CARD_EDIT_URI "chachkouski.YaDisk.card.edit.uri"
 
 #endif /* COMMON_HPP_ */

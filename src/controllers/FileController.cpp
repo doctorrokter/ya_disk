@@ -279,7 +279,7 @@ void FileController::startUpload(const QString& remoteUri) {
         map = m_queue.at(0).toMap();
     }
 
-    QString sourceFilePath = map.value("sourceFilePath").toString();
+    QString sourceFilePath = map.value("sourceFilePath").toString().replace("file://", "");
     QFile file(sourceFilePath);
     if (file.exists()) {
         QNetworkReply* reply = m_pWebdav->put(remoteUri, file);
@@ -479,4 +479,15 @@ void FileController::startLoadPreview(const QString& filename, const QString& pa
     bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPreviewLoaded()));
     Q_ASSERT(res);
     Q_UNUSED(res);
+}
+
+const QVariantList& FileController::getSharedFiles() const { return m_sharedFiles; }
+void FileController::setSharedFiles(const QVariantList& sharedFiles) {
+    m_sharedFiles = sharedFiles;
+    emit sharedFilesChanged(m_sharedFiles);
+}
+
+void FileController::clearSharedFiles() {
+    m_sharedFiles.clear();
+    emit sharedFilesChanged(m_sharedFiles);
 }

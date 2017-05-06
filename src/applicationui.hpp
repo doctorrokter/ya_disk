@@ -26,6 +26,10 @@
 #include "controllers/FileController.hpp"
 #include "controllers/UserController.hpp"
 #include "config/AppConfig.hpp"
+#include <bb/system/InvokeManager>
+#include <bb/system/InvokeRequest>
+
+using namespace bb::system;
 
 namespace bb
 {
@@ -53,9 +57,12 @@ public:
     Q_INVOKABLE void initWebdav();
 
 Q_SIGNALS:
+    void cardDone();
 
 private slots:
     void onSystemLanguageChanged();
+    void onCardDone(const QString& msg);
+    void onInvoked(const bb::system::InvokeRequest& request);
 private:
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
@@ -69,6 +76,10 @@ private:
     FileController* m_pFileController;
     UserController* m_pUserController;
     AppConfig* m_pAppConfig;
+    InvokeManager* m_pInvokeManager;
+    QString m_startupMode;
+
+    void initFullUI(const QString& data = "", const QString& mimeType = "");
 };
 
 #endif /* ApplicationUI_HPP_ */

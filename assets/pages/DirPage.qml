@@ -89,7 +89,17 @@ Page {
                 title: path
             }
             
-            FilesMover {}
+            FilesMover {
+                path: root.path
+            }
+            
+            FilesUploader {
+                path: root.path
+                
+                onStartUpload: {
+                    uploadsPageRequested();
+                }
+            }
             
             ListView {
                 id: listView
@@ -294,6 +304,10 @@ Page {
                     root.selectedFiles = [];
                 }
             }
+        },
+        
+        SystemToast {
+            id: toast
         }
     ]
     
@@ -392,6 +406,11 @@ Page {
         _fileController.previewLoaded.connect(root.setPreview);
         _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
+        
+        if (_data !== "") {
+            toast.body = _data;
+            toast.show();
+        }
 //        
 //        var data = [];
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});

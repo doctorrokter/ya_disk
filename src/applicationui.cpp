@@ -21,13 +21,16 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
 #include <bb/cascades/ThemeSupport>
+#include <bb/system/CardDoneMessage>
 #include <QVariantList>
 #include <QStringList>
 #include <QVariantMap>
 #include <QDir>
 #include <QFile>
+#include <bb/data/JsonDataAccess>
 
 using namespace bb::cascades;
+using namespace bb::data;
 
 ApplicationUI::ApplicationUI() : QObject() {
 
@@ -65,23 +68,34 @@ ApplicationUI::ApplicationUI() : QObject() {
         }
     }
 
-    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
-    QDeclarativeEngine* engine = QmlDocument::defaultDeclarativeEngine();
-    QDeclarativeContext* rootContext = engine->rootContext();
-    rootContext->setContextProperty("_app", this);
-    rootContext->setContextProperty("_appConfig", m_pAppConfig);
-    rootContext->setContextProperty("_file", m_pFileUtil);
-    rootContext->setContextProperty("_fileController", m_pFileController);
-    rootContext->setContextProperty("_userController", m_pUserController);
+    m_pInvokeManager = new InvokeManager(this);
+    connect(m_pInvokeManager, SIGNAL(invoked(const bb::system::InvokeRequest&)), SLOT(onInvoked(const bb::system::InvokeRequest&)));
 
-    AbstractPane *root = qml->createRootObject<AbstractPane>();
-
-    if (hasToken()) {
-        initWebdav();
-    }
-
-    Application::instance()->setScene(root);
+    switch (m_pInvokeManager->startupMode()) {
+            case ApplicationStartupMode::LaunchApplication:
+                m_startupMode = "Launch";
+                initFullUI();
+                break;
+            case ApplicationStartupMode::InvokeApplication:
+                m_startupMode = "Invoke";
+                break;
+            case ApplicationStartupMode::InvokeCard:
+                m_startupMode = "Card";
+                break;
+            }
 }
+
+//ApplicationUI::~ApplicationUI() {
+//    m_pAppConfig->deleteLater();
+//    m_pFileController->deleteLater();
+//    m_pFileUtil->deleteLater();
+//    m_pUserController->deleteLater();
+//    m_pInvokeManager->deleteLater();
+//    m_pLocaleHandler->deleteLater();
+//    m_pParser->deleteLater();
+//    m_pTranslator->deleteLater();
+//    m_pWebdav->deleteLater();
+//}
 
 void ApplicationUI::onSystemLanguageChanged() {
     QCoreApplication::instance()->removeTranslator(m_pTranslator);
@@ -109,4 +123,65 @@ void ApplicationUI::initWebdav() {
     m_pParser = new QWebdavDirParser(this);
     m_pFileController->initWebdav(m_pWebdav, m_pParser);
     m_pUserController->initWebdav(m_pWebdav, m_pParser);
+}
+
+void ApplicationUI::initFullUI(const QString& data, const QString& mimeType) {
+    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
+    QDeclarativeEngine* engine = QmlDocument::defaultDeclarativeEngine();
+    QDeclarativeContext* rootContext = engine->rootContext();
+    rootContext->setContextProperty("_app", this);
+    rootContext->setContextProperty("_appConfig", m_pAppConfig);
+    rootContext->setContextProperty("_file", m_pFileUtil);
+    rootContext->setContextProperty("_fileController", m_pFileController);
+    rootContext->setContextProperty("_userController", m_pUserController);
+    rootContext->setContextProperty("_data", data);
+    rootContext->setContextProperty("_mimeType", mimeType);
+
+    AbstractPane *root = qml->createRootObject<AbstractPane>();
+
+    if (hasToken()) {
+        initWebdav();
+    }
+    Application::instance()->setScene(root);
+}
+
+void ApplicationUI::onCardDone(const QString& msg) {
+    CardDoneMessage message;
+    message.setData(msg);
+    message.setDataType("text/plain");
+    message.setReason(tr("Success!"));
+
+    m_pInvokeManager->sendCardDone(message);
+    emit cardDone();
+}
+
+void ApplicationUI::onInvoked(const bb::system::InvokeRequest& request) {
+    QString action = request.action();
+    QString target = request.target();
+    QString mimeType = request.mimeType();
+
+#ifdef DEBUG_WEBDAV
+    qDebug() << "action: " << action << endl;
+    qDebug() << "target: " << target << endl;
+    qDebug() << "mimeType: " << mimeType << endl;
+#endif
+
+    if (target == INVOKE_CARD_EDIT_URI) {
+        QByteArray data = request.data();
+        QString uri = request.uri().toString();
+        QVariantList list;
+        if (uri.contains("list")) {
+            JsonDataAccess jda;
+            QVariant var = jda.loadFromBuffer(data);
+            QVariantList dataList = var.toList();
+            foreach(QVariant v, dataList) {
+                QVariantMap m = v.toMap();
+                list << m.value("uri").toString();
+            }
+        } else {
+            list << uri;
+        }
+        m_pFileController->setSharedFiles(list);
+        initFullUI();
+    }
 }

@@ -22,6 +22,7 @@ class FileController: public QObject {
     Q_OBJECT
     Q_PROPERTY(QVariantList queue READ getQueue NOTIFY queueChanged)
     Q_PROPERTY(QVariantList selectedFiles READ getSelectedFiles NOTIFY selectedFilesChanged)
+    Q_PROPERTY(QVariantList sharedFiles READ getSharedFiles WRITE setSharedFiles NOTIFY sharedFilesChanged)
     Q_PROPERTY(QString currentPath READ getCurrentPath WRITE setCurrentPath NOTIFY currentPathChanged)
 public:
     FileController(FileUtil* fileUtil, QObject* parent = 0);
@@ -44,6 +45,9 @@ public:
     Q_INVOKABLE void setCurrentPath(const QString& currentPath);
     Q_INVOKABLE void showProps(const QVariantMap& fileMap);
     Q_INVOKABLE void loadPreview(const QString& filename, const QString& path);
+    Q_INVOKABLE const QVariantList& getSharedFiles() const;
+    Q_INVOKABLE void setSharedFiles(const QVariantList& sharedFiles);
+    Q_INVOKABLE void clearSharedFiles();
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -64,6 +68,7 @@ public:
         void currentPathChanged(const QString& currentPath);
         void propsPageRequested(const QVariantMap& fileMap);
         void previewLoaded(const QString& path, const QString& localPreviewPath);
+        void sharedFilesChanged(const QVariantList& sharedFiles);
 
     private slots:
         void onLoad();
@@ -87,6 +92,7 @@ private:
     QVariantList m_selectedFiles;
     QVariantList m_previewsQueue;
     QString m_currentPath;
+    QVariantList m_sharedFiles;
 
     void startUpload(const QString& remoteUri);
     void startLoadPreview(const QString& filename, const QString& path);

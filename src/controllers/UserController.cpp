@@ -103,9 +103,5 @@ void UserController::onDiskinfoLoaded() {
     m_pUser->setUsedBytes(map.value("d:quota-used-bytes").toLongLong());
 
     reply->deleteLater();
-
-    qDebug() << m_pUser->getAvailableBytes() << endl;
-    qDebug() << m_pUser->getUsedBytes() << endl;
-
     emit userChanged(m_pUser->toMap());
 }

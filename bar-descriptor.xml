@@ -67,7 +67,7 @@
     <!-- <copyright></copyright> -->
 
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
-    <description>Connect to Yandex Disk</description>
+    <description>Connect to Yandex.Disk</description>
     <splashScreens>
        <image>splash_1440_x_1440.png</image>
        <image>splash_720_x_720.png</image>

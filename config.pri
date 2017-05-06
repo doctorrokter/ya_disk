@@ -37,6 +37,7 @@ simulator {
 config_pri_assets {
     OTHER_FILES += \
         $$quote($$BASEDIR/assets/components/FilesMover.qml) \
+        $$quote($$BASEDIR/assets/components/FilesUploader.qml) \
         $$quote($$BASEDIR/assets/components/GridListItem.qml) \
         $$quote($$BASEDIR/assets/components/PropListItem.qml) \
         $$quote($$BASEDIR/assets/components/StackListItem.qml) \

@@ -22,26 +22,34 @@ static const uint qt_meta_data_ApplicationUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      15,   14,   14,   14, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      15,   14,   14,   14, 0x08,
+      26,   14,   14,   14, 0x08,
+      56,   52,   14,   14, 0x08,
+      84,   76,   14,   14, 0x08,
 
  // methods: signature, parameters, type, tag, flags
-      57,   41,   14,   14, 0x02,
-      84,   14,   79,   14, 0x02,
-      95,   14,   14,   14, 0x02,
+     137,  121,   14,   14, 0x02,
+     164,   14,  159,   14, 0x02,
+     175,   14,   14,   14, 0x02,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ApplicationUI[] = {
-    "ApplicationUI\0\0onSystemLanguageChanged()\0"
+    "ApplicationUI\0\0cardDone()\0"
+    "onSystemLanguageChanged()\0msg\0"
+    "onCardDone(QString)\0request\0"
+    "onInvoked(bb::system::InvokeRequest)\0"
     "token,expiresIn\0setToken(QString,int)\0"
     "bool\0hasToken()\0initWebdav()\0"
 };
@@ -52,11 +60,14 @@ void ApplicationUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_ASSERT(staticMetaObject.cast(_o));
         ApplicationUI *_t = static_cast<ApplicationUI *>(_o);
         switch (_id) {
-        case 0: _t->onSystemLanguageChanged(); break;
-        case 1: _t->setToken((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2]))); break;
-        case 2: { bool _r = _t->hasToken();
+        case 0: _t->cardDone(); break;
+        case 1: _t->onSystemLanguageChanged(); break;
+        case 2: _t->onCardDone((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->onInvoked((*reinterpret_cast< const bb::system::InvokeRequest(*)>(_a[1]))); break;
+        case 4: _t->setToken((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2]))); break;
+        case 5: { bool _r = _t->hasToken();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 3: _t->initWebdav(); break;
+        case 6: _t->initWebdav(); break;
         default: ;
         }
     }
@@ -94,10 +105,16 @@ int ApplicationUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 7;
     }
     return _id;
+}
+
+// SIGNAL 0
+void ApplicationUI::cardDone()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE
