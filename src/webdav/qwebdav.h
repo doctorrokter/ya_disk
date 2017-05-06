@@ -102,6 +102,7 @@ public:
     QNetworkReply* get(const QString& path, QIODevice* data, quint64 fromRangeInBytes);
 
     QNetworkReply* preview(const QString& path, const QString& size);
+    QNetworkReply* userinfo();
 
     QNetworkReply* put(const QString& path, QIODevice* data);
     QNetworkReply* put(const QString& path, const QByteArray& data);

@@ -14,16 +14,64 @@ Page {
     
     property string dirName: "Root"
     property variant data: undefined
-    property string path: "/Music/"
+    property string path: ""
     property string fileOrDirToDelete: ""
     property string pathToDelete: ""
     property variant selectedFiles: []
+    property int bytesInGB: 1073741824 
     
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     actionBarVisibility: ChromeVisibility.Overlay
     
     titleBar: TitleBar {
-        title: dirName
+        kind: TitleBarKind.FreeForm
+        kindProperties: FreeFormTitleBarKindProperties {
+            
+            content: Container {
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+                
+                leftPadding: ui.du(1)
+                topPadding: ui.du(1)
+                rightPadding: ui.du(1)
+                bottomPadding: ui.du(1)
+                
+                layout: DockLayout {
+                    
+                }
+                
+                Label {
+                    visible: path !== "/"
+                    verticalAlignment: VerticalAlignment.Center
+                    text: dirName
+                    textStyle.base: SystemDefaults.TextStyles.TitleText
+                    textStyle.fontWeight: FontWeight.W500
+                }
+                
+                Label {
+                    id: fioLabel
+                    visible: path === "/" && _userController.user !== null
+                    verticalAlignment: VerticalAlignment.Top
+                    textStyle.base: SystemDefaults.TextStyles.TitleText
+                    textStyle.fontWeight: FontWeight.W500
+                }
+                
+                Label {
+                    id: loginLabel
+                    visible: path === "/" && _userController.user !== null
+                    verticalAlignment: VerticalAlignment.Bottom
+                    textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                }
+                
+                Label {
+                    id: bytesLabel
+                    visible: path === "/" && _userController.user !== null
+                    verticalAlignment: VerticalAlignment.Bottom
+                    horizontalAlignment: HorizontalAlignment.Right
+                    textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                }
+            }
+        }
     }
     
     Container {
@@ -342,6 +390,7 @@ Page {
         _fileController.fileRenamed.connect(root.onFileRenamed);
         _fileController.fileMoved.connect(root.onFileMoved);
         _fileController.previewLoaded.connect(root.setPreview);
+        _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
 //        
 //        var data = [];
@@ -361,6 +410,22 @@ Page {
             });
         }
         spinner.stop();
+    }
+    
+    onPathChanged: {
+        if (path === "/") {
+            _userController.userinfo();
+            _userController.diskinfo();
+        }
+    }
+    
+    function updateUser(user) {
+        fioLabel.text = user.fio;
+        loginLabel.text = user.login;
+        if (user.available_bytes !== 0) {
+            bytesLabel.text = (Number(user.used_bytes / bytesInGB).toFixed(1) + qsTr("GB") + Retranslate.onLocaleOrLanguageChanged) + 
+            "/" + (Number(user.available_bytes / bytesInGB).toFixed(1) + qsTr("GB") + Retranslate.onLocaleOrLanguageChanged);
+        }
     }
     
     function loadPreview(file) {
@@ -432,6 +497,7 @@ Page {
                 }
             }
         }
+        _userController.diskinfo();
     }
     
     function getComparablePath(isDir, name) {
@@ -478,6 +544,7 @@ Page {
                 dataModel.append(file);
             }
         }
+        _userController.diskinfo();
     }
     
     function onFileRenamed(prevName, prevPath, newName, newPath) {
@@ -526,6 +593,7 @@ Page {
         _fileController.fileRenamed.disconnect(root.onFileRenamed);
         _fileController.fileMoved.disconnect(root.onFileMoved);
         _fileController.previewLoaded.disconnect(root.setPreview);
+        _userController.userChanged.disconnect(root.updateUser);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

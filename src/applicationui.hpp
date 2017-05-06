@@ -24,6 +24,7 @@
 #include "Common.hpp"
 #include "util/FileUtil.hpp"
 #include "controllers/FileController.hpp"
+#include "controllers/UserController.hpp"
 #include "config/AppConfig.hpp"
 
 namespace bb
@@ -66,6 +67,7 @@ private:
 
     FileUtil* m_pFileUtil;
     FileController* m_pFileController;
+    UserController* m_pUserController;
     AppConfig* m_pAppConfig;
 };
 

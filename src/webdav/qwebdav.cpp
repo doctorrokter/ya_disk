@@ -402,8 +402,34 @@ QNetworkReply* QWebdav::preview(const QString& path, const QString& size) {
         qDebug() << "QWebdav::get() url = " << req.url().toString(QUrl::RemoveUserInfo);
     #endif
 
-    return QNetworkAccessManager::get(req);
+    QNetworkReply* reply = QNetworkAccessManager::get(req);
+    connect(reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(replyError(QNetworkReply::NetworkError)));
+
+    return reply;
 }
+
+QNetworkReply* QWebdav::userinfo() {
+    QNetworkRequest req;
+    req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
+    req.setRawHeader(QString("Content-Type").toLatin1(), QString("text/plain").toLatin1());
+    req.setRawHeader(QString("Accept").toLatin1(), QString("*/*").toLatin1());
+
+    QUrl reqUrl(m_baseUrl);
+    reqUrl.setPath(absolutePath("/"));
+    reqUrl.addQueryItem("userinfo", "");
+    req.setUrl(reqUrl);
+
+#ifdef DEBUG_WEBDAV
+        qDebug() << "QWebdav::get() url = " << req.url().toString(QUrl::RemoveUserInfo);
+    #endif
+
+    QNetworkReply* reply = QNetworkAccessManager::get(req);
+    connect(reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(replyError(QNetworkReply::NetworkError)));
+    return reply;
+}
+
 
 QNetworkReply* QWebdav::put(const QString& path, QIODevice* data)
 {

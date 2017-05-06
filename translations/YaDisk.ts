@@ -55,6 +55,10 @@
         <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>GB</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilePickersSheet</name>

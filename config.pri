@@ -75,8 +75,11 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/applicationui.cpp) \
         $$quote($$BASEDIR/src/config/AppConfig.cpp) \
         $$quote($$BASEDIR/src/controllers/FileController.cpp) \
+        $$quote($$BASEDIR/src/controllers/UserController.cpp) \
         $$quote($$BASEDIR/src/main.cpp) \
+        $$quote($$BASEDIR/src/models/User.cpp) \
         $$quote($$BASEDIR/src/util/FileUtil.cpp) \
+        $$quote($$BASEDIR/src/vendor/Console.cpp) \
         $$quote($$BASEDIR/src/webdav/qnaturalsort.cpp) \
         $$quote($$BASEDIR/src/webdav/qwebdav.cpp) \
         $$quote($$BASEDIR/src/webdav/qwebdavdirparser.cpp) \
@@ -87,7 +90,10 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/applicationui.hpp) \
         $$quote($$BASEDIR/src/config/AppConfig.hpp) \
         $$quote($$BASEDIR/src/controllers/FileController.hpp) \
+        $$quote($$BASEDIR/src/controllers/UserController.hpp) \
+        $$quote($$BASEDIR/src/models/User.hpp) \
         $$quote($$BASEDIR/src/util/FileUtil.hpp) \
+        $$quote($$BASEDIR/src/vendor/Console.hpp) \
         $$quote($$BASEDIR/src/webdav/qnaturalsort.h) \
         $$quote($$BASEDIR/src/webdav/qwebdav.h) \
         $$quote($$BASEDIR/src/webdav/qwebdav_global.h) \
@@ -116,11 +122,21 @@ lupdate_inclusion {
         $$quote($$BASEDIR/../src/controllers/*.cc) \
         $$quote($$BASEDIR/../src/controllers/*.cpp) \
         $$quote($$BASEDIR/../src/controllers/*.cxx) \
+        $$quote($$BASEDIR/../src/models/*.c) \
+        $$quote($$BASEDIR/../src/models/*.c++) \
+        $$quote($$BASEDIR/../src/models/*.cc) \
+        $$quote($$BASEDIR/../src/models/*.cpp) \
+        $$quote($$BASEDIR/../src/models/*.cxx) \
         $$quote($$BASEDIR/../src/util/*.c) \
         $$quote($$BASEDIR/../src/util/*.c++) \
         $$quote($$BASEDIR/../src/util/*.cc) \
         $$quote($$BASEDIR/../src/util/*.cpp) \
         $$quote($$BASEDIR/../src/util/*.cxx) \
+        $$quote($$BASEDIR/../src/vendor/*.c) \
+        $$quote($$BASEDIR/../src/vendor/*.c++) \
+        $$quote($$BASEDIR/../src/vendor/*.cc) \
+        $$quote($$BASEDIR/../src/vendor/*.cpp) \
+        $$quote($$BASEDIR/../src/vendor/*.cxx) \
         $$quote($$BASEDIR/../src/webdav/*.c) \
         $$quote($$BASEDIR/../src/webdav/*.c++) \
         $$quote($$BASEDIR/../src/webdav/*.cc) \

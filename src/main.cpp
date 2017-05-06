@@ -22,16 +22,38 @@
 #include <QTranslator>
 
 #include <Qt/qdeclarativedebug.h>
+#include "vendor/Console.hpp"
+#include "models/User.hpp"
 
 using namespace bb::cascades;
 
-Q_DECL_EXPORT int main(int argc, char **argv)
-{
+void myMessageOutput(QtMsgType type, const char* msg) {  // <-- ADD THIS
+    Q_UNUSED(type);
+    fprintf(stdout, "%s\n", msg);
+    fflush(stdout);
+
+    QSettings settings;
+    if (settings.value("sendToConsoleDebug", true).toBool()) {
+        Console* console = new Console();
+        console->sendMessage("ConsoleThis$$" + QString(msg));
+        console->deleteLater();
+    }
+}
+
+Q_DECL_EXPORT int main(int argc, char **argv) {
     Application app(argc, argv);
+
+    QTextCodec *codec1 = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForLocale(codec1);
+    QTextCodec::setCodecForTr(codec1);
+    QTextCodec::setCodecForCStrings(codec1);
+    qRegisterMetaType<User*>("User*");
 
     // Create the Application UI object, this is where the main.qml file
     // is loaded and the application scene is set.
     ApplicationUI appui;
+
+    qInstallMsgHandler(myMessageOutput);
 
     // Enter the application main event loop.
     return Application::exec();

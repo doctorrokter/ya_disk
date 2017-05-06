@@ -14,5 +14,7 @@
 #define PREVIEWS_DIR "/data/previews"
 #define PREVIEWS_QUEUE_SIZE 2
 #define UPLOADS_QUEUE_SIZE 1
+#define PROVIDER_ID "external"
+#define ACCOUNT_ID 150
 
 #endif /* COMMON_HPP_ */

@@ -47,6 +47,7 @@ ApplicationUI::ApplicationUI() : QObject() {
     m_pLocaleHandler = new LocaleHandler(this);
     m_pFileUtil = new FileUtil(this);
     m_pFileController = new FileController(m_pFileUtil, this);
+    m_pUserController = new UserController(this);
 
     bool res = QObject::connect(m_pLocaleHandler, SIGNAL(systemLanguageChanged()), this, SLOT(onSystemLanguageChanged()));
     Q_ASSERT(res);
@@ -71,6 +72,7 @@ ApplicationUI::ApplicationUI() : QObject() {
     rootContext->setContextProperty("_appConfig", m_pAppConfig);
     rootContext->setContextProperty("_file", m_pFileUtil);
     rootContext->setContextProperty("_fileController", m_pFileController);
+    rootContext->setContextProperty("_userController", m_pUserController);
 
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
@@ -106,4 +108,5 @@ void ApplicationUI::initWebdav() {
     m_pWebdav->setConnectionSettings(QWebdav::HTTPS, QString(API_URL), "/", m_settings.value("access_token").toString(), QString(API_PORT).toInt());
     m_pParser = new QWebdavDirParser(this);
     m_pFileController->initWebdav(m_pWebdav, m_pParser);
+    m_pUserController->initWebdav(m_pWebdav, m_pParser);
 }
