@@ -32,6 +32,7 @@ NavigationPane {
         }
         
         helpAction: HelpActionItem {
+            title: qsTr("About") + Retranslate.onLocaleOrLanguageChanged
             onTriggered: {
                 var hp = helpPage.createObject();
                 navPane.push(hp);

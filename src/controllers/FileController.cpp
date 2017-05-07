@@ -263,10 +263,6 @@ void FileController::onUploadFinished() {
     }
 
     emit uploadFinished(remoteUri);
-
-    if (m_pFileUtil->isImage(file["ext"].toString())) {
-        loadPreview(filename, remoteUri);
-    }
 }
 
 QVariantList FileController::getQueue() {
@@ -411,14 +407,14 @@ void FileController::showProps(const QVariantMap& fileMap) {
 void FileController::loadPreview(const QString& filename, const QString& path) {
     QString previewLocalPath = QDir::currentPath() + PREVIEWS_DIR + path;
     QFile preview(previewLocalPath);
-    if (preview.exists()) {
+    if (preview.exists() && preview.size() > 1000) {
         emit previewLoaded(path, previewLocalPath);
     } else {
         QVariantMap previewMap;
         previewMap["filename"] = filename;
         previewMap["path"] = path;
         m_previewsQueue.append(previewMap);
-        if (m_previewsQueue.size() < PREVIEWS_QUEUE_SIZE) {
+        if (m_previewsQueue.size() <= PREVIEWS_QUEUE_SIZE) {
             startLoadPreview(filename, path);
         }
     }

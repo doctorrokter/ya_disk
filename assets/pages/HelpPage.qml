@@ -7,7 +7,7 @@ Page {
     id: root
     
     titleBar: TitleBar {
-        title: qsTr("Help") + Retranslate.onLocaleOrLanguageChanged
+        title: qsTr("About") + Retranslate.onLocaleOrLanguageChanged
     }
     
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll

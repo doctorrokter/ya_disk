@@ -162,11 +162,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help</source>
+        <source>OS version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>OS version: </source>
+        <source>About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -270,6 +270,10 @@
     </message>
     <message>
         <source>Send feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

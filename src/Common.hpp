@@ -12,10 +12,8 @@
 #define API_PORT 443
 #define TEMP_DIR "/data/temp"
 #define PREVIEWS_DIR "/data/previews"
-#define PREVIEWS_QUEUE_SIZE 2
+#define PREVIEWS_QUEUE_SIZE 1
 #define UPLOADS_QUEUE_SIZE 1
-#define PROVIDER_ID "external"
-#define ACCOUNT_ID 150
 #define INVOKE_CARD_EDIT_URI "chachkouski.YaDisk.card.edit.uri"
 
 #endif /* COMMON_HPP_ */

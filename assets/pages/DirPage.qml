@@ -114,10 +114,6 @@ Page {
                 
                 dataModel: ArrayDataModel {
                     id: dataModel
-                    
-                    onItemAdded: {
-                        root.loadPreview(data(indexPath));
-                    }
                 }
                 
                 layout: {
@@ -426,6 +422,7 @@ Page {
         if (data) {
             data.forEach(function(f) {
                 dataModel.append(f);
+                root.loadPreview(f);
             });
         }
         spinner.stop();
