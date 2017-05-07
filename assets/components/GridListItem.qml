@@ -122,7 +122,7 @@ CustomListItem {
         Label {
             visible: !ListItemData.dir
             
-            text: Qt.formatDateTime(ListItemData.lastModified, "dd.MM.yyyy, h:mm")
+            text: _date.str(ListItemData.lastModified);
             verticalAlignment: VerticalAlignment.Bottom
             textStyle.color: ui.palette.textOnPrimary
             textStyle.base: SystemDefaults.TextStyles.SmallText

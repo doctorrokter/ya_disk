@@ -85,6 +85,35 @@ Page {
                 
                 Container {
                     horizontalAlignment: HorizontalAlignment.Fill
+                    topPadding: ui.du(2.5)
+                    leftPadding: ui.du(2.5)
+                    rightPadding: ui.du(2.5)
+                    bottomPadding: ui.du(2.5)
+                    DropDown {
+                        title: qsTr("Date/time format") + Retranslate.onLocaleOrLanguageChanged
+                        
+                        options: [
+                            Option {
+                                id: customFormatOption
+                                text: "d MMM yyyy, h:mm"
+                                value: "d MMM yyyy, h:mm"
+                            },
+                            
+                            Option {
+                                id: localizedFormatOption
+                                text: qsTr("Localized") + Retranslate.onLocaleOrLanguageChanged
+                                value: "localized"
+                            }
+                        ]
+                        
+                        onSelectedOptionChanged: {
+                            _appConfig.set("date_format", selectedOption.value);
+                        }
+                    }
+                }
+                
+                Container {
+                    horizontalAlignment: HorizontalAlignment.Fill
                     minHeight: ui.du(20)
                 }
             }
@@ -100,9 +129,16 @@ Page {
         var doNotAsk = _appConfig.get("do_not_ask_before_deleting");
         dontAskBeforeDeletingToggle.checked = doNotAsk && doNotAsk === "true";
     }
+    
+    function adjustDateTimeFormat() {
+        var df = _appConfig.get("date_format");
+        customFormatOption.selected = (df === "" || df === customFormatOption.value);
+        localizedFormatOption.selected = (df === localizedFormatOption.value);
+    }
        
     onCreationCompleted: {
         adjustTheme();
         adjustAskBeforeDeleting();
+        adjustDateTimeFormat();
     }
 }

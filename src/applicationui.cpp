@@ -28,17 +28,23 @@
 #include <QDir>
 #include <QFile>
 #include <bb/data/JsonDataAccess>
-#include <bb/utility/i18n/ClockFormat>
-#include <bb/utility/i18n/RelativeDateFormatter>
 
 using namespace bb::cascades;
 using namespace bb::data;
-using namespace bb::utility::i18n;
 
 ApplicationUI::ApplicationUI() : QObject() {
 
     QCoreApplication::setOrganizationName("mikhail.chachkouski");
     QCoreApplication::setApplicationName("YaDisk");
+
+    if (m_settings.value("expires_time_stamp", "").toString().compare("") != 0) {
+        QDateTime expiryDate = QDateTime::fromTime_t(m_settings.value("expires_time_stamp").toInt());
+        if (expiryDate <= QDateTime::currentDateTime()) {
+            m_settings.remove("access_token");
+            m_settings.remove("expires_in");
+            m_settings.remove("expires_time_stamp");
+        }
+    }
 
     QDir dataDir(QDir::currentPath() + TEMP_DIR);
     dataDir.setNameFilters(QStringList() << "*.*");
@@ -52,6 +58,7 @@ ApplicationUI::ApplicationUI() : QObject() {
     m_pTranslator = new QTranslator(this);
     m_pLocaleHandler = new LocaleHandler(this);
     m_pFileUtil = new FileUtil(this);
+    m_pDateUtil = new DateUtil(this);
     m_pFileController = new FileController(m_pFileUtil, this);
     m_pUserController = new UserController(this);
 
@@ -98,6 +105,7 @@ ApplicationUI::~ApplicationUI() {
     m_pParser->deleteLater();
     m_pTranslator->deleteLater();
     m_pWebdav->deleteLater();
+    m_pDateUtil->deleteLater();
 }
 
 void ApplicationUI::onSystemLanguageChanged() {
@@ -114,6 +122,7 @@ void ApplicationUI::onSystemLanguageChanged() {
 void ApplicationUI::setToken(const QString& token, const int& expiresIn) {
     m_settings.setValue("access_token", token);
     m_settings.setValue("expires_in", expiresIn);
+    m_settings.setValue("expires_time_stamp", QDateTime::currentDateTime().addSecs(expiresIn).toTime_t());
     initWebdav();
     qDebug() << "Token received: " << token << ", expires in: " << expiresIn << endl;
 }
@@ -137,6 +146,7 @@ void ApplicationUI::initFullUI(const QString& data, const QString& mimeType) {
     rootContext->setContextProperty("_app", this);
     rootContext->setContextProperty("_appConfig", m_pAppConfig);
     rootContext->setContextProperty("_file", m_pFileUtil);
+    rootContext->setContextProperty("_date", m_pDateUtil);
     rootContext->setContextProperty("_fileController", m_pFileController);
     rootContext->setContextProperty("_userController", m_pUserController);
     rootContext->setContextProperty("_data", data);

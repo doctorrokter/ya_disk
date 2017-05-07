@@ -81,6 +81,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/controllers/UserController.cpp) \
         $$quote($$BASEDIR/src/main.cpp) \
         $$quote($$BASEDIR/src/models/User.cpp) \
+        $$quote($$BASEDIR/src/util/DateUtil.cpp) \
         $$quote($$BASEDIR/src/util/FileUtil.cpp) \
         $$quote($$BASEDIR/src/vendor/Console.cpp) \
         $$quote($$BASEDIR/src/webdav/qnaturalsort.cpp) \
@@ -95,6 +96,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/controllers/FileController.hpp) \
         $$quote($$BASEDIR/src/controllers/UserController.hpp) \
         $$quote($$BASEDIR/src/models/User.hpp) \
+        $$quote($$BASEDIR/src/util/DateUtil.hpp) \
         $$quote($$BASEDIR/src/util/FileUtil.hpp) \
         $$quote($$BASEDIR/src/vendor/Console.hpp) \
         $$quote($$BASEDIR/src/webdav/qnaturalsort.h) \

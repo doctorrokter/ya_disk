@@ -23,6 +23,7 @@
 #include "webdav/qwebdavdirparser.h"
 #include "Common.hpp"
 #include "util/FileUtil.hpp"
+#include "util/DateUtil.hpp"
 #include "controllers/FileController.hpp"
 #include "controllers/UserController.hpp"
 #include "config/AppConfig.hpp"
@@ -73,6 +74,7 @@ private:
     QWebdavDirParser* m_pParser;
 
     FileUtil* m_pFileUtil;
+    DateUtil* m_pDateUtil;
     FileController* m_pFileController;
     UserController* m_pUserController;
     AppConfig* m_pAppConfig;

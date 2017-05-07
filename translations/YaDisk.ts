@@ -235,6 +235,14 @@
         <source>Don&apos;t ask before deleting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Date/time format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Localized</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StackListItem</name>

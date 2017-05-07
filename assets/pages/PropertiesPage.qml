@@ -130,7 +130,7 @@ Page {
             
             PropListItem {
                 name: qsTr("Last modified") + Retranslate.onLocaleOrLanguageChanged + ":"
-                value: Qt.formatDateTime(root.lastModified, "d MMM yyyy, h:mm")
+                value: _date.str(root.lastModified);
             }
             
             PropListItem {

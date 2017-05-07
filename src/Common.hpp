@@ -15,5 +15,6 @@
 #define PREVIEWS_QUEUE_SIZE 1
 #define UPLOADS_QUEUE_SIZE 1
 #define INVOKE_CARD_EDIT_URI "chachkouski.YaDisk.card.edit.uri"
+#define DATE_FORMAT "d MMM yyyy, h:mm"
 
 #endif /* COMMON_HPP_ */

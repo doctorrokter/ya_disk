@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="157"/>
+        <location filename="../src/applicationui.cpp" line="167"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,6 +308,16 @@
         <location filename="../assets/pages/SettingsPage.qml" line="67"/>
         <source>Don&apos;t ask before deleting</source>
         <translation type="unfinished">Не спрашивать перед удалением</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/SettingsPage.qml" line="93"/>
+        <source>Date/time format</source>
+        <translation type="unfinished">Формат даты/времени</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/SettingsPage.qml" line="104"/>
+        <source>Localized</source>
+        <translation type="unfinished">Локализованный</translation>
     </message>
 </context>
 <context>

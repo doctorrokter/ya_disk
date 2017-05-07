@@ -44,7 +44,7 @@
        <platformArchitecture>x86</platformArchitecture>
        <asset path="x86/o-g/YaDisk" entry="true" type="Qnx/Elf">YaDisk</asset>
     </configuration>
-
+    
     <!-- The name that is displayed in the BlackBerry 10 application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
     <name>
@@ -145,5 +145,4 @@
     		<property var="uris" value="file://,list://"/>
   		</filter>
 	</invoke-target>
-
 </qnx>
