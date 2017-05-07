@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="152"/>
+        <location filename="../src/applicationui.cpp" line="157"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -250,32 +250,30 @@
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="133"/>
         <source>Content</source>
-        <translation type="unfinished">Содержимое</translation>
+        <translation type="obsolete">Содержимое</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="134"/>
         <source>Elements</source>
-        <translation type="unfinished">Элемент(-ов)</translation>
+        <translation type="obsolete">Элемент(-ов)</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="138"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="132"/>
         <source>Last modified</source>
         <translation type="unfinished">Последние изменения</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="143"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="138"/>
         <source>Size</source>
         <translation type="unfinished">Размер</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="144"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="139"/>
         <source>MB</source>
         <translation type="unfinished">МБ</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="148"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="143"/>
         <source>Placement</source>
         <translation type="unfinished">Местоположение</translation>
     </message>
@@ -347,7 +345,7 @@
         <translation type="unfinished">Обратная связь</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="170"/>
+        <location filename="../assets/main.qml" line="171"/>
         <source>Root</source>
         <translation type="unfinished">Корень</translation>
     </message>

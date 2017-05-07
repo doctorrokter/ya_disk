@@ -28,9 +28,12 @@
 #include <QDir>
 #include <QFile>
 #include <bb/data/JsonDataAccess>
+#include <bb/utility/i18n/ClockFormat>
+#include <bb/utility/i18n/RelativeDateFormatter>
 
 using namespace bb::cascades;
 using namespace bb::data;
+using namespace bb::utility::i18n;
 
 ApplicationUI::ApplicationUI() : QObject() {
 
@@ -99,7 +102,9 @@ ApplicationUI::~ApplicationUI() {
 
 void ApplicationUI::onSystemLanguageChanged() {
     QCoreApplication::instance()->removeTranslator(m_pTranslator);
-    QString locale_string = QLocale().name();
+    QLocale locale;
+    QString locale_string = locale.name();
+
     QString file_name = QString("YaDisk_%1").arg(locale_string);
     if (m_pTranslator->load(file_name, "app/native/qm")) {
         QCoreApplication::instance()->installTranslator(m_pTranslator);

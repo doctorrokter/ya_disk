@@ -159,6 +159,7 @@ NavigationPane {
         pp.dir = file.dir;
         pp.size = file.size;
         pp.path = file.path;
+        pp.lastModified = file.lastModified;
         navPane.push(pp);
     }
     

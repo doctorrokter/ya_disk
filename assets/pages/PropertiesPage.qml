@@ -129,17 +129,12 @@ Page {
             }
             
             PropListItem {
-                visible: root.dir
-                name: qsTr("Content") + Retranslate.onLocaleOrLanguageChanged + ":"
-                value: contentSize + " " + (qsTr("Elements") + Retranslate.onLocaleOrLanguageChanged)
-            }
-            
-            PropListItem {
                 name: qsTr("Last modified") + Retranslate.onLocaleOrLanguageChanged + ":"
-                value: root.lastModified
+                value: Qt.formatDateTime(root.lastModified, "d MMM yyyy, h:mm")
             }
             
             PropListItem {
+                visible: !root.dir
                 name: qsTr("Size") + Retranslate.onLocaleOrLanguageChanged + ":"
                 value: Number(root.size / (1024 * 1024)).toFixed(1) + " " + qsTr("MB") + Retranslate.onLocaleOrLanguageChanged
             }
@@ -170,4 +165,12 @@ Page {
     onPathChanged: {
         _fileController.loadPreview(root.name, root.path);
     }
+    
+    attachedObjects: [
+        DateTimePicker {
+            id: dateTimePicker
+            mode: DateTimePickerMode.Time
+            value: root.lastModified
+        }
+    ]
 }

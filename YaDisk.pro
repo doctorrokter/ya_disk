@@ -2,7 +2,7 @@ APP_NAME = YaDisk
 
 CONFIG += qt warn_on cascades10
 
-LIBS += -lbbnetwork -lbbdevice -lbbsystem -lbbcascadespickers -lbbpim -lbb -lbbdata -lbbplatform
+LIBS += -lbbnetwork -lbbdevice -lbbsystem -lbbcascadespickers -lbbpim -lbb -lbbdata -lbbplatform -lbbutilityi18n
 
 QT += network xml
 

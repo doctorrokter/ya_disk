@@ -197,14 +197,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Last modified</source>
         <translation type="unfinished"></translation>
     </message>
