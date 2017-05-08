@@ -35,11 +35,6 @@ void UserController::onUserinfoLoaded() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
     QString data = reply->readAll().data();
 
-    #ifdef DEBUG_WEBDAV
-        qDebug() << "UserController ===>>> userinfo: " << data << endl;
-    #endif
-
-
     m_pUser = new User(this);
     QStringList lnParts = data.split("\n");
     foreach(QString part, lnParts) {
@@ -91,10 +86,6 @@ void UserController::onDiskinfoLoaded() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
 
     QString data = reply->readAll().data();
-
-#ifdef DEBUG_WEBDAV
-    qDebug() << "UserController ===>>> disk info: " << data << endl;
-#endif
 
     XmlDataAccess xda;
     QVariantMap map = xda.loadFromBuffer(data, "/d:multistatus/d:response/d:propstat/d:prop").toMap();

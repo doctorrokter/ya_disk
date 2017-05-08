@@ -404,10 +404,6 @@ Page {
         _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
-        if (_data !== "") {
-            toast.body = _data;
-            toast.show();
-        }
 //        var data = [];
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});

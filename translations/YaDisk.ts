@@ -262,6 +262,10 @@
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MB</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UploadsPage</name>

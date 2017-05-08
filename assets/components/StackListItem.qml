@@ -206,6 +206,7 @@ CustomListItem {
                     return ui.du(1);
                 }
             }
+            rightPadding: ui.du(1)
             bottomPadding: {
                 if (!ListItemData.dir) {
                     return ui.du(1);
@@ -230,6 +231,15 @@ CustomListItem {
                 visible: !ListItemData.dir
                 verticalAlignment: VerticalAlignment.Bottom
                 text: _date.str(ListItemData.lastModified);
+                textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                textStyle.fontWeight: FontWeight.W100
+            }
+            
+            Label {
+                visible: !ListItemData.dir
+                verticalAlignment: VerticalAlignment.Bottom
+                horizontalAlignment: HorizontalAlignment.Right
+                text: Number(ListItemData.size / (1024 * 1024)).toFixed(1) + " " + qsTr("MB") + Retranslate.onLocaleOrLanguageChanged
                 textStyle.base: SystemDefaults.TextStyles.SubtitleText
                 textStyle.fontWeight: FontWeight.W100
             }

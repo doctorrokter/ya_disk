@@ -72,19 +72,19 @@
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="376"/>
-        <location filename="../assets/pages/DirPage.qml" line="541"/>
+        <location filename="../assets/pages/DirPage.qml" line="537"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="378"/>
-        <location filename="../assets/pages/DirPage.qml" line="545"/>
+        <location filename="../assets/pages/DirPage.qml" line="541"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="442"/>
-        <location filename="../assets/pages/DirPage.qml" line="443"/>
+        <location filename="../assets/pages/DirPage.qml" line="438"/>
+        <location filename="../assets/pages/DirPage.qml" line="439"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
     </message>
@@ -341,6 +341,11 @@
         <location filename="../assets/components/StackListItem.qml" line="102"/>
         <source>Properties</source>
         <translation type="unfinished">Свойства</translation>
+    </message>
+    <message>
+        <location filename="../assets/components/StackListItem.qml" line="242"/>
+        <source>MB</source>
+        <translation type="unfinished">МБ</translation>
     </message>
 </context>
 <context>
