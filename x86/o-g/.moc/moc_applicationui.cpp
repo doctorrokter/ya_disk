@@ -33,8 +33,8 @@ static const uint qt_meta_data_ApplicationUI[] = {
       15,   14,   14,   14, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      26,   14,   14,   14, 0x08,
-      56,   52,   14,   14, 0x08,
+      30,   26,   14,   14, 0x0a,
+      50,   14,   14,   14, 0x08,
       84,   76,   14,   14, 0x08,
 
  // methods: signature, parameters, type, tag, flags
@@ -46,10 +46,9 @@ static const uint qt_meta_data_ApplicationUI[] = {
 };
 
 static const char qt_meta_stringdata_ApplicationUI[] = {
-    "ApplicationUI\0\0cardDone()\0"
-    "onSystemLanguageChanged()\0msg\0"
-    "onCardDone(QString)\0request\0"
-    "onInvoked(bb::system::InvokeRequest)\0"
+    "ApplicationUI\0\0cardDone()\0msg\0"
+    "onCardDone(QString)\0onSystemLanguageChanged()\0"
+    "request\0onInvoked(bb::system::InvokeRequest)\0"
     "token,expiresIn\0setToken(QString,int)\0"
     "bool\0hasToken()\0initWebdav()\0"
 };
@@ -61,8 +60,8 @@ void ApplicationUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         ApplicationUI *_t = static_cast<ApplicationUI *>(_o);
         switch (_id) {
         case 0: _t->cardDone(); break;
-        case 1: _t->onSystemLanguageChanged(); break;
-        case 2: _t->onCardDone((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 1: _t->onCardDone((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: _t->onSystemLanguageChanged(); break;
         case 3: _t->onInvoked((*reinterpret_cast< const bb::system::InvokeRequest(*)>(_a[1]))); break;
         case 4: _t->setToken((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2]))); break;
         case 5: { bool _r = _t->hasToken();

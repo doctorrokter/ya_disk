@@ -6,6 +6,13 @@ LIBS += -lbbnetwork -lbbdevice -lbbsystem -lbbcascadespickers -lbbpim -lbb -lbbd
 
 QT += network xml
 
-DEFINES += DEBUG_WEBDAV QWEBDAVITEM_EXTENDED_PROPERTIES
+debug {
+	DEFINES += DEBUG_WEBDAV QWEBDAVITEM_EXTENDED_PROPERTIES
+}
+
+release {
+	DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
+}
+
 
 include(config.pri)

@@ -60,9 +60,11 @@ public:
 Q_SIGNALS:
     void cardDone();
 
+public Q_SLOTS:
+    void onCardDone(const QString& msg);
+
 private slots:
     void onSystemLanguageChanged();
-    void onCardDone(const QString& msg);
     void onInvoked(const bb::system::InvokeRequest& request);
 private:
     QTranslator* m_pTranslator;

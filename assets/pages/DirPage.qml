@@ -20,8 +20,8 @@ Page {
     property variant selectedFiles: []
     property int bytesInGB: 1073741824 
     
-    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-    actionBarVisibility: ChromeVisibility.Overlay
+//    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+//    actionBarVisibility: ChromeVisibility.Overlay
     
     titleBar: TitleBar {
         kind: TitleBarKind.FreeForm
@@ -207,6 +207,7 @@ Page {
                     }
                 ]
             }
+            
         }
         
         ActivityIndicator {
@@ -407,7 +408,6 @@ Page {
             toast.body = _data;
             toast.show();
         }
-//        
 //        var data = [];
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});
 //        data.push({path: "sdfsdfsdf/sdfsdf/", name: "dfsdfsdfsdf", ext: "", dir: true, lastModified: new Date()});

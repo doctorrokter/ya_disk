@@ -68,15 +68,15 @@ ApplicationUI::ApplicationUI() : QObject() {
 
     onSystemLanguageChanged();
 
-    m_pAppConfig = new AppConfig(this);
-    QString theme = m_pAppConfig->get("theme").toString();
-    if (theme.compare("") != 0) {
-        if (theme.compare("DARK") == 0) {
-            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Dark);
-        } else {
-            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Bright);
-        }
-    }
+//    m_pAppConfig = new AppConfig(this);
+//    QString theme = m_pAppConfig->get("theme").toString();
+//    if (theme.compare("") != 0) {
+//        if (theme.compare("DARK") == 0) {
+//            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Dark);
+//        } else {
+//            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Bright);
+//        }
+//    }
 
     m_pInvokeManager = new InvokeManager(this);
     connect(m_pInvokeManager, SIGNAL(invoked(const bb::system::InvokeRequest&)), SLOT(onInvoked(const bb::system::InvokeRequest&)));
@@ -140,6 +140,16 @@ void ApplicationUI::initWebdav() {
 }
 
 void ApplicationUI::initFullUI(const QString& data, const QString& mimeType) {
+    m_pAppConfig = new AppConfig(this);
+        QString theme = m_pAppConfig->get("theme").toString();
+        if (theme.compare("") != 0) {
+            if (theme.compare("DARK") == 0) {
+                Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Dark);
+            } else {
+                Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Bright);
+            }
+        }
+
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
     QDeclarativeEngine* engine = QmlDocument::defaultDeclarativeEngine();
     QDeclarativeContext* rootContext = engine->rootContext();

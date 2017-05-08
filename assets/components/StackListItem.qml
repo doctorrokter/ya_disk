@@ -150,7 +150,11 @@ CustomListItem {
     
     function filterColor() {
         if (!ListItemData.dir) {
-            return ui.palette.textOnPlain;
+            if (ListItemData.previewPath === undefined) {
+                return ui.palette.textOnPlain;
+            } else {
+                return 0;
+            }
         }
         return ui.palette.primary;
     }

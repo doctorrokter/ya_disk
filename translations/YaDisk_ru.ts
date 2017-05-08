@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="167"/>
+        <location filename="../src/applicationui.cpp" line="177"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33,51 +33,51 @@
         <translation type="unfinished">Ничего не выбрано</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="246"/>
+        <location filename="../assets/pages/DirPage.qml" line="247"/>
         <source>Enter folder name</source>
         <translation type="unfinished">Введите название папки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="260"/>
-        <location filename="../assets/pages/DirPage.qml" line="285"/>
+        <location filename="../assets/pages/DirPage.qml" line="261"/>
+        <location filename="../assets/pages/DirPage.qml" line="286"/>
         <source>Confirm the deleting</source>
         <translation type="unfinished">Подтвердите удаление</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="261"/>
-        <location filename="../assets/pages/DirPage.qml" line="286"/>
+        <location filename="../assets/pages/DirPage.qml" line="262"/>
+        <location filename="../assets/pages/DirPage.qml" line="287"/>
         <source>This action cannot be undone. Continue?</source>
         <translation type="unfinished">Это действите не может быть отменено. Продолжаем?</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="264"/>
-        <location filename="../assets/pages/DirPage.qml" line="289"/>
+        <location filename="../assets/pages/DirPage.qml" line="265"/>
+        <location filename="../assets/pages/DirPage.qml" line="290"/>
         <source>Don&apos;t ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="314"/>
+        <location filename="../assets/pages/DirPage.qml" line="315"/>
         <source>Create folder</source>
         <translation type="unfinished">Создать папку</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="334"/>
+        <location filename="../assets/pages/DirPage.qml" line="335"/>
         <source>Upload</source>
         <translation type="unfinished">Загрузить</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="356"/>
+        <location filename="../assets/pages/DirPage.qml" line="357"/>
         <source>Uploads</source>
         <translation type="unfinished">Загрузки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="375"/>
+        <location filename="../assets/pages/DirPage.qml" line="376"/>
         <location filename="../assets/pages/DirPage.qml" line="541"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="377"/>
+        <location filename="../assets/pages/DirPage.qml" line="378"/>
         <location filename="../assets/pages/DirPage.qml" line="545"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
@@ -156,12 +156,12 @@
         <translation type="unfinished">Отмена</translation>
     </message>
     <message>
-        <location filename="../assets/components/FilesUploader.qml" line="27"/>
+        <location filename="../assets/components/FilesUploader.qml" line="32"/>
         <source>Selected</source>
         <translation type="unfinished">Выбарно</translation>
     </message>
     <message>
-        <location filename="../assets/components/FilesUploader.qml" line="32"/>
+        <location filename="../assets/components/FilesUploader.qml" line="37"/>
         <source>Upload</source>
         <translation type="unfinished">Загрузить</translation>
     </message>

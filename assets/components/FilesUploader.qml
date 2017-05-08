@@ -19,6 +19,11 @@ Container {
         margin.leftOffset: ui.du(2)
         margin.topOffset: ui.du(2)
         margin.bottomOffset: ui.du(2)
+        
+        onClicked: {
+            _fileController.clearSharedFiles();
+            _app.onCardDone("Card done!");
+        }
     }
     
     Label {
