@@ -8,6 +8,8 @@
 #include <src/util/DateUtil.hpp>
 #include "../Common.hpp"
 #include "../config/AppConfig.hpp"
+#include <QDebug>
+#include <time.h>
 
 DateUtil::DateUtil(QObject* parent) : QObject(parent) {}
 
@@ -15,6 +17,8 @@ DateUtil::~DateUtil() {}
 
 QString DateUtil::str(const QDateTime& dateTime) {
     QDateTime dt = dateTime;
+    dt = dt.addSecs(-timezone);
+
     QString df = AppConfig::getStatic("date_format").toString();
     if (df.isEmpty() || df.compare(DATE_FORMAT) == 0) {
         return dt.toString(DATE_FORMAT);
