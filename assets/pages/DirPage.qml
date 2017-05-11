@@ -52,8 +52,9 @@ Page {
                     id: fioLabel
                     visible: path === "/" && _userController.user !== null
                     verticalAlignment: VerticalAlignment.Top
-                    textStyle.base: SystemDefaults.TextStyles.TitleText
                     textStyle.fontWeight: FontWeight.W500
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: 11
                 }
                 
                 Label {
@@ -61,6 +62,8 @@ Page {
                     visible: path === "/" && _userController.user !== null
                     verticalAlignment: VerticalAlignment.Bottom
                     textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: 7
                 }
                 
                 Label {
@@ -69,6 +72,8 @@ Page {
                     verticalAlignment: VerticalAlignment.Bottom
                     horizontalAlignment: HorizontalAlignment.Right
                     textStyle.base: SystemDefaults.TextStyles.SubtitleText
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: 7
                 }
             }
         }
