@@ -69,8 +69,7 @@ QWebdavDirParser::~QWebdavDirParser()
     }
 }
 
-bool QWebdavDirParser::listDirectory(QWebdav *pWebdav, const QString &path)
-{
+bool QWebdavDirParser::listDirectory(QWebdav *pWebdav, const QString &path, const int& amount, const int& offset) {
     if (m_busy)
         return false;
 
@@ -92,7 +91,7 @@ bool QWebdavDirParser::listDirectory(QWebdav *pWebdav, const QString &path)
     m_abort = false;
     m_includeRequestedURI = false;
 
-    m_reply = pWebdav->list(path);
+    m_reply = pWebdav->list(path, 1, amount, offset);
     connect(m_reply, SIGNAL(finished()), this, SLOT(replyFinished()));
 
     if (!m_dirList.isEmpty())

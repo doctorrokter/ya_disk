@@ -28,7 +28,7 @@ public:
     FileController(FileUtil* fileUtil, QObject* parent = 0);
     virtual ~FileController();
 
-    Q_INVOKABLE void loadPath(const QString& path = "/");
+    Q_INVOKABLE void loadPath(const QString& path = "/", const int& amount = 0, const int& offset = 0);
     Q_INVOKABLE void loadFile(const QString& filename, const QString& path);
     Q_INVOKABLE void openFile(const QString& filename, const QString& path);
     Q_INVOKABLE void createDir(const QString& dirname, const QString& currentPath);

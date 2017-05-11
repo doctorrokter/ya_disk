@@ -38,8 +38,8 @@ void FileController::initWebdav(QWebdav* webdav, QWebdavDirParser* parser) {
     loadPath();
 }
 
-void FileController::loadPath(const QString& path) {
-    bool res = m_pParser->listDirectory(m_pWebdav, path);
+void FileController::loadPath(const QString& path, const int& amount, const int& offset) {
+    bool res = m_pParser->listDirectory(m_pWebdav, path, amount, offset);
     Q_ASSERT(res);
     Q_UNUSED(res);
 }
@@ -106,12 +106,6 @@ void FileController::onLoad() {
         dataList.append(item.toMap());
     }
     emit dataLoaded(dataList);
-
-    foreach(item, list) {
-        if (m_pFileUtil->isImage(item.ext())) {
-            loadPreview(item.name(), item.path());
-        }
-    }
 }
 
 void FileController::onFileLoaded() {

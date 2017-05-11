@@ -92,8 +92,8 @@ public:
     void acceptSslCertificate(const QString &sslCertDigestMd5 = "",
                               const QString &sslCertDigestSha1 = "");
 
-    QNetworkReply* list(const QString& path);
-    QNetworkReply* list(const QString& path, int depth);
+//    QNetworkReply* list(const QString& path, const int& amount = 0, const int& offset = 0);
+    QNetworkReply* list(const QString& path, int depth, const int& amount = 0, const int& offset = 0);
 
     QNetworkReply* search(const QString& path, const QString& query);
 
@@ -113,8 +113,8 @@ public:
     QNetworkReply* move(const QString& pathFrom, const QString& pathTo, bool overwrite = false);
     QNetworkReply* remove(const QString& path );
 
-    QNetworkReply* propfind(const QString& path, const QByteArray& query, int depth = 0);
-    QNetworkReply* propfind(const QString& path, const QWebdav::PropNames& props, int depth = 0);
+    QNetworkReply* propfind(const QString& path, const QByteArray& query, int depth = 0, const int& amount = 0, const int& offset = 0);
+    QNetworkReply* propfind(const QString& path, const QWebdav::PropNames& props, int depth = 0, const int& amount = 0, const int& offset = 0);
 
     QNetworkReply* proppatch(const QString& path, const QWebdav::PropValues& props);
     QNetworkReply* proppatch(const QString& path, const QByteArray& query);

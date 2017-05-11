@@ -281,16 +281,15 @@ QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& re
     return reply;
 }
 
-QNetworkReply* QWebdav::list(const QString& path)
-{
-#ifdef DEBUG_WEBDAV
-    qDebug() << "QWebdav::list() path = " << path;
-#endif
-    return list(path, 1);
-}
+//QNetworkReply* QWebdav::list(const QString& path, const int& amount, const int& offset)
+//{
+//#ifdef DEBUG_WEBDAV
+//    qDebug() << "QWebdav::list() path = " << path;
+//#endif
+//    return list(path, 1, amount, offset);
+//}
 
-QNetworkReply* QWebdav::list(const QString& path, int depth)
-{
+QNetworkReply* QWebdav::list(const QString& path, int depth, const int& amount, const int& offset) {
     QWebdav::PropNames query;
     QStringList props;
 
@@ -320,7 +319,7 @@ QNetworkReply* QWebdav::list(const QString& path, int depth)
 
     query["DAV:"] = props;
 
-    return propfind(path, query, depth);
+    return propfind(path, query, depth, amount, offset);
 }
 
 QNetworkReply* QWebdav::search(const QString& path, const QString& q )
@@ -504,7 +503,7 @@ QNetworkReply* QWebdav::put(const QString& path, QFile& file) {
 }
 
 
-QNetworkReply* QWebdav::propfind(const QString& path, const QWebdav::PropNames& props, int depth)
+QNetworkReply* QWebdav::propfind(const QString& path, const QWebdav::PropNames& props, int depth, const int& amount, const int& offset)
 {
     QByteArray query;
 
@@ -521,17 +520,23 @@ QNetworkReply* QWebdav::propfind(const QString& path, const QWebdav::PropNames& 
     }
     query += "</D:prop>";
     query += "</D:propfind>";
-    return propfind(path, query, depth);
+    return propfind(path, query, depth, amount, offset);
 }
 
 
-QNetworkReply* QWebdav::propfind(const QString& path, const QByteArray& query, int depth)
+QNetworkReply* QWebdav::propfind(const QString& path, const QByteArray& query, int depth, const int& amount, const int& offset)
 {
     QNetworkRequest req;
     req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
 
     QUrl reqUrl(m_baseUrl);
     reqUrl.setPath(absolutePath(path));
+    if (amount != 0) {
+        reqUrl.addQueryItem("amount", QString::number(amount));
+        if (offset != 0) {
+            reqUrl.addQueryItem("offset", QString::number(offset));
+        }
+    }
 
     req.setUrl(reqUrl);
     req.setRawHeader("Depth", depth == 2 ? QString("infinity").toUtf8() : QString::number(depth).toUtf8());

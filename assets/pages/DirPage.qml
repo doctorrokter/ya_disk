@@ -6,7 +6,7 @@ import "../components"
 Page {
     id: root
     
-    signal loadPath(string dirName, string path)
+    signal loadPath(string dirName, string path, int amount, int offset, bool existingPage)
     signal loadFile(string filename, string path)
     signal openFile(string filename, string path)
     signal upload(string path)
@@ -18,7 +18,11 @@ Page {
     property string fileOrDirToDelete: ""
     property string pathToDelete: ""
     property variant selectedFiles: []
-    property int bytesInGB: 1073741824 
+    property int bytesInGB: 1073741824
+    
+    property int page: 1
+    property int pageSize: 50
+    property bool hasNext: true
     
 //    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 //    actionBarVisibility: ChromeVisibility.Overlay
@@ -129,6 +133,23 @@ Page {
                     return stackListLayout;
                 }
                 
+                attachedObjects: [
+                    ListScrollStateHandler {
+                        onScrollingChanged: {
+                            if (atEnd) {
+                                if (!spinner.running) {
+                                    if (root.hasNext) {
+                                        spinner.start();
+                                        var offset = root.pageSize * root.page;
+                                        loadPath(root.dirName, root.path, root.pageSize, offset, true);
+                                        root.page++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+                
                 multiSelectAction: MultiSelectActionItem {}
                 
                 multiSelectHandler {
@@ -181,7 +202,7 @@ Page {
                 onTriggered: {
                     var data = dataModel.data(indexPath);
                     if (data.dir) {
-                        loadPath(data.name, data.path);
+                        loadPath(data.name, data.path, root.pageSize, 0, false);
                     } else {
                         spinner.start();
                         openFile(data.name, data.path);
@@ -420,12 +441,7 @@ Page {
     
     onDataChanged: {
         dataModel.clear();
-        if (data) {
-            data.forEach(function(f) {
-                dataModel.append(f);
-                root.loadPreview(f);
-            });
-        }
+        appendData(data);
         spinner.stop();
     }
     
@@ -597,6 +613,25 @@ Page {
                     dataModel.removeAt(i);
                 }
             }
+        }
+    }
+    
+    function setData(data) {
+        if (root.data === undefined || root.data.length === 0) {
+            root.data = data;
+        } else {
+            appendData(data);
+        }
+        spinner.stop();
+    }
+    
+    function appendData(data) {
+        if (data) {
+            data.forEach(function(f) {
+                dataModel.append(f);
+                root.loadPreview(f);
+            });
+            root.hasNext = data.length >= root.pageSize;
         }
     }
     

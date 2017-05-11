@@ -126,11 +126,13 @@ NavigationPane {
             id: dirPage
             DirPage {
                 onLoadPath: {
-                    var dp = dirPage.createObject();
-                    dp.path = path;
-                    dp.dirName = dirName;
-                    navPane.push(dp);
-                    _fileController.loadPath(path);
+                    if (!existingPage) {
+                        var dp = dirPage.createObject();
+                        dp.path = path;
+                        dp.dirName = dirName;
+                        navPane.push(dp);
+                    }
+                    _fileController.loadPath(path, amount, offset);
                 }
                 
                 onLoadFile: {
@@ -173,7 +175,11 @@ NavigationPane {
             navPane.push(dp);
         } else {
             var dp = navPane.at(navPane.count() - 1);
-            dp.data = data;
+            if (dp.data === undefined) {
+                dp.data = data;
+            } else {
+                dp.setData(data);
+            }
         }
     }
 }
