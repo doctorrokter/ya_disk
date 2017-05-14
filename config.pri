@@ -41,6 +41,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/components/GridListItem.qml) \
         $$quote($$BASEDIR/assets/components/PropListItem.qml) \
         $$quote($$BASEDIR/assets/components/StackListItem.qml) \
+        $$quote($$BASEDIR/assets/images/Splat_96x96.png) \
         $$quote($$BASEDIR/assets/images/bb_screen.jpg) \
         $$quote($$BASEDIR/assets/images/ic_add.png) \
         $$quote($$BASEDIR/assets/images/ic_add_folder.png) \
@@ -58,6 +59,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_forward.png) \
         $$quote($$BASEDIR/assets/images/ic_properties.png) \
         $$quote($$BASEDIR/assets/images/ic_rename.png) \
+        $$quote($$BASEDIR/assets/images/ic_share.png) \
         $$quote($$BASEDIR/assets/images/ic_upload.png) \
         $$quote($$BASEDIR/assets/images/ic_uploads.png) \
         $$quote($$BASEDIR/assets/images/ic_view_grid.png) \

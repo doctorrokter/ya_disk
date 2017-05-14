@@ -14,9 +14,11 @@
 #include <QFile>
 #include <bb/system/InvokeRequest>
 #include <bb/system/InvokeManager>
+#include <bb/data/XmlDataAccess>
 #include "../webdav/qwebdavitem.h"
 
 using namespace bb::system;
+using namespace bb::data;
 
 FileController::FileController(FileUtil* fileUtil, QObject* parent) : QObject(parent),
     m_pWebdav(0), m_pParser(0), m_pFileUtil(fileUtil) {}
@@ -480,4 +482,33 @@ void FileController::setSharedFiles(const QVariantList& sharedFiles) {
 void FileController::clearSharedFiles() {
     m_sharedFiles.clear();
     emit sharedFilesChanged(m_sharedFiles);
+}
+
+void FileController::makePublic(const QString& path) {
+    QWebdav::PropValues props;
+    QMap<QString, QVariant> map;
+    map.insert("public_url", "true");
+    props.insert("urn:yandex:disk:meta", map);
+
+    QNetworkReply* reply = m_pWebdav->propertyupdate(path, props);
+    reply->setProperty("path", path);
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPublicMade()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+}
+
+void FileController::onPublicMade() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QByteArray bytes = reply->readAll();
+
+    qDebug() << "FileController ===>>> makePublic " << bytes.data() << endl;
+
+    XmlDataAccess xda;
+    QVariantMap map = xda.loadFromBuffer(bytes, "/d:multistatus/d:response/d:propstat/d:prop").toMap();
+    QString publicUrl = map.value("public_url").toMap().value(".data").toString();
+    QString path = reply->property("path").toString();
+
+    reply->deleteLater();
+    emit publicMade(path, publicUrl);
 }

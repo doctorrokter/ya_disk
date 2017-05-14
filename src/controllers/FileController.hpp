@@ -48,6 +48,7 @@ public:
     Q_INVOKABLE const QVariantList& getSharedFiles() const;
     Q_INVOKABLE void setSharedFiles(const QVariantList& sharedFiles);
     Q_INVOKABLE void clearSharedFiles();
+    Q_INVOKABLE void makePublic(const QString& path);
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -69,6 +70,7 @@ public:
         void propsPageRequested(const QVariantMap& fileMap);
         void previewLoaded(const QString& path, const QString& localPreviewPath);
         void sharedFilesChanged(const QVariantList& sharedFiles);
+        void publicMade(const QString& path, const QString& link);
 
     private slots:
         void onLoad();
@@ -80,6 +82,7 @@ public:
         void onFileRenamed();
         void onFileMoved();
         void onPreviewLoaded();
+        void onPublicMade();
 private:
     QWebdav* m_pWebdav;
     QWebdavDirParser* m_pParser;

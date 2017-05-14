@@ -24,9 +24,6 @@ Page {
     property int pageSize: 50
     property bool hasNext: true
     
-//    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-//    actionBarVisibility: ChromeVisibility.Overlay
-    
     titleBar: TitleBar {
         kind: TitleBarKind.FreeForm
         kindProperties: FreeFormTitleBarKindProperties {
@@ -58,7 +55,7 @@ Page {
                     verticalAlignment: VerticalAlignment.Top
                     textStyle.fontWeight: FontWeight.W500
                     textStyle.fontSize: FontSize.PointValue
-                    textStyle.fontSizeValue: 11
+                    textStyle.fontSizeValue: 10
                 }
                 
                 Label {
@@ -281,6 +278,13 @@ Page {
             }
         },
         
+        SystemPrompt {
+            id: publicUrlPrompt
+            
+            title: qsTr("Public URL") + Retranslate.onLocaleOrLanguageChanged
+            dismissAutomatically: true    
+        },
+        
         SystemDialog {
             id: deleteDialog
             
@@ -413,6 +417,27 @@ Page {
                     _appConfig.set("files_view", "grid");
                 }
             }
+        },
+        
+        ActionItem {
+            id: publishAction
+            title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
+            imageSource: "asset:///images/ic_share.png"
+            enabled: root.path !== "/"
+            
+            onTriggered: {
+                _fileController.makePublic(root.path);
+            }
+            
+            shortcuts: [
+                Shortcut {
+                    key: "s"
+                    
+                    onTriggered: {
+                        publishAction.triggered();
+                    }
+                }
+            ]
         }
     ]
     
@@ -427,6 +452,7 @@ Page {
         _fileController.fileRenamed.connect(root.onFileRenamed);
         _fileController.fileMoved.connect(root.onFileMoved);
         _fileController.previewLoaded.connect(root.setPreview);
+        _fileController.publicMade.connect(root.showPublicUrl);
         _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
@@ -635,6 +661,30 @@ Page {
         }
     }
     
+    function showPublicUrl(path, publicUrl) {
+        if (root.path === path) {
+            publicUrlPrompt.inputField.defaultText = publicUrl;
+            publicUrlPrompt.show();
+        } else {
+            var hasChild = false;
+            for (var i = 0; i < dataModel.size(); i++) {
+                if (!hasChild) {
+                    var data = dataModel.value(i);
+                    if (data.path === path) {
+                        data.publicUrl = publicUrl;
+                        dataModel.replace(i, data);
+                        hasChild = true;
+                    }
+                }
+            }
+            
+            if (hasChild) {
+                publicUrlPrompt.inputField.defaultText = publicUrl;
+                publicUrlPrompt.show();
+            }
+        }
+    }
+    
     function cleanUp() {
         _fileController.fileLoaded.disconnect(root.stopSpinner);
         _fileController.fileOpened.disconnect(root.stopSpinner);
@@ -646,6 +696,7 @@ Page {
         _fileController.fileMoved.disconnect(root.onFileMoved);
         _fileController.previewLoaded.disconnect(root.setPreview);
         _userController.userChanged.disconnect(root.updateUser);
+        _fileController.publicMade.disconnect(root.showPublicUrl);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

@@ -260,8 +260,7 @@ QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& re
     return sendCustomRequest(req, method.toLatin1(), outgoingData);
 }
 
-QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& req, const QByteArray& outgoingData )
-{
+QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& req, const QByteArray& outgoingData) {
     QBuffer* dataIO = new QBuffer;
     dataIO->setData(outgoingData);
     dataIO->open(QIODevice::ReadOnly);
@@ -573,8 +572,31 @@ QNetworkReply* QWebdav::proppatch(const QString& path, const QWebdav::PropValues
     return proppatch(path, query);
 }
 
-QNetworkReply* QWebdav::proppatch(const QString& path, const QByteArray& query)
-{
+QNetworkReply* QWebdav::propertyupdate(const QString& path, const QWebdav::PropValues& props) {
+    QByteArray query;
+
+    query = "<propertyupdate xmlns=\"DAV:\">";
+    query += "<set>";
+    foreach (QString ns, props.keys()) {
+        QMap<QString , QVariant>::const_iterator i;
+
+        for (i = props[ns].constBegin(); i != props[ns].constEnd(); ++i) {
+            query += "<prop>";
+            query += "<" + i.key() + " xmlns=\"" + ns + "\">";
+            query += i.value().toString();
+            query += "</" + i.key() + ">";
+            query += "</prop>";
+        }
+    }
+    query += "</set>";
+    query += "</propertyupdate>";
+
+    qDebug() << query << endl;
+
+    return proppatch(path, query);
+}
+
+QNetworkReply* QWebdav::proppatch(const QString& path, const QByteArray& query) {
     QNetworkRequest req;
     req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
 

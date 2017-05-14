@@ -132,6 +132,15 @@ CustomListItem {
             margin.bottomOffset: ui.du(1)
         }
         
+        ImageView {
+            visible: ListItemData.publicUrl !== undefined
+            horizontalAlignment: HorizontalAlignment.Right
+            verticalAlignment: VerticalAlignment.Top
+            imageSource: "asset:///images/Splat_96x96.png"
+            maxWidth: ui.du(5)
+            maxHeight: ui.du(5)
+        }
+        
         attachedObjects: [
             LayoutUpdateHandler {
                 id: listItemLUH
@@ -246,6 +255,26 @@ CustomListItem {
                             
                             onTriggered: {
                                 propsAction.triggered();
+                            }
+                        }
+                    ]
+                },
+                
+                ActionItem {
+                    id: publishAction
+                    title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_share.png"
+                    
+                    onTriggered: {
+                        _fileController.makePublic(ListItemData.path);
+                    }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "s"
+                            
+                            onTriggered: {
+                                publishAction.triggered();
                             }
                         }
                     ]

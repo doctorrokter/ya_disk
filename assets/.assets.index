@@ -1,5 +1,5 @@
 1
-35
+37
 components/FilesMover.qml
 components/FilesUploader.qml
 components/GridListItem.qml
@@ -22,11 +22,13 @@ images/ic_folder.png
 images/ic_forward.png
 images/ic_properties.png
 images/ic_rename.png
+images/ic_share.png
 images/ic_upload.png
 images/ic_uploads.png
 images/ic_view_grid.png
 images/ic_view_list.png
 images/opac_bg.png
+images/Splat_96x96.png
 main.qml
 pages/DirPage.qml
 pages/HelpPage.qml

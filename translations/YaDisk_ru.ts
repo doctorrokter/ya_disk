@@ -12,79 +12,89 @@
 <context>
     <name>DirPage</name>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="156"/>
-        <location filename="../assets/pages/DirPage.qml" line="194"/>
+        <location filename="../assets/pages/DirPage.qml" line="153"/>
+        <location filename="../assets/pages/DirPage.qml" line="191"/>
         <source>files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="179"/>
+        <location filename="../assets/pages/DirPage.qml" line="176"/>
         <source>Move</source>
         <translation type="unfinished">Переместить</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="196"/>
+        <location filename="../assets/pages/DirPage.qml" line="193"/>
         <source>file</source>
         <translation type="unfinished">файл</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="198"/>
+        <location filename="../assets/pages/DirPage.qml" line="195"/>
         <source>None selected</source>
         <translation type="unfinished">Ничего не выбрано</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="273"/>
+        <location filename="../assets/pages/DirPage.qml" line="270"/>
         <source>Enter folder name</source>
         <translation type="unfinished">Введите название папки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="287"/>
-        <location filename="../assets/pages/DirPage.qml" line="312"/>
-        <source>Confirm the deleting</source>
-        <translation type="unfinished">Подтвердите удаление</translation>
-    </message>
-    <message>
-        <location filename="../assets/pages/DirPage.qml" line="288"/>
-        <location filename="../assets/pages/DirPage.qml" line="313"/>
-        <source>This action cannot be undone. Continue?</source>
-        <translation type="unfinished">Это действите не может быть отменено. Продолжаем?</translation>
+        <location filename="../assets/pages/DirPage.qml" line="284"/>
+        <source>Public URL</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="291"/>
         <location filename="../assets/pages/DirPage.qml" line="316"/>
+        <source>Confirm the deleting</source>
+        <translation type="unfinished">Подтвердите удаление</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/DirPage.qml" line="292"/>
+        <location filename="../assets/pages/DirPage.qml" line="317"/>
+        <source>This action cannot be undone. Continue?</source>
+        <translation type="unfinished">Это действите не может быть отменено. Продолжаем?</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/DirPage.qml" line="295"/>
+        <location filename="../assets/pages/DirPage.qml" line="320"/>
         <source>Don&apos;t ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="341"/>
+        <location filename="../assets/pages/DirPage.qml" line="345"/>
         <source>Create folder</source>
         <translation type="unfinished">Создать папку</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="361"/>
+        <location filename="../assets/pages/DirPage.qml" line="365"/>
         <source>Upload</source>
         <translation type="unfinished">Загрузить</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="383"/>
+        <location filename="../assets/pages/DirPage.qml" line="387"/>
         <source>Uploads</source>
         <translation type="unfinished">Загрузки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="402"/>
-        <location filename="../assets/pages/DirPage.qml" line="558"/>
+        <location filename="../assets/pages/DirPage.qml" line="406"/>
+        <location filename="../assets/pages/DirPage.qml" line="584"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="404"/>
-        <location filename="../assets/pages/DirPage.qml" line="562"/>
+        <location filename="../assets/pages/DirPage.qml" line="408"/>
+        <location filename="../assets/pages/DirPage.qml" line="588"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="459"/>
-        <location filename="../assets/pages/DirPage.qml" line="460"/>
+        <location filename="../assets/pages/DirPage.qml" line="424"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/DirPage.qml" line="485"/>
+        <location filename="../assets/pages/DirPage.qml" line="486"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
     </message>
@@ -169,24 +179,29 @@
 <context>
     <name>GridListItem</name>
     <message>
-        <location filename="../assets/components/GridListItem.qml" line="150"/>
+        <location filename="../assets/components/GridListItem.qml" line="159"/>
         <source>Enter new name</source>
         <translation type="unfinished">Введите новое название</translation>
     </message>
     <message>
-        <location filename="../assets/components/GridListItem.qml" line="186"/>
+        <location filename="../assets/components/GridListItem.qml" line="195"/>
         <source>Rename</source>
         <translation type="unfinished">Переименовать</translation>
     </message>
     <message>
-        <location filename="../assets/components/GridListItem.qml" line="214"/>
+        <location filename="../assets/components/GridListItem.qml" line="223"/>
         <source>Move</source>
         <translation type="unfinished">Переместить</translation>
     </message>
     <message>
-        <location filename="../assets/components/GridListItem.qml" line="236"/>
+        <location filename="../assets/components/GridListItem.qml" line="245"/>
         <source>Properties</source>
         <translation type="unfinished">Свойства</translation>
+    </message>
+    <message>
+        <location filename="../assets/components/GridListItem.qml" line="265"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -343,7 +358,12 @@
         <translation type="unfinished">Свойства</translation>
     </message>
     <message>
-        <location filename="../assets/components/StackListItem.qml" line="242"/>
+        <location filename="../assets/components/StackListItem.qml" line="122"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/components/StackListItem.qml" line="281"/>
         <source>MB</source>
         <translation type="unfinished">МБ</translation>
     </message>

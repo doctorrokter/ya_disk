@@ -115,6 +115,26 @@ CustomListItem {
                             }
                         }
                     ]
+                },
+                
+                ActionItem {
+                    id: publishAction
+                    title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_share.png"
+                    
+                    onTriggered: {
+                        _fileController.makePublic(ListItemData.path);
+                    }
+                    
+                    shortcuts: [
+                        Shortcut {
+                            key: "s"
+                            
+                            onTriggered: {
+                                publishAction.triggered();
+                            }
+                        }
+                    ]
                 }
             ]
             
@@ -222,10 +242,29 @@ CustomListItem {
             
             layout: DockLayout {}
             
-            Label {
-                text: ListItemData.name
-                verticalAlignment: VerticalAlignment.Top
+            Container {
+                layout: StackLayout {
+                    orientation: LayoutOrientation.LeftToRight
+                }
+                
+                Label {
+                    text: ListItemData.name
+                    verticalAlignment: VerticalAlignment.Top
+                    
+                    layoutProperties: StackLayoutProperties {
+                        spaceQuota: 1
+                    }
+                }
+                
+                ImageView {
+                    visible: ListItemData.publicUrl !== undefined
+                    horizontalAlignment: HorizontalAlignment.Right
+                    imageSource: "asset:///images/Splat_96x96.png"
+                    maxWidth: ui.du(5)
+                    maxHeight: ui.du(5)
+                }
             }
+            
             
             Label {
                 visible: !ListItemData.dir
@@ -243,6 +282,8 @@ CustomListItem {
                 textStyle.base: SystemDefaults.TextStyles.SubtitleText
                 textStyle.fontWeight: FontWeight.W100
             }
+            
+            
         }
     }
 }
