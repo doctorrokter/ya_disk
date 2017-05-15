@@ -543,6 +543,25 @@ QNetworkReply* QWebdav::propfind(const QString& path, const QByteArray& query, i
     return createRequest("PROPFIND", req, query);
 }
 
+QNetworkReply* QWebdav::checkPublicity(const QString& path) {
+    QByteArray query = "<propfind xmlns=\"DAV:\">";
+    query += "<prop>";
+    query += "<public_url xmlns=\"urn:yandex:disk:meta\"/>";
+    query += "</prop>";
+    query += "</propfind>";
+
+    QNetworkRequest req;
+    req.setRawHeader(QString("Authorization").toLatin1(), QString("OAuth ").append(m_accessToken).toLatin1());
+    req.setRawHeader(QString("Depth").toLatin1(), QString("0").toLatin1());
+
+    QUrl reqUrl(m_baseUrl);
+    reqUrl.setPath(absolutePath(path));
+
+    req.setUrl(reqUrl);
+
+    return createRequest("PROPFIND", req, query);
+}
+
 QNetworkReply* QWebdav::proppatch(const QString& path, const QWebdav::PropValues& props)
 {
     QByteArray query;

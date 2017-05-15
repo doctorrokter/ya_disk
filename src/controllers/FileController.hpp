@@ -48,7 +48,8 @@ public:
     Q_INVOKABLE const QVariantList& getSharedFiles() const;
     Q_INVOKABLE void setSharedFiles(const QVariantList& sharedFiles);
     Q_INVOKABLE void clearSharedFiles();
-    Q_INVOKABLE void makePublic(const QString& path);
+    Q_INVOKABLE void makePublic(const QString& path, const bool& isDir);
+    Q_INVOKABLE void checkPublicity(const QString& path, const bool& isDir);
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -71,6 +72,7 @@ public:
         void previewLoaded(const QString& path, const QString& localPreviewPath);
         void sharedFilesChanged(const QVariantList& sharedFiles);
         void publicMade(const QString& path, const QString& link);
+        void publicityChecked(const QString& path, const QString& publicUrl);
 
     private slots:
         void onLoad();
@@ -83,6 +85,7 @@ public:
         void onFileMoved();
         void onPreviewLoaded();
         void onPublicMade();
+        void onPublicityChecked();
 private:
     QWebdav* m_pWebdav;
     QWebdavDirParser* m_pParser;
@@ -99,6 +102,9 @@ private:
 
     void startUpload(const QString& remoteUri);
     void startLoadPreview(const QString& filename, const QString& path);
+    void savePublicUrl(const QString& path, const QString& publicUrl, const bool& isDir);
+    void sendCheckPublicity(const QString& path, const bool& isDir);
+    QString readPublicUrl(const QString& filepath);
 };
 
 #endif /* FILECONTROLLER_HPP_ */

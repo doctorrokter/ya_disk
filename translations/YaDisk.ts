@@ -74,6 +74,10 @@
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unshare</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilePickersSheet</name>
@@ -222,6 +226,10 @@
     </message>
     <message>
         <source>Placement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

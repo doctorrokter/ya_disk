@@ -25,6 +25,7 @@ public:
     Q_INVOKABLE bool isPresentation(const QString& ext);
     Q_INVOKABLE bool isPdf(const QString& ext);
     Q_INVOKABLE QString filename(const QString& filepath);
+    Q_INVOKABLE bool removeDir(const QString& dirName);
 
 private:
     QStringList m_imagesList;

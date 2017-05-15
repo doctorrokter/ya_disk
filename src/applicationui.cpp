@@ -46,14 +46,6 @@ ApplicationUI::ApplicationUI() : QObject() {
         }
     }
 
-    QDir dataDir(QDir::currentPath() + TEMP_DIR);
-    dataDir.setNameFilters(QStringList() << "*.*");
-    dataDir.setFilter(QDir::Files);
-    foreach(QString dirFile, dataDir.entryList()) {
-        qDebug() << "ApplicationUI ===>>> remove temp file: " << dirFile << endl;
-        dataDir.remove(dirFile);
-    }
-
     m_pAppConfig = new AppConfig(this);
     m_pTranslator = new QTranslator(this);
     m_pLocaleHandler = new LocaleHandler(this);
@@ -62,21 +54,19 @@ ApplicationUI::ApplicationUI() : QObject() {
     m_pFileController = new FileController(m_pFileUtil, this);
     m_pUserController = new UserController(this);
 
+    QString tempDirPath = QDir::currentPath() + TEMP_DIR;
+    m_pFileUtil->removeDir(tempDirPath);
+
+    QString urlsDirPath = QDir::currentPath() + PUBLIC_URLS_DIR;
+    m_pFileUtil->removeDir(urlsDirPath);
+    QDir urlsDir;
+    urlsDir.mkpath(urlsDirPath);
+
     bool res = QObject::connect(m_pLocaleHandler, SIGNAL(systemLanguageChanged()), this, SLOT(onSystemLanguageChanged()));
     Q_ASSERT(res);
     Q_UNUSED(res);
 
     onSystemLanguageChanged();
-
-//    m_pAppConfig = new AppConfig(this);
-//    QString theme = m_pAppConfig->get("theme").toString();
-//    if (theme.compare("") != 0) {
-//        if (theme.compare("DARK") == 0) {
-//            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Dark);
-//        } else {
-//            Application::instance()->themeSupport()->setVisualStyle(VisualStyle::Bright);
-//        }
-//    }
 
     m_pInvokeManager = new InvokeManager(this);
     connect(m_pInvokeManager, SIGNAL(invoked(const bb::system::InvokeRequest&)), SLOT(onInvoked(const bb::system::InvokeRequest&)));

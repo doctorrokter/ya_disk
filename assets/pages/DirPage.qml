@@ -426,7 +426,7 @@ Page {
             enabled: root.path !== "/"
             
             onTriggered: {
-                _fileController.makePublic(root.path);
+                _fileController.makePublic(root.path, true);
             }
             
             shortcuts: [
@@ -453,6 +453,7 @@ Page {
         _fileController.fileMoved.connect(root.onFileMoved);
         _fileController.previewLoaded.connect(root.setPreview);
         _fileController.publicMade.connect(root.showPublicUrl);
+        _fileController.publicityChecked.connect(root.setPublicUrl);
         _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
         
@@ -476,6 +477,8 @@ Page {
             _userController.userinfo();
             _userController.diskinfo();
         }
+        
+        _fileController.checkPublicity(path, true);
     }
     
     function updateUser(user) {
@@ -656,6 +659,7 @@ Page {
             data.forEach(function(f) {
                 dataModel.append(f);
                 root.loadPreview(f);
+                _fileController.checkPublicity(f.path, f.dir);
             });
             root.hasNext = data.length >= root.pageSize;
         }
@@ -666,23 +670,36 @@ Page {
             publicUrlPrompt.inputField.defaultText = publicUrl;
             publicUrlPrompt.show();
         } else {
-            var hasChild = false;
-            for (var i = 0; i < dataModel.size(); i++) {
-                if (!hasChild) {
-                    var data = dataModel.value(i);
-                    if (data.path === path) {
-                        data.publicUrl = publicUrl;
-                        dataModel.replace(i, data);
-                        hasChild = true;
-                    }
-                }
-            }
+            var hasChild = replaceItemPublicUrl(path, publicUrl);
             
             if (hasChild) {
                 publicUrlPrompt.inputField.defaultText = publicUrl;
                 publicUrlPrompt.show();
             }
         }
+    }
+    
+    function setPublicUrl(path, publicUrl) {
+        if (root.path === path) {
+            publishAction.title = qsTr("Unshare") + Retranslate.onLocaleOrLanguageChanged;
+        }
+        
+        replaceItemPublicUrl(path, publicUrl);
+    }
+    
+    function replaceItemPublicUrl(path, publicUrl) {
+        var hasChild = false;
+        for (var i = 0; i < dataModel.size(); i++) {
+            if (!hasChild) {
+                var data = dataModel.value(i);
+                if (data.path === path) {
+                    data.publicUrl = publicUrl;
+                    dataModel.replace(i, data);
+                    hasChild = true;
+                }
+            }
+        }
+        return hasChild;
     }
     
     function cleanUp() {
@@ -697,6 +714,7 @@ Page {
         _fileController.previewLoaded.disconnect(root.setPreview);
         _userController.userChanged.disconnect(root.updateUser);
         _fileController.publicMade.disconnect(root.showPublicUrl);
+        _fileController.publicityChecked.disconnect(root.setPublicUrl);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }
 }

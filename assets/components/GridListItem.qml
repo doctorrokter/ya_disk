@@ -133,7 +133,7 @@ CustomListItem {
         }
         
         ImageView {
-            visible: ListItemData.publicUrl !== undefined
+            visible: ListItemData.publicUrl !== undefined && ListItemData.publicUrl !== ""
             horizontalAlignment: HorizontalAlignment.Right
             verticalAlignment: VerticalAlignment.Top
             imageSource: "asset:///images/Splat_96x96.png"
@@ -266,7 +266,7 @@ CustomListItem {
                     imageSource: "asset:///images/ic_share.png"
                     
                     onTriggered: {
-                        _fileController.makePublic(ListItemData.path);
+                        _fileController.makePublic(ListItemData.path, ListItemData.dir);
                     }
                     
                     shortcuts: [

@@ -11,6 +11,7 @@ Page {
     property int size: 0
     property int contentSize: 0
     property date lastModified: new Date()
+    property string publicUrl: ""
     
     signal propertiesDone()
     
@@ -143,6 +144,12 @@ Page {
                 name: qsTr("Placement") + Retranslate.onLocaleOrLanguageChanged + ":"
                 value: root.path
             }
+            
+            PropListItem {
+                visible: root.publicUrl !== ""
+                name: qsTr("Public URL") + Retranslate.onLocaleOrLanguageChanged + ":"
+                value: root.publicUrl
+            }
         }
     }
     
@@ -156,14 +163,21 @@ Page {
     
     function cleanUp() {
         _fileController.previewLoaded.disconnect(root.setPreview);
+        _fileController.publicityChecked.disconnect(root.setPublicUrl);
     }
     
     onCreationCompleted: {
         _fileController.previewLoaded.connect(root.setPreview);
+        _fileController.publicityChecked.connect(root.setPublicUrl);
     }
     
     onPathChanged: {
         _fileController.loadPreview(root.name, root.path);
+        _fileController.checkPublicity(root.path, root.dir);
+    }
+    
+    function setPublicUrl(path, publicUrl) {
+        root.publicUrl = publicUrl;
     }
     
     attachedObjects: [

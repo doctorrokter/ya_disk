@@ -15,6 +15,7 @@
 #include <bb/system/InvokeRequest>
 #include <bb/system/InvokeManager>
 #include <bb/data/XmlDataAccess>
+#include <QFileInfo>
 #include "../webdav/qwebdavitem.h"
 
 using namespace bb::system;
@@ -484,7 +485,7 @@ void FileController::clearSharedFiles() {
     emit sharedFilesChanged(m_sharedFiles);
 }
 
-void FileController::makePublic(const QString& path) {
+void FileController::makePublic(const QString& path, const bool& isDir) {
     QWebdav::PropValues props;
     QMap<QString, QVariant> map;
     map.insert("public_url", "true");
@@ -492,6 +493,7 @@ void FileController::makePublic(const QString& path) {
 
     QNetworkReply* reply = m_pWebdav->propertyupdate(path, props);
     reply->setProperty("path", path);
+    reply->setProperty("isDir", isDir);
 
     bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPublicMade()));
     Q_ASSERT(res);
@@ -502,13 +504,116 @@ void FileController::onPublicMade() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
     QByteArray bytes = reply->readAll();
 
+#ifdef DEBUG_WEBDAV
     qDebug() << "FileController ===>>> makePublic " << bytes.data() << endl;
+#endif
 
     XmlDataAccess xda;
     QVariantMap map = xda.loadFromBuffer(bytes, "/d:multistatus/d:response/d:propstat/d:prop").toMap();
     QString publicUrl = map.value("public_url").toMap().value(".data").toString();
     QString path = reply->property("path").toString();
+    bool isDir = reply->property("isDir").toBool();
 
     reply->deleteLater();
+    savePublicUrl(path, publicUrl, isDir);
     emit publicMade(path, publicUrl);
+}
+
+void FileController::checkPublicity(const QString& path, const bool& isDir) {
+    QString dirPath = QDir::currentPath() + PUBLIC_URLS_DIR + path;
+
+    if (isDir) {
+        QDir dir(dirPath);
+        if (dir.exists()) {
+            QString publicUrl = readPublicUrl(dirPath + "/" + PUBLIC_URL_FILE_NAME);
+
+            #ifdef DEBUG_WEBDAV
+                qDebug() << "===>>> FileController: public URL got from cache: " << publicUrl << endl;
+            #endif
+
+            emit publicityChecked(path, publicUrl);
+        } else {
+            sendCheckPublicity(path, isDir);
+        }
+    } else {
+        QString filepath = dirPath.append(".txt");
+        QFile publicFile(filepath);
+        if (publicFile.exists()) {
+            QString publicUrl = readPublicUrl(filepath);
+
+            #ifdef DEBUG_WEBDAV
+                qDebug() << "===>>> FileController: public URL got from cache: " << publicUrl << endl;
+            #endif
+
+            emit publicityChecked(path, publicUrl);
+        } else {
+            sendCheckPublicity(path, isDir);
+        }
+    }
+}
+
+void FileController::onPublicityChecked() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QByteArray bytes = reply->readAll();
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "===>>> FileController.onPublicityChecked " << bytes.data() << endl;
+    #endif
+
+    XmlDataAccess xda;
+    QVariantMap map = xda.loadFromBuffer(bytes, "/d:multistatus/d:response/d:propstat/d:prop").toMap();
+    QString publicUrl = map.value("public_url").toMap().value(".data").toString();
+    QString path = reply->property("path").toString();
+    bool isDir = reply->property("isDir").toBool();
+
+    reply->deleteLater();
+    savePublicUrl(path, publicUrl, isDir);
+    emit publicityChecked(path, publicUrl);
+}
+
+void FileController::savePublicUrl(const QString& path, const QString& publicUrl, const bool& isDir) {
+    QString dirPath = QDir::currentPath() + PUBLIC_URLS_DIR + path;
+
+    QString filename;
+    if (isDir) {
+        QDir dir(dirPath);
+        if (dir.exists()) {
+            m_pFileUtil->removeDir(dirPath);
+        }
+        dir.mkpath(dirPath);
+        filename = dirPath + PUBLIC_URL_FILE_NAME;
+    } else {
+        filename = dirPath.append(".txt");
+    }
+
+    QFile publicFile(filename);
+    publicFile.open(QIODevice::WriteOnly);
+    publicFile.write(publicUrl.toLatin1());
+    publicFile.close();
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "===>>> FileController: file created " << publicFile.fileName() << endl;
+    #endif
+}
+
+void FileController::sendCheckPublicity(const QString& path, const bool& isDir) {
+    QNetworkReply* reply = m_pWebdav->checkPublicity(path);
+    reply->setProperty("path", path);
+    reply->setProperty("isDir", isDir);
+
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "===>>> FileController.checkPublicity" << endl;
+    #endif
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPublicityChecked()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+}
+
+QString FileController::readPublicUrl(const QString& filepath) {
+    QFile publicFile(filepath);
+    publicFile.open(QIODevice::ReadOnly);
+    QString publicUrl = publicFile.readAll().data();
+    publicFile.close();
+    return publicUrl;
 }

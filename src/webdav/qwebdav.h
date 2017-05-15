@@ -115,6 +115,7 @@ public:
 
     QNetworkReply* propfind(const QString& path, const QByteArray& query, int depth = 0, const int& amount = 0, const int& offset = 0);
     QNetworkReply* propfind(const QString& path, const QWebdav::PropNames& props, int depth = 0, const int& amount = 0, const int& offset = 0);
+    QNetworkReply* checkPublicity(const QString& path);
 
     QNetworkReply* proppatch(const QString& path, const QWebdav::PropValues& props);
     QNetworkReply* proppatch(const QString& path, const QByteArray& query);

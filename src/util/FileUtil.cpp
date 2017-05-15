@@ -6,6 +6,10 @@
  */
 
 #include <src/util/FileUtil.hpp>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QFileInfoList>
 
 FileUtil::FileUtil(QObject* parent) : QObject(parent) {
     m_imagesList << "jpg" << "jpeg" << "gif" << "png";
@@ -79,5 +83,28 @@ bool FileUtil::isPdf(const QString& ext) {
 QString FileUtil::filename(const QString& filepath) {
     QStringList parts = filepath.split("/");
     return parts[parts.size() - 1];
+}
+
+bool FileUtil::removeDir(const QString& dirName) {
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName)) {
+        QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden | QDir::AllDirs | QDir::Files, QDir::DirsFirst);
+        Q_FOREACH(QFileInfo info, list) {
+            if (info.isDir()) {
+                result = removeDir(info.absoluteFilePath());
+            } else {
+                result = QFile::remove(info.absoluteFilePath());
+            }
+
+            if (!result) {
+                return result;
+            }
+        }
+        result = dir.rmdir(dirName);
+    }
+
+    return result;
 }
 

@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="177"/>
+        <location filename="../src/applicationui.cpp" line="167"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,13 +77,13 @@
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="406"/>
-        <location filename="../assets/pages/DirPage.qml" line="584"/>
+        <location filename="../assets/pages/DirPage.qml" line="587"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="408"/>
-        <location filename="../assets/pages/DirPage.qml" line="588"/>
+        <location filename="../assets/pages/DirPage.qml" line="591"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
@@ -93,10 +93,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="485"/>
-        <location filename="../assets/pages/DirPage.qml" line="486"/>
+        <location filename="../assets/pages/DirPage.qml" line="488"/>
+        <location filename="../assets/pages/DirPage.qml" line="489"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/DirPage.qml" line="684"/>
+        <source>Unshare</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -239,34 +244,39 @@
 <context>
     <name>PropertiesPage</name>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="18"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="19"/>
         <source>Properties</source>
         <translation type="unfinished">Свойства</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="21"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="22"/>
         <source>Done</source>
         <translation type="unfinished">Готово</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="114"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="115"/>
         <source>Folder properties</source>
         <translation type="unfinished">Свойства папки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="116"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="117"/>
         <source>File properties</source>
         <translation type="unfinished">Свойства файла</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="121"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="122"/>
         <source>Filename</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="127"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="128"/>
         <source>Type</source>
         <translation type="unfinished">Тип</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/PropertiesPage.qml" line="150"/>
+        <source>Public URL</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Content</source>
@@ -277,22 +287,22 @@
         <translation type="obsolete">Элемент(-ов)</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="132"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="133"/>
         <source>Last modified</source>
         <translation type="unfinished">Последние изменения</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="138"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="139"/>
         <source>Size</source>
         <translation type="unfinished">Размер</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="139"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="140"/>
         <source>MB</source>
         <translation type="unfinished">МБ</translation>
     </message>
     <message>
-        <location filename="../assets/pages/PropertiesPage.qml" line="143"/>
+        <location filename="../assets/pages/PropertiesPage.qml" line="144"/>
         <source>Placement</source>
         <translation type="unfinished">Местоположение</translation>
     </message>
