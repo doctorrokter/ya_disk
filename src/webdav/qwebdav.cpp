@@ -591,23 +591,39 @@ QNetworkReply* QWebdav::proppatch(const QString& path, const QWebdav::PropValues
     return proppatch(path, query);
 }
 
-QNetworkReply* QWebdav::propertyupdate(const QString& path, const QWebdav::PropValues& props) {
+QNetworkReply* QWebdav::propertyupdate(const QString& path, const QWebdav::PropValues& props, const bool& remove) {
     QByteArray query;
 
     query = "<propertyupdate xmlns=\"DAV:\">";
-    query += "<set>";
+
+    if (remove) {
+        query += "<remove>";
+    } else {
+        query += "<set>";
+    }
+
     foreach (QString ns, props.keys()) {
         QMap<QString , QVariant>::const_iterator i;
 
         for (i = props[ns].constBegin(); i != props[ns].constEnd(); ++i) {
+            QString val = i.value().toString();
             query += "<prop>";
-            query += "<" + i.key() + " xmlns=\"" + ns + "\">";
-            query += i.value().toString();
-            query += "</" + i.key() + ">";
+            if (val.isEmpty()) {
+                query += "<" + i.key() + " xmlns=\"" + ns + "\"/>";
+            } else {
+                query += "<" + i.key() + " xmlns=\"" + ns + "\">";
+                query += val;
+                query += "</" + i.key() + ">";
+            }
             query += "</prop>";
         }
     }
-    query += "</set>";
+    if (remove) {
+        query += "</remove>";
+    } else {
+        query += "</set>";
+    }
+
     query += "</propertyupdate>";
 
     qDebug() << query << endl;

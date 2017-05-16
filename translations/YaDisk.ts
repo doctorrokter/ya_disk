@@ -70,14 +70,6 @@
         <source>Public URL</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unshare</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FilePickersSheet</name>
@@ -159,7 +151,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share</source>
+        <source>Unpublish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -287,7 +283,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share</source>
+        <source>Unpublish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

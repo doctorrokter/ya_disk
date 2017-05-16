@@ -119,11 +119,20 @@ CustomListItem {
                 
                 ActionItem {
                     id: publishAction
-                    title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
+                    title: {
+                        if (ListItemData.publicUrl !== undefined) {
+                            return qsTr("Unpublish") + Retranslate.onLocaleOrLanguageChanged;
+                        }
+                        return qsTr("Publish") + Retranslate.onLocaleOrLanguageChanged;
+                    }
                     imageSource: "asset:///images/ic_share.png"
                     
                     onTriggered: {
-                        _fileController.makePublic(ListItemData.path, ListItemData.dir);
+                        if (ListItemData.publicUrl !== undefined) {
+                            _fileController.unpublish(ListItemData.path, ListItemData.dir);
+                        } else {
+                            _fileController.publish(ListItemData.path, ListItemData.dir);
+                        }
                     }
                     
                     shortcuts: [
@@ -282,8 +291,6 @@ CustomListItem {
                 textStyle.base: SystemDefaults.TextStyles.SubtitleText
                 textStyle.fontWeight: FontWeight.W100
             }
-            
-            
         }
     }
 }

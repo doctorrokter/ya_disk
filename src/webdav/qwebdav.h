@@ -120,7 +120,7 @@ public:
     QNetworkReply* proppatch(const QString& path, const QWebdav::PropValues& props);
     QNetworkReply* proppatch(const QString& path, const QByteArray& query);
 
-    QNetworkReply* propertyupdate(const QString& path, const QWebdav::PropValues& props);
+    QNetworkReply* propertyupdate(const QString& path, const QWebdav::PropValues& props, const bool& remove = false);
     /* TODO lock, unlock */
 
     //! converts a digest from QByteArray to hexadecimal format ( XX:XX:XX:... with X in [0-9,A-F] )

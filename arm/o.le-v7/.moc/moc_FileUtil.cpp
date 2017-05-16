@@ -22,7 +22,7 @@ static const uint qt_meta_data_FileUtil[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,6 +38,7 @@ static const uint qt_meta_data_FileUtil[] = {
      108,   15,   10,    9, 0x02,
      132,   15,   10,    9, 0x02,
      164,  155,  147,    9, 0x02,
+     190,  182,   10,    9, 0x02,
 
        0        // eod
 };
@@ -48,6 +49,7 @@ static const char qt_meta_stringdata_FileUtil[] = {
     "isDoc(QString)\0isSpreadSheet(QString)\0"
     "isPresentation(QString)\0isPdf(QString)\0"
     "QString\0filepath\0filename(QString)\0"
+    "dirName\0removeDir(QString)\0"
 };
 
 void FileUtil::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -72,6 +74,8 @@ void FileUtil::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 7: { QString _r = _t->filename((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 8: { bool _r = _t->removeDir((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         default: ;
         }
     }
@@ -109,9 +113,9 @@ int FileUtil::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

@@ -77,31 +77,21 @@
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="406"/>
-        <location filename="../assets/pages/DirPage.qml" line="587"/>
+        <location filename="../assets/pages/DirPage.qml" line="588"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="408"/>
-        <location filename="../assets/pages/DirPage.qml" line="591"/>
+        <location filename="../assets/pages/DirPage.qml" line="592"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="424"/>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/pages/DirPage.qml" line="488"/>
         <location filename="../assets/pages/DirPage.qml" line="489"/>
+        <location filename="../assets/pages/DirPage.qml" line="490"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
-    </message>
-    <message>
-        <location filename="../assets/pages/DirPage.qml" line="684"/>
-        <source>Unshare</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -204,9 +194,14 @@
         <translation type="unfinished">Свойства</translation>
     </message>
     <message>
-        <location filename="../assets/components/GridListItem.qml" line="265"/>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
+        <location filename="../assets/components/GridListItem.qml" line="267"/>
+        <source>Unpublish</source>
+        <translation type="unfinished">Отмена публичности</translation>
+    </message>
+    <message>
+        <location filename="../assets/components/GridListItem.qml" line="269"/>
+        <source>Publish</source>
+        <translation type="unfinished">Опубликовать</translation>
     </message>
 </context>
 <context>
@@ -368,12 +363,17 @@
         <translation type="unfinished">Свойства</translation>
     </message>
     <message>
-        <location filename="../assets/components/StackListItem.qml" line="122"/>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
+        <location filename="../assets/components/StackListItem.qml" line="124"/>
+        <source>Unpublish</source>
+        <translation type="unfinished">Отмена публичности</translation>
     </message>
     <message>
-        <location filename="../assets/components/StackListItem.qml" line="281"/>
+        <location filename="../assets/components/StackListItem.qml" line="126"/>
+        <source>Publish</source>
+        <translation type="unfinished">Опубликовать</translation>
+    </message>
+    <message>
+        <location filename="../assets/components/StackListItem.qml" line="290"/>
         <source>MB</source>
         <translation type="unfinished">МБ</translation>
     </message>

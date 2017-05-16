@@ -48,7 +48,8 @@ public:
     Q_INVOKABLE const QVariantList& getSharedFiles() const;
     Q_INVOKABLE void setSharedFiles(const QVariantList& sharedFiles);
     Q_INVOKABLE void clearSharedFiles();
-    Q_INVOKABLE void makePublic(const QString& path, const bool& isDir);
+    Q_INVOKABLE void publish(const QString& path, const bool& isDir);
+    Q_INVOKABLE void unpublish(const QString& path, const bool& isDir);
     Q_INVOKABLE void checkPublicity(const QString& path, const bool& isDir);
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
@@ -72,6 +73,7 @@ public:
         void previewLoaded(const QString& path, const QString& localPreviewPath);
         void sharedFilesChanged(const QVariantList& sharedFiles);
         void publicMade(const QString& path, const QString& link);
+        void unpublicMade(const QString& path);
         void publicityChecked(const QString& path, const QString& publicUrl);
 
     private slots:
@@ -85,6 +87,7 @@ public:
         void onFileMoved();
         void onPreviewLoaded();
         void onPublicMade();
+        void onUnpublicMade();
         void onPublicityChecked();
 private:
     QWebdav* m_pWebdav;
@@ -103,6 +106,7 @@ private:
     void startUpload(const QString& remoteUri);
     void startLoadPreview(const QString& filename, const QString& path);
     void savePublicUrl(const QString& path, const QString& publicUrl, const bool& isDir);
+    void removePublicUrl(const QString& path, const bool& isDir);
     void sendCheckPublicity(const QString& path, const bool& isDir);
     QString readPublicUrl(const QString& filepath);
 };

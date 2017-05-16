@@ -417,28 +417,28 @@ Page {
                     _appConfig.set("files_view", "grid");
                 }
             }
-        },
-        
-        ActionItem {
-            id: publishAction
-            title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
-            imageSource: "asset:///images/ic_share.png"
-            enabled: root.path !== "/"
-            
-            onTriggered: {
-                _fileController.makePublic(root.path, true);
-            }
-            
-            shortcuts: [
-                Shortcut {
-                    key: "s"
-                    
-                    onTriggered: {
-                        publishAction.triggered();
-                    }
-                }
-            ]
         }
+        
+//        ActionItem {
+//            id: publishAction
+//            title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
+//            imageSource: "asset:///images/ic_share.png"
+//            enabled: root.path !== "/"
+//            
+//            onTriggered: {
+//                _fileController.publish(root.path, true);
+//            }
+//            
+//            shortcuts: [
+//                Shortcut {
+//                    key: "s"
+//                    
+//                    onTriggered: {
+//                        publishAction.triggered();
+//                    }
+//                }
+//            ]
+//        }
     ]
     
     onCreationCompleted: {
@@ -453,6 +453,7 @@ Page {
         _fileController.fileMoved.connect(root.onFileMoved);
         _fileController.previewLoaded.connect(root.setPreview);
         _fileController.publicMade.connect(root.showPublicUrl);
+        _fileController.unpublicMade.connect(root.hidePublicUrl);
         _fileController.publicityChecked.connect(root.setPublicUrl);
         _userController.userChanged.connect(root.updateUser);
         _appConfig.settingsChanged.connect(root.onSettingsChanged);
@@ -679,10 +680,20 @@ Page {
         }
     }
     
-    function setPublicUrl(path, publicUrl) {
-        if (root.path === path) {
-            publishAction.title = qsTr("Unshare") + Retranslate.onLocaleOrLanguageChanged;
+    function hidePublicUrl(path) {
+        for (var i = 0; i < dataModel.size(); i++) {
+            var data = dataModel.value(i);
+            if (data.path === path) {
+                data.publicUrl = undefined;
+                dataModel.replace(i, data);
+            }
         }
+    }
+    
+    function setPublicUrl(path, publicUrl) {
+//        if (root.path === path) {
+//            publishAction.title = qsTr("Unshare") + Retranslate.onLocaleOrLanguageChanged;
+//        }
         
         replaceItemPublicUrl(path, publicUrl);
     }
@@ -714,6 +725,7 @@ Page {
         _fileController.previewLoaded.disconnect(root.setPreview);
         _userController.userChanged.disconnect(root.updateUser);
         _fileController.publicMade.disconnect(root.showPublicUrl);
+        _fileController.unpublicMade.disconnect(root.hidePublicUrl);
         _fileController.publicityChecked.disconnect(root.setPublicUrl);
         _appConfig.settingsChanged.disconnect(root.onSettingsChanged);
     }

@@ -485,7 +485,7 @@ void FileController::clearSharedFiles() {
     emit sharedFilesChanged(m_sharedFiles);
 }
 
-void FileController::makePublic(const QString& path, const bool& isDir) {
+void FileController::publish(const QString& path, const bool& isDir) {
     QWebdav::PropValues props;
     QMap<QString, QVariant> map;
     map.insert("public_url", "true");
@@ -505,7 +505,7 @@ void FileController::onPublicMade() {
     QByteArray bytes = reply->readAll();
 
 #ifdef DEBUG_WEBDAV
-    qDebug() << "FileController ===>>> makePublic " << bytes.data() << endl;
+    qDebug() << "FileController ===>>> publish " << bytes.data() << endl;
 #endif
 
     XmlDataAccess xda;
@@ -517,6 +517,37 @@ void FileController::onPublicMade() {
     reply->deleteLater();
     savePublicUrl(path, publicUrl, isDir);
     emit publicMade(path, publicUrl);
+}
+
+void FileController::unpublish(const QString& path, const bool& isDir) {
+    QWebdav::PropValues props;
+    QMap<QString, QVariant> map;
+    map.insert("public_url", "");
+    props.insert("urn:yandex:disk:meta", map);
+
+    QNetworkReply* reply = m_pWebdav->propertyupdate(path, props, true);
+    reply->setProperty("path", path);
+    reply->setProperty("isDir", isDir);
+
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onUnpublicMade()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+}
+
+void FileController::onUnpublicMade() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QByteArray bytes = reply->readAll();
+
+#ifdef DEBUG_WEBDAV
+    qDebug() << "FileController ===>>> unpublish " << bytes.data() << endl;
+#endif
+
+    QString path = reply->property("path").toString();
+    bool isDir = reply->property("isDir").toBool();
+
+    reply->deleteLater();
+    removePublicUrl(path, isDir);
+    emit unpublicMade(path);
 }
 
 void FileController::checkPublicity(const QString& path, const bool& isDir) {
@@ -594,6 +625,22 @@ void FileController::savePublicUrl(const QString& path, const QString& publicUrl
     #ifdef DEBUG_WEBDAV
         qDebug() << "===>>> FileController: file created " << publicFile.fileName() << endl;
     #endif
+}
+
+void FileController::removePublicUrl(const QString& path, const bool& isDir) {
+    QString dirPath = QDir::currentPath() + PUBLIC_URLS_DIR + path;
+
+    if (isDir) {
+        QDir dir(dirPath);
+        if (dir.exists()) {
+            m_pFileUtil->removeDir(dirPath);
+        }
+    } else {
+        QFile file(dirPath + ".txt");
+        if (file.exists()) {
+            file.remove();
+        }
+    }
 }
 
 void FileController::sendCheckPublicity(const QString& path, const bool& isDir) {
