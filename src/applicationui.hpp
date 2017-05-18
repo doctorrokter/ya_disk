@@ -56,6 +56,7 @@ public:
     Q_INVOKABLE void setToken(const QString& token, const int& expiresIn);
     Q_INVOKABLE bool hasToken();
     Q_INVOKABLE void initWebdav();
+    Q_INVOKABLE bool copyToClipboard(const QString& str);
 
 Q_SIGNALS:
     void cardDone();

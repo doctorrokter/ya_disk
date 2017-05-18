@@ -263,7 +263,7 @@ CustomListItem {
                 ActionItem {
                     id: publishAction
                     title: {
-                        if (ListItemData.publicUrl !== undefined) {
+                        if (ListItemData.publicUrl) {
                             return qsTr("Unpublish") + Retranslate.onLocaleOrLanguageChanged;
                         }
                         return qsTr("Publish") + Retranslate.onLocaleOrLanguageChanged;
@@ -271,7 +271,7 @@ CustomListItem {
                     imageSource: "asset:///images/ic_share.png"
                     
                     onTriggered: {
-                        if (ListItemData.publicUrl !== undefined) {
+                        if (ListItemData.publicUrl) {
                             _fileController.unpublish(ListItemData.path, ListItemData.dir);
                         } else {
                             _fileController.publish(ListItemData.path, ListItemData.dir);

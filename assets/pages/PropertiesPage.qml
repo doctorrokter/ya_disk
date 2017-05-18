@@ -1,4 +1,5 @@
 import bb.cascades 1.4
+import bb.system 1.2
 import "../components"
 
 Page {
@@ -11,7 +12,7 @@ Page {
     property int size: 0
     property int contentSize: 0
     property date lastModified: new Date()
-    property string publicUrl: ""
+    property string publicUrl: "wfwerwe"
     
     signal propertiesDone()
     
@@ -150,6 +151,29 @@ Page {
                 name: qsTr("Public URL") + Retranslate.onLocaleOrLanguageChanged + ":"
                 value: root.publicUrl
             }
+            
+            Container {
+                visible: root.publicUrl !== ""
+                horizontalAlignment: HorizontalAlignment.Fill
+                
+                leftPadding: ui.du(1)
+                topPadding: ui.du(1)
+                rightPadding: ui.du(1)
+                bottomPadding: ui.du(1)
+                
+                Button {
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    text: qsTr("Copy link to clipboard") + Retranslate.onLocaleOrLanguageChanged
+                    
+                    onClicked: {
+                        if (_app.copyToClipboard(root.publicUrl)) {
+                            toast.body = qsTr("Copied to clipboard") + Retranslate.onLocaleOrLanguageChanged;
+                            toast.position = SystemUiPosition.MiddleCenter
+                            toast.show();
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -185,6 +209,10 @@ Page {
             id: dateTimePicker
             mode: DateTimePickerMode.Time
             value: root.lastModified
+        },
+        
+        SystemToast {
+            id: toast
         }
     ]
 }

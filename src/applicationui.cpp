@@ -28,9 +28,11 @@
 #include <QDir>
 #include <QFile>
 #include <bb/data/JsonDataAccess>
+#include <bb/system/Clipboard>
 
 using namespace bb::cascades;
 using namespace bb::data;
+using namespace bb::system;
 
 ApplicationUI::ApplicationUI() : QObject() {
 
@@ -199,4 +201,11 @@ void ApplicationUI::onInvoked(const bb::system::InvokeRequest& request) {
         m_pFileController->setSharedFiles(list);
         initFullUI();
     }
+}
+
+bool ApplicationUI::copyToClipboard(const QString& str) {
+    Clipboard clipboard;
+    clipboard.clear();
+    QByteArray data = str.toLatin1();
+    return clipboard.insert("text/plain", data);
 }
