@@ -10,6 +10,8 @@
 
 #define API_URL "webdav.yandex.ru"
 #define API_PORT 443
+#define CLIENT_ID "4dbce468bbc44a099ed8a2d433f84365"
+#define CLIENT_SECRET "eb21473fce90440b99eede083889df6e"
 #define TEMP_DIR "/data/temp"
 #define PUBLIC_URLS_DIR "/data/public_urls"
 #define PREVIEWS_DIR "/data/previews"

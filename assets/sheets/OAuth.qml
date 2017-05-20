@@ -1,4 +1,5 @@
 import bb.cascades 1.4
+import bb.device 1.4
 
 Sheet {
     id: authPage
@@ -7,25 +8,27 @@ Sheet {
     property string display: "popup"
     property string responseType: "token"
     
-    signal accessTokeReceived(string accessToken, int expiresIn)
+    property string signInUrl: "https://oauth.yandex." + _yaDomain + "/authorize?client_id=" + clientId + 
+        "&display=" + display + 
+        "&response_type=" + responseType + 
+        "&device_id=" + _deviceId.replace("{", "").replace("}", "") + 
+        "&device_name=" + hardware.deviceName
     
-    function init() {
-        webView.url = "https://oauth.yandex.ru/authorize?client_id=" + clientId + "&display=" + display + "&response_type=" + responseType;
-    }
+    property string registrationUrl: "https://passport.yandex." + _yaDomain + "/registration"
+    
+    signal accessTokeReceived(string accessToken, int expiresIn)
     
     Page {
         ScrollView {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            scrollViewProperties {
-                scrollMode: ScrollMode.Both
-                pinchToZoomEnabled: true
-            }
-                        
             Container {
                 WebView {
-                    id: webView    
+                    id: webView
+                    settings.customHttpHeaders: {
+                        "User-Agent": "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Mobile Safari/537.36"
+                    }
                     
                     onUrlChanged: {
                         console.debug(url);
@@ -39,4 +42,14 @@ Sheet {
             }
         }
     }
+    
+    onOpened: {
+        webView.url = authPage.signInUrl;
+    }
+    
+    attachedObjects: [
+        HardwareInfo {
+            id: hardware
+        }
+    ]
 }

@@ -48,6 +48,15 @@ NavigationPane {
                 onTriggered: {
                     invokeFeedback.trigger(invokeFeedback.query.invokeActionId);
                 }
+            },
+            
+            ActionItem {
+                title: qsTr("Logout") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: "asset:///images/ic_sign_out.png"
+                
+                onTriggered: {
+                    _app.logout();
+                }
             }
         ]
     }
@@ -62,11 +71,11 @@ NavigationPane {
     
     onCreationCompleted: {
         if (!_app.hasToken()) {
-            oauth.init();
             oauth.open();
         }
         _fileController.dataLoaded.connect(newPage);
         _fileController.propsPageRequested.connect(showProps);
+        _app.loggedOut.connect(navPane.onLoggedOut);
     }
     
     attachedObjects: [
@@ -154,6 +163,13 @@ NavigationPane {
             }
         }
     ]
+    
+    function onLoggedOut() {
+        while (navPane.count() !== 0) {
+            navPane.pop();
+        }
+        oauth.open();
+    }
     
     function showProps(file) {
         var pp = propsPage.createObject();

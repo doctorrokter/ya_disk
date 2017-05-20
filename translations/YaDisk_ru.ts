@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="169"/>
+        <location filename="../src/applicationui.cpp" line="189"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,6 +237,17 @@
     </message>
 </context>
 <context>
+    <name>OAuth</name>
+    <message>
+        <source>Sign in</source>
+        <translation type="obsolete">Войти</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translation type="obsolete">Создать аккаунт</translation>
+    </message>
+</context>
+<context>
     <name>PropertiesPage</name>
     <message>
         <location filename="../assets/pages/PropertiesPage.qml" line="20"/>
@@ -409,7 +420,12 @@
         <translation type="unfinished">Обратная связь</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="174"/>
+        <location filename="../assets/main.qml" line="54"/>
+        <source>Logout</source>
+        <translation type="unfinished">Выход</translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="190"/>
         <source>Root</source>
         <translation type="unfinished">Корень</translation>
     </message>

@@ -29,6 +29,8 @@
 #include <QFile>
 #include <bb/data/JsonDataAccess>
 #include <bb/system/Clipboard>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace bb::cascades;
 using namespace bb::data;
@@ -42,10 +44,12 @@ ApplicationUI::ApplicationUI() : QObject() {
     if (m_settings.value("expires_time_stamp", "").toString().compare("") != 0) {
         QDateTime expiryDate = QDateTime::fromTime_t(m_settings.value("expires_time_stamp").toInt());
         if (expiryDate <= QDateTime::currentDateTime()) {
-            m_settings.remove("access_token");
-            m_settings.remove("expires_in");
-            m_settings.remove("expires_time_stamp");
+            flushToken();
         }
+    }
+
+    if (m_settings.value("device_id", "").toString().isEmpty()) {
+        flushToken();
     }
 
     m_pAppConfig = new AppConfig(this);
@@ -154,6 +158,22 @@ void ApplicationUI::initFullUI(const QString& data, const QString& mimeType) {
     rootContext->setContextProperty("_data", data);
     rootContext->setContextProperty("_mimeType", mimeType);
 
+    if (m_settings.value("device_id", "").toString().isEmpty()) {
+        QUuid uuid;
+        QString uuidStr = uuid.createUuid().toString();
+        rootContext->setContextProperty("_deviceId", uuidStr);
+        m_settings.setValue("device_id", uuidStr);
+    } else {
+        rootContext->setContextProperty("_deviceId", m_settings.value("device_id", "").toString());
+    }
+
+    QLocale systemLocale;
+    QString yaDomain = "com";
+    if (systemLocale.language() == QLocale::Russian) {
+        yaDomain = "ru";
+    }
+    rootContext->setContextProperty("_yaDomain", yaDomain);
+
     AbstractPane *root = qml->createRootObject<AbstractPane>();
 
     if (hasToken()) {
@@ -208,4 +228,50 @@ bool ApplicationUI::copyToClipboard(const QString& str) {
     clipboard.clear();
     QByteArray data = str.toLatin1();
     return clipboard.insert("text/plain", data);
+}
+
+void ApplicationUI::logout() {
+    QNetworkRequest req;
+    QUrl url("https://" + QString("oauth.yandex.ru") + "/revoke_token");
+    req.setUrl(url);
+
+    QUrl params;
+    params.addQueryItem("access_token", m_settings.value("access_token").toString());
+    params.addQueryItem("device_id", m_settings.value("device_id").toString().replace("{", "").replace("}", ""));
+
+    QByteArray secret;
+    secret.append(QString(CLIENT_ID).append(":").append(CLIENT_SECRET));
+
+    QByteArray header;
+    header.append(QString("Basic ").append(secret.toBase64().data()));
+    req.setRawHeader("Authorization", header);
+    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    qDebug() << "===>>> LOGOUT <<<===" << endl;
+    qDebug() << req.url().toString() << endl;
+    qDebug() << req.rawHeader("Authorization") << endl;
+    qDebug() << params.toString() << endl;
+
+    m_pNetwork = new QNetworkAccessManager(this);
+    QNetworkReply* reply = m_pNetwork->post(req, params.encodedQuery());
+    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onLogout()));
+    Q_ASSERT(res);
+    Q_UNUSED(res);
+}
+
+void ApplicationUI::onLogout() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+
+    qDebug() << reply->readAll() << endl;
+    reply->deleteLater();
+    m_pNetwork->deleteLater();
+
+    flushToken();
+    emit loggedOut();
+}
+
+void ApplicationUI::flushToken() {
+    m_settings.remove("access_token");
+    m_settings.remove("expires_in");
+    m_settings.remove("expires_time_stamp");
 }

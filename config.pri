@@ -43,6 +43,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/components/StackListItem.qml) \
         $$quote($$BASEDIR/assets/images/Splat_96x96.png) \
         $$quote($$BASEDIR/assets/images/bb_screen.jpg) \
+        $$quote($$BASEDIR/assets/images/featured_image_2.png) \
         $$quote($$BASEDIR/assets/images/ic_add.png) \
         $$quote($$BASEDIR/assets/images/ic_add_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_deselect_all.png) \
@@ -60,6 +61,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_properties.png) \
         $$quote($$BASEDIR/assets/images/ic_rename.png) \
         $$quote($$BASEDIR/assets/images/ic_share.png) \
+        $$quote($$BASEDIR/assets/images/ic_sign_out.png) \
         $$quote($$BASEDIR/assets/images/ic_unshare.png) \
         $$quote($$BASEDIR/assets/images/ic_upload.png) \
         $$quote($$BASEDIR/assets/images/ic_uploads.png) \

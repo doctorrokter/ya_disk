@@ -145,4 +145,16 @@
     		<property var="uris" value="file://,list://"/>
   		</filter>
 	</invoke-target>
+	
+	<invoke-target id="chachkouski.YaDisk.open">
+    	<invoke-target-type>application</invoke-target-type>
+        <filter>
+        	<action>bb.action.VIEW</action>
+            <mime-type>*</mime-type>
+           	<property var="uris" value="yadisk:"/>
+        </filter>
+        <invoke-target-pattern>
+            <pattern-value type="uri">yadisk:</pattern-value>
+        </invoke-target-pattern>
+	</invoke-target>
 </qnx>

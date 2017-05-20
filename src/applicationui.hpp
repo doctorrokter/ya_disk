@@ -29,6 +29,7 @@
 #include "config/AppConfig.hpp"
 #include <bb/system/InvokeManager>
 #include <bb/system/InvokeRequest>
+#include <QNetworkAccessManager>
 
 using namespace bb::system;
 
@@ -57,12 +58,15 @@ public:
     Q_INVOKABLE bool hasToken();
     Q_INVOKABLE void initWebdav();
     Q_INVOKABLE bool copyToClipboard(const QString& str);
+    Q_INVOKABLE void logout();
 
 Q_SIGNALS:
     void cardDone();
+    void loggedOut();
 
 public Q_SLOTS:
     void onCardDone(const QString& msg);
+    void onLogout();
 
 private slots:
     void onSystemLanguageChanged();
@@ -84,7 +88,10 @@ private:
     InvokeManager* m_pInvokeManager;
     QString m_startupMode;
 
+    QNetworkAccessManager* m_pNetwork;
+
     void initFullUI(const QString& data = "", const QString& mimeType = "");
+    void flushToken();
 };
 
 #endif /* ApplicationUI_HPP_ */
