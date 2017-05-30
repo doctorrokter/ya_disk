@@ -97,17 +97,6 @@ Page {
     }
     
     onCreationCompleted: {
-//        var data = [];
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/"});
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/"});
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/"});
-//        data.push({filename: "sdfsdwefdsdffsdf", targetPath: "/Downloads/"});
-//        data.push({filename: "sdfsdfsdfsdf3234", targetPath: "/Downloads/"});
-//        data.push({filename: "sdfsdfssdfsdf", targetPath: "/Downloads/"});
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/photo/"});
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/photo/"});
-//        data.push({filename: "sdfsdfsdf", targetPath: "/Documents/photo/"});
-//        uploadsDadaModel.insertList(data);
         uploadsDadaModel.insertList(_fileController.queue);
         _fileController.queueChanged.connect(root.updateQueue);
     }

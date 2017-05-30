@@ -287,6 +287,18 @@ CustomListItem {
                             }
                         }
                     ]
+                },
+                
+                ActionItem {
+                    id: downloadAction
+                    title: qsTr("Download") + Retranslate.onLocaleOrLanguageChanged
+                    imageSource: "asset:///images/ic_download.png"
+                    enabled: !ListItemData.dir
+                    
+                    onTriggered: {
+                        console.debug("DOWNLOAD: ", ListItemData.name + ", ", ListItemData.path);
+                        _fileController.downloader.download(ListItemData.name, ListItemData.path);
+                    }
                 }
             ]
         }

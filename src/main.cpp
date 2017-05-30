@@ -24,6 +24,7 @@
 #include <Qt/qdeclarativedebug.h>
 #include "vendor/Console.hpp"
 #include "models/User.hpp"
+#include "controllers/loaders/FileDownloader.hpp"
 
 using namespace bb::cascades;
 
@@ -48,6 +49,8 @@ Q_DECL_EXPORT int main(int argc, char **argv) {
     QTextCodec::setCodecForTr(codec1);
     QTextCodec::setCodecForCStrings(codec1);
     qRegisterMetaType<User*>("User*");
+    qRegisterMetaType<FileDownloader*>("FileDownloader*");
+    qmlRegisterUncreatableType<FileDownloader>("chachkouski.type", 1, 0, "downloader", "test");
 
     // Create the Application UI object, this is where the main.qml file
     // is loaded and the application scene is set.

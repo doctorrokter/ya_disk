@@ -11,6 +11,7 @@ Page {
     signal openFile(string filename, string path)
     signal upload(string path)
     signal uploadsPageRequested();
+    signal downloadsPageRequested();
     
     property string dirName: "Root"
     property variant data: undefined
@@ -180,6 +181,21 @@ Page {
                                 _fileController.currentPath = root.path;
                                 listView.selectionList().forEach(function(indexPath) {
                                     _fileController.selectFile(dataModel.data(indexPath));
+                                });
+                            }
+                        },
+                        
+                        ActionItem {
+                            id: downloadAction
+                            title: qsTr("Download") + Retranslate.onLocaleOrLanguageChanged
+                            imageSource: "asset:///images/ic_download.png"
+                            
+                            onTriggered: {
+                                listView.selectionList().forEach(function(indexPath) {
+                                    var data = dataModel.data(indexPath);
+                                    if (!data.dir) {
+                                        _fileController.downloader.download(data.name, data.path);
+                                    }
                                 });
                             }
                         }
@@ -388,6 +404,16 @@ Page {
             
             onTriggered: {
                 root.uploadsPageRequested();
+            }
+        },
+        
+        ActionItem {
+            id: downloadsAction
+            imageSource: "asset:///images/ic_download.png"
+            title: qsTr("Downloads") + Retranslate.onLocaleOrLanguageChanged
+            
+            onTriggered: {
+                root.downloadsPageRequested();
             }
         },
         

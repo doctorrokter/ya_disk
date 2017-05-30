@@ -22,8 +22,8 @@ static const uint qt_meta_data_FileController[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      60,   14, // methods
-       4,  314, // properties
+      62,   14, // methods
+       5,  324, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -94,18 +94,22 @@ static const uint qt_meta_data_FileController[] = {
     2054, 2043,   15,   15, 0x02,
     2076, 2043,   15,   15, 0x02,
     2100, 2043,   15,   15, 0x02,
+    2145,   15, 2129,   15, 0x02,
+    2161,   46,   15,   15, 0x02,
 
  // properties: name, type, flags
      574, 1792, 0x09495001,
      607, 1792, 0x09495001,
      789, 1792, 0x09495103,
-     656, 2129, 0x0a495103,
+     656, 2187, 0x0a495103,
+    2195, 2129, 0x00095009,
 
  // properties: notify_signal_id
       11,
       12,
       16,
       13,
+       0,
 
        0        // eod
 };
@@ -167,7 +171,10 @@ static const char qt_meta_stringdata_FileController[] = {
     "getSharedFiles()\0setSharedFiles(QVariantList)\0"
     "clearSharedFiles()\0path,isDir\0"
     "publish(QString,bool)\0unpublish(QString,bool)\0"
-    "checkPublicity(QString,bool)\0QString\0"
+    "checkPublicity(QString,bool)\0"
+    "FileDownloader*\0getDownloader()\0"
+    "download(QString,QString)\0QString\0"
+    "downloader\0"
 };
 
 void FileController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -238,6 +245,9 @@ void FileController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 57: _t->publish((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
         case 58: _t->unpublish((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
         case 59: _t->checkPublicity((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
+        case 60: { FileDownloader* _r = _t->getDownloader();
+            if (_a[0]) *reinterpret_cast< FileDownloader**>(_a[0]) = _r; }  break;
+        case 61: _t->download((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -275,9 +285,9 @@ int FileController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 60)
+        if (_id < 62)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 60;
+        _id -= 62;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -287,27 +297,28 @@ int FileController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: *reinterpret_cast< QVariantList*>(_v) = getSelectedFiles(); break;
         case 2: *reinterpret_cast< QVariantList*>(_v) = getSharedFiles(); break;
         case 3: *reinterpret_cast< QString*>(_v) = getCurrentPath(); break;
+        case 4: *reinterpret_cast< FileDownloader**>(_v) = getDownloader(); break;
         }
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::WriteProperty) {
         void *_v = _a[0];
         switch (_id) {
         case 2: setSharedFiles(*reinterpret_cast< QVariantList*>(_v)); break;
         case 3: setCurrentPath(*reinterpret_cast< QString*>(_v)); break;
         }
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::ResetProperty) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 4;
+        _id -= 5;
     }
 #endif // QT_NO_PROPERTIES
     return _id;

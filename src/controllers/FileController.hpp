@@ -17,6 +17,7 @@
 #include "../webdav/qwebdavdirparser.h"
 #include "../Common.hpp"
 #include "../util/FileUtil.hpp"
+#include "loaders/FileDownloader.hpp"
 
 class FileController: public QObject {
     Q_OBJECT
@@ -24,6 +25,7 @@ class FileController: public QObject {
     Q_PROPERTY(QVariantList selectedFiles READ getSelectedFiles NOTIFY selectedFilesChanged)
     Q_PROPERTY(QVariantList sharedFiles READ getSharedFiles WRITE setSharedFiles NOTIFY sharedFilesChanged)
     Q_PROPERTY(QString currentPath READ getCurrentPath WRITE setCurrentPath NOTIFY currentPathChanged)
+    Q_PROPERTY(FileDownloader* downloader READ getDownloader)
 public:
     FileController(FileUtil* fileUtil, QObject* parent = 0);
     virtual ~FileController();
@@ -51,6 +53,9 @@ public:
     Q_INVOKABLE void publish(const QString& path, const bool& isDir);
     Q_INVOKABLE void unpublish(const QString& path, const bool& isDir);
     Q_INVOKABLE void checkPublicity(const QString& path, const bool& isDir);
+
+    Q_INVOKABLE FileDownloader* getDownloader() const;
+    Q_INVOKABLE void download(const QString& filename, const QString& path);
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -94,6 +99,8 @@ private:
     QWebdavDirParser* m_pParser;
 
     FileUtil* m_pFileUtil;
+    FileDownloader* m_pDownloader;
+
     QList<QNetworkReply*> m_replies;
     QList<QNetworkReply*> m_uploadReplies;
     QList<QNetworkReply*> m_previewReplies;

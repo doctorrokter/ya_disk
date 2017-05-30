@@ -103,6 +103,11 @@ NavigationPane {
         },
         
         ComponentDefinition {
+            id: downloadsPage
+            DownloadsPage {}    
+        },
+        
+        ComponentDefinition {
             id: settingsPage
             SettingsPage {}    
         },
@@ -159,6 +164,10 @@ NavigationPane {
                 
                 onUploadsPageRequested: {
                     navPane.push(uploadsPage.createObject());
+                }
+                
+                onDownloadsPageRequested: {
+                    navPane.push(downloadsPage.createObject());
                 }
             }
         }

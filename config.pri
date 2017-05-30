@@ -55,6 +55,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/ic_doctype_ppt.png) \
         $$quote($$BASEDIR/assets/images/ic_doctype_video.png) \
         $$quote($$BASEDIR/assets/images/ic_doctype_xls.png) \
+        $$quote($$BASEDIR/assets/images/ic_download.png) \
         $$quote($$BASEDIR/assets/images/ic_feedback.png) \
         $$quote($$BASEDIR/assets/images/ic_folder.png) \
         $$quote($$BASEDIR/assets/images/ic_forward.png) \
@@ -70,6 +71,7 @@ config_pri_assets {
         $$quote($$BASEDIR/assets/images/opac_bg.png) \
         $$quote($$BASEDIR/assets/main.qml) \
         $$quote($$BASEDIR/assets/pages/DirPage.qml) \
+        $$quote($$BASEDIR/assets/pages/DownloadsPage.qml) \
         $$quote($$BASEDIR/assets/pages/HelpPage.qml) \
         $$quote($$BASEDIR/assets/pages/PropertiesPage.qml) \
         $$quote($$BASEDIR/assets/pages/SettingsPage.qml) \
@@ -84,6 +86,8 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/config/AppConfig.cpp) \
         $$quote($$BASEDIR/src/controllers/FileController.cpp) \
         $$quote($$BASEDIR/src/controllers/UserController.cpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/FileDownloader.cpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/beans/Download.cpp) \
         $$quote($$BASEDIR/src/main.cpp) \
         $$quote($$BASEDIR/src/models/User.cpp) \
         $$quote($$BASEDIR/src/util/DateUtil.cpp) \
@@ -100,6 +104,8 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/config/AppConfig.hpp) \
         $$quote($$BASEDIR/src/controllers/FileController.hpp) \
         $$quote($$BASEDIR/src/controllers/UserController.hpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/FileDownloader.hpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/beans/Download.hpp) \
         $$quote($$BASEDIR/src/models/User.hpp) \
         $$quote($$BASEDIR/src/util/DateUtil.hpp) \
         $$quote($$BASEDIR/src/util/FileUtil.hpp) \
@@ -132,6 +138,16 @@ lupdate_inclusion {
         $$quote($$BASEDIR/../src/controllers/*.cc) \
         $$quote($$BASEDIR/../src/controllers/*.cpp) \
         $$quote($$BASEDIR/../src/controllers/*.cxx) \
+        $$quote($$BASEDIR/../src/controllers/loaders/*.c) \
+        $$quote($$BASEDIR/../src/controllers/loaders/*.c++) \
+        $$quote($$BASEDIR/../src/controllers/loaders/*.cc) \
+        $$quote($$BASEDIR/../src/controllers/loaders/*.cpp) \
+        $$quote($$BASEDIR/../src/controllers/loaders/*.cxx) \
+        $$quote($$BASEDIR/../src/controllers/loaders/beans/*.c) \
+        $$quote($$BASEDIR/../src/controllers/loaders/beans/*.c++) \
+        $$quote($$BASEDIR/../src/controllers/loaders/beans/*.cc) \
+        $$quote($$BASEDIR/../src/controllers/loaders/beans/*.cpp) \
+        $$quote($$BASEDIR/../src/controllers/loaders/beans/*.cxx) \
         $$quote($$BASEDIR/../src/models/*.c) \
         $$quote($$BASEDIR/../src/models/*.c++) \
         $$quote($$BASEDIR/../src/models/*.cc) \

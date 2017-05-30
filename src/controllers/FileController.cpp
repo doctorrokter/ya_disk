@@ -22,17 +22,21 @@ using namespace bb::system;
 using namespace bb::data;
 
 FileController::FileController(FileUtil* fileUtil, QObject* parent) : QObject(parent),
-    m_pWebdav(0), m_pParser(0), m_pFileUtil(fileUtil) {}
+    m_pWebdav(0), m_pParser(0), m_pFileUtil(fileUtil), m_pDownloader(0) {
+}
 
 FileController::~FileController() {
     m_pWebdav->deleteLater();
     m_pParser->deleteLater();
     m_pFileUtil->deleteLater();
+    m_pDownloader->deleteLater();
 }
 
 void FileController::initWebdav(QWebdav* webdav, QWebdavDirParser* parser) {
     m_pWebdav = webdav;
     m_pParser = parser;
+
+    m_pDownloader = new FileDownloader(m_pWebdav, this);
 
     bool res = QObject::connect(m_pParser, SIGNAL(finished()), this, SLOT(onLoad()));
     Q_ASSERT(res);
@@ -663,4 +667,10 @@ QString FileController::readPublicUrl(const QString& filepath) {
     QString publicUrl = publicFile.readAll().data();
     publicFile.close();
     return publicUrl;
+}
+
+FileDownloader* FileController::getDownloader() const { return m_pDownloader; }
+
+void FileController::download(const QString& filename, const QString& path) {
+    m_pDownloader->download(filename, path);
 }
