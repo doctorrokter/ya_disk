@@ -22,7 +22,7 @@ using namespace bb::system;
 using namespace bb::data;
 
 FileController::FileController(FileUtil* fileUtil, QObject* parent) : QObject(parent),
-    m_pWebdav(0), m_pParser(0), m_pFileUtil(fileUtil), m_pDownloader(0) {
+    m_pWebdav(0), m_pParser(0), m_pFileUtil(fileUtil), m_pDownloader(0), m_pPreviewLoader(0) {
 }
 
 FileController::~FileController() {
@@ -37,6 +37,7 @@ void FileController::initWebdav(QWebdav* webdav, QWebdavDirParser* parser) {
     m_pParser = parser;
 
     m_pDownloader = new FileDownloader(m_pWebdav, this);
+    m_pPreviewLoader = new PreviewLoader(m_pWebdav, this);
 
     bool res = QObject::connect(m_pParser, SIGNAL(finished()), this, SLOT(onLoad()));
     Q_ASSERT(res);
@@ -405,79 +406,6 @@ void FileController::showProps(const QVariantMap& fileMap) {
     emit propsPageRequested(fileMap);
 }
 
-void FileController::loadPreview(const QString& filename, const QString& path) {
-    QString previewLocalPath = QDir::currentPath() + PREVIEWS_DIR + path;
-    QFile preview(previewLocalPath);
-    if (preview.exists() && preview.size() > 1000) {
-        emit previewLoaded(path, previewLocalPath);
-    } else {
-        QVariantMap previewMap;
-        previewMap["filename"] = filename;
-        previewMap["path"] = path;
-        m_previewsQueue.append(previewMap);
-        if (m_previewsQueue.size() <= PREVIEWS_QUEUE_SIZE) {
-            startLoadPreview(filename, path);
-        }
-    }
-}
-
-void FileController::onPreviewLoaded() {
-    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
-    QByteArray bytes = reply->readAll();
-
-    QString filename = reply->property("filename").toString();
-    QString path = reply->property("path").toString();
-
-    for (int i = 0; i< m_previewsQueue.size(); i++) {
-        QVariantMap previewMap = m_previewsQueue.at(i).toMap();
-        if (previewMap.value("filename").toString().compare(filename) == 0 && previewMap.value("path").toString().compare(path) == 0) {
-            m_previewsQueue.removeAt(i);
-        }
-    }
-
-    if (bytes.size() != 0) {
-        QString pathCopy = QString(path);
-
-        QString previewsDir = QDir::currentPath() + PREVIEWS_DIR + pathCopy.replace(QString("/").append(filename), "");
-        QDir dir(previewsDir);
-        if (!dir.exists()) {
-            dir.mkpath(previewsDir);
-        }
-
-        QString filePath = QDir::currentPath() + PREVIEWS_DIR + path;
-        QFile file(filePath);
-
-        if (file.open(QIODevice::WriteOnly)) {
-            file.write(bytes);
-            file.close();
-
-            #ifdef DEBUG_WEBDAV
-                qDebug() << "FileController ===>>>  Preview saved to " << filePath << ", size: " << file.size() << endl;
-            #endif
-        }
-        emit previewLoaded(path, filePath);
-    }
-
-    m_previewReplies.removeAll(reply);
-    reply->deleteLater();
-
-    if (m_previewsQueue.size() > 0) {
-        QVariantMap previewMap = m_previewsQueue.at(0).toMap();
-        startLoadPreview(previewMap.value("filename").toString(), previewMap.value("path").toString());
-    }
-}
-
-void FileController::startLoadPreview(const QString& filename, const QString& path) {
-    QNetworkReply* reply = m_pWebdav->preview(path, "XS");
-    reply->setProperty("filename", filename);
-    reply->setProperty("path", path);
-    m_previewReplies.append(reply);
-
-    bool res = QObject::connect(reply, SIGNAL(finished()), this, SLOT(onPreviewLoaded()));
-    Q_ASSERT(res);
-    Q_UNUSED(res);
-}
-
 const QVariantList& FileController::getSharedFiles() const { return m_sharedFiles; }
 void FileController::setSharedFiles(const QVariantList& sharedFiles) {
     m_sharedFiles = sharedFiles;
@@ -671,6 +599,4 @@ QString FileController::readPublicUrl(const QString& filepath) {
 
 FileDownloader* FileController::getDownloader() const { return m_pDownloader; }
 
-void FileController::download(const QString& filename, const QString& path) {
-    m_pDownloader->download(filename, path);
-}
+PreviewLoader* FileController::getPreviewLoader() const { return m_pPreviewLoader; }

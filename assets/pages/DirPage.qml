@@ -477,7 +477,7 @@ Page {
         _fileController.fileUploaded.connect(root.onFileUploaded);
         _fileController.fileRenamed.connect(root.onFileRenamed);
         _fileController.fileMoved.connect(root.onFileMoved);
-        _fileController.previewLoaded.connect(root.setPreview);
+        _fileController.previewLoader.loaded.connect(root.setPreview);
         _fileController.publicMade.connect(root.showPublicUrl);
         _fileController.unpublicMade.connect(root.hidePublicUrl);
         _fileController.publicityChecked.connect(root.setPublicUrl);
@@ -519,7 +519,7 @@ Page {
     
     function loadPreview(file) {
         if (!file.dir && _file.isImage(file.ext.toLowerCase())) {
-            _fileController.loadPreview(file.name, file.path);
+            _fileController.previewLoader.load(file.name, file.path);
         }
     }
     
@@ -717,10 +717,6 @@ Page {
     }
     
     function setPublicUrl(path, publicUrl) {
-//        if (root.path === path) {
-//            publishAction.title = qsTr("Unshare") + Retranslate.onLocaleOrLanguageChanged;
-//        }
-        
         replaceItemPublicUrl(path, publicUrl);
     }
     
@@ -748,7 +744,7 @@ Page {
         _fileController.fileUploaded.disconnect(root.onFileUploaded);
         _fileController.fileRenamed.disconnect(root.onFileRenamed);
         _fileController.fileMoved.disconnect(root.onFileMoved);
-        _fileController.previewLoaded.disconnect(root.setPreview);
+        _fileController.previewLoader.loaded.disconnect(root.setPreview);
         _userController.userChanged.disconnect(root.updateUser);
         _fileController.publicMade.disconnect(root.showPublicUrl);
         _fileController.unpublicMade.disconnect(root.hidePublicUrl);

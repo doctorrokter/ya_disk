@@ -18,6 +18,7 @@
 #include "../Common.hpp"
 #include "../util/FileUtil.hpp"
 #include "loaders/FileDownloader.hpp"
+#include "loaders/PreviewLoader.hpp"
 
 class FileController: public QObject {
     Q_OBJECT
@@ -26,6 +27,7 @@ class FileController: public QObject {
     Q_PROPERTY(QVariantList sharedFiles READ getSharedFiles WRITE setSharedFiles NOTIFY sharedFilesChanged)
     Q_PROPERTY(QString currentPath READ getCurrentPath WRITE setCurrentPath NOTIFY currentPathChanged)
     Q_PROPERTY(FileDownloader* downloader READ getDownloader)
+    Q_PROPERTY(PreviewLoader* previewLoader READ getPreviewLoader)
 public:
     FileController(FileUtil* fileUtil, QObject* parent = 0);
     virtual ~FileController();
@@ -46,7 +48,6 @@ public:
     Q_INVOKABLE const QString& getCurrentPath() const;
     Q_INVOKABLE void setCurrentPath(const QString& currentPath);
     Q_INVOKABLE void showProps(const QVariantMap& fileMap);
-    Q_INVOKABLE void loadPreview(const QString& filename, const QString& path);
     Q_INVOKABLE const QVariantList& getSharedFiles() const;
     Q_INVOKABLE void setSharedFiles(const QVariantList& sharedFiles);
     Q_INVOKABLE void clearSharedFiles();
@@ -55,7 +56,7 @@ public:
     Q_INVOKABLE void checkPublicity(const QString& path, const bool& isDir);
 
     Q_INVOKABLE FileDownloader* getDownloader() const;
-    Q_INVOKABLE void download(const QString& filename, const QString& path);
+    Q_INVOKABLE PreviewLoader* getPreviewLoader() const;
 
     void initWebdav(QWebdav* webdav, QWebdavDirParser* parser);
 
@@ -75,7 +76,6 @@ public:
         void selectedFilesChanged(const QVariantList& selectedFiles);
         void currentPathChanged(const QString& currentPath);
         void propsPageRequested(const QVariantMap& fileMap);
-        void previewLoaded(const QString& path, const QString& localPreviewPath);
         void sharedFilesChanged(const QVariantList& sharedFiles);
         void publicMade(const QString& path, const QString& link);
         void unpublicMade(const QString& path);
@@ -90,7 +90,6 @@ public:
         void onUploadFinished();
         void onFileRenamed();
         void onFileMoved();
-        void onPreviewLoaded();
         void onPublicMade();
         void onUnpublicMade();
         void onPublicityChecked();
@@ -100,18 +99,16 @@ private:
 
     FileUtil* m_pFileUtil;
     FileDownloader* m_pDownloader;
+    PreviewLoader* m_pPreviewLoader;
 
     QList<QNetworkReply*> m_replies;
     QList<QNetworkReply*> m_uploadReplies;
-    QList<QNetworkReply*> m_previewReplies;
     QVariantList m_queue;
     QVariantList m_selectedFiles;
-    QVariantList m_previewsQueue;
     QString m_currentPath;
     QVariantList m_sharedFiles;
 
     void startUpload(const QString& remoteUri);
-    void startLoadPreview(const QString& filename, const QString& path);
     void savePublicUrl(const QString& path, const QString& publicUrl, const bool& isDir);
     void removePublicUrl(const QString& path, const bool& isDir);
     void sendCheckPublicity(const QString& path, const bool& isDir);

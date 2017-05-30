@@ -16,7 +16,7 @@
 #define PUBLIC_URLS_DIR "/data/public_urls"
 #define PREVIEWS_DIR "/data/previews"
 #define PUBLIC_URL_FILE_NAME "1.txt"
-#define PREVIEWS_QUEUE_SIZE 1
+#define PREVIEWS_QUEUE_SIZE 5
 #define UPLOADS_QUEUE_SIZE 1
 #define DOWNLOADS_QUEUE_SIZE 5
 #define INVOKE_CARD_EDIT_URI "chachkouski.YaDisk.card.edit.uri"

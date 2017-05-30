@@ -87,6 +87,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/controllers/FileController.cpp) \
         $$quote($$BASEDIR/src/controllers/UserController.cpp) \
         $$quote($$BASEDIR/src/controllers/loaders/FileDownloader.cpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/PreviewLoader.cpp) \
         $$quote($$BASEDIR/src/controllers/loaders/beans/Download.cpp) \
         $$quote($$BASEDIR/src/main.cpp) \
         $$quote($$BASEDIR/src/models/User.cpp) \
@@ -105,6 +106,7 @@ config_pri_source_group1 {
         $$quote($$BASEDIR/src/controllers/FileController.hpp) \
         $$quote($$BASEDIR/src/controllers/UserController.hpp) \
         $$quote($$BASEDIR/src/controllers/loaders/FileDownloader.hpp) \
+        $$quote($$BASEDIR/src/controllers/loaders/PreviewLoader.hpp) \
         $$quote($$BASEDIR/src/controllers/loaders/beans/Download.hpp) \
         $$quote($$BASEDIR/src/models/User.hpp) \
         $$quote($$BASEDIR/src/util/DateUtil.hpp) \
