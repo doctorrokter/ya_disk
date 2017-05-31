@@ -43,7 +43,7 @@ void FileController::initWebdav(QWebdav* webdav, QWebdavDirParser* parser) {
     Q_ASSERT(res);
     Q_UNUSED(res);
 
-    loadPath();
+    loadPath("/", 25);
 }
 
 void FileController::loadPath(const QString& path, const int& amount, const int& offset) {

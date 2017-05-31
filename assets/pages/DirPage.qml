@@ -22,7 +22,7 @@ Page {
     property int bytesInGB: 1073741824
     
     property int page: 1
-    property int pageSize: 50
+    property int pageSize: 25
     property bool hasNext: true
     
     titleBar: TitleBar {
@@ -443,28 +443,7 @@ Page {
                     _appConfig.set("files_view", "grid");
                 }
             }
-        }
-        
-//        ActionItem {
-//            id: publishAction
-//            title: qsTr("Share") + Retranslate.onLocaleOrLanguageChanged
-//            imageSource: "asset:///images/ic_share.png"
-//            enabled: root.path !== "/"
-//            
-//            onTriggered: {
-//                _fileController.publish(root.path, true);
-//            }
-//            
-//            shortcuts: [
-//                Shortcut {
-//                    key: "s"
-//                    
-//                    onTriggered: {
-//                        publishAction.triggered();
-//                    }
-//                }
-//            ]
-//        }
+        }        
     ]
     
     onCreationCompleted: {
@@ -683,12 +662,12 @@ Page {
     
     function appendData(data) {
         if (data) {
+            root.hasNext = data.length === root.pageSize;
             data.forEach(function(f) {
                 dataModel.append(f);
                 root.loadPreview(f);
                 _fileController.checkPublicity(f.path, f.dir);
             });
-            root.hasNext = data.length >= root.pageSize;
         }
     }
     

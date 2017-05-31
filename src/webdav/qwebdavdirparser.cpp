@@ -91,11 +91,12 @@ bool QWebdavDirParser::listDirectory(QWebdav *pWebdav, const QString &path, cons
     m_abort = false;
     m_includeRequestedURI = false;
 
+    if (!m_dirList.isEmpty()) {
+        m_dirList.clear();
+    }
+
     m_reply = pWebdav->list(path, 1, amount, offset);
     connect(m_reply, SIGNAL(finished()), this, SLOT(replyFinished()));
-
-    if (!m_dirList.isEmpty())
-        m_dirList.clear();
 
     return true;
 }
@@ -121,8 +122,9 @@ bool QWebdavDirParser::listItem(QWebdav *pWebdav, const QString &path)
 
     m_reply = pWebdav->list(path, 0);
 
-    if (!m_dirList.isEmpty())
+    if (!m_dirList.isEmpty()) {
         m_dirList.clear();
+    }
 
     connect(m_reply, SIGNAL(finished()), this, SLOT(replyFinished()));
 
@@ -215,13 +217,7 @@ void QWebdavDirParser::replyFinished()
         }
         else {
             QByteArray data = m_reply->readAll();
-            //        if(data.isEmpty()) {
-            //            qDebug() << "QWebdavDirParser::replyFinished() | Reply has no data."; //<< m_reply->rawHeaderPairs();
-            //        }
-
             if(contentType.contains("xml")) {
-                // DEBUG
-                //qDebug() << data;
                 parseMultiResponse(data);
             }
         }

@@ -87,19 +87,19 @@
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="432"/>
-        <location filename="../assets/pages/DirPage.qml" line="614"/>
+        <location filename="../assets/pages/DirPage.qml" line="593"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
         <location filename="../assets/pages/DirPage.qml" line="434"/>
-        <location filename="../assets/pages/DirPage.qml" line="618"/>
+        <location filename="../assets/pages/DirPage.qml" line="597"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="515"/>
-        <location filename="../assets/pages/DirPage.qml" line="516"/>
+        <location filename="../assets/pages/DirPage.qml" line="494"/>
+        <location filename="../assets/pages/DirPage.qml" line="495"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
     </message>

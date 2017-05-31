@@ -63,7 +63,7 @@ void PreviewLoader::onLoad() {
             file.close();
 
             #ifdef DEBUG_WEBDAV
-                qDebug() << "FileController ===>>>  Preview saved to " << filePath << ", size: " << file.size() << endl;
+//                qDebug() << "FileController ===>>>  Preview saved to " << filePath << ", size: " << file.size() << endl;
             #endif
         }
         emit loaded(path, filePath);

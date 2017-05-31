@@ -280,14 +280,6 @@ QNetworkReply* QWebdav::createRequest(const QString& method, QNetworkRequest& re
     return reply;
 }
 
-//QNetworkReply* QWebdav::list(const QString& path, const int& amount, const int& offset)
-//{
-//#ifdef DEBUG_WEBDAV
-//    qDebug() << "QWebdav::list() path = " << path;
-//#endif
-//    return list(path, 1, amount, offset);
-//}
-
 QNetworkReply* QWebdav::list(const QString& path, int depth, const int& amount, const int& offset) {
     QWebdav::PropNames query;
     QStringList props;
@@ -397,7 +389,7 @@ QNetworkReply* QWebdav::preview(const QString& path, const QString& size) {
     req.setUrl(reqUrl);
 
     #ifdef DEBUG_WEBDAV
-        qDebug() << "QWebdav::get() url = " << req.url().toString(QUrl::RemoveUserInfo);
+//        qDebug() << "QWebdav::get() url = " << req.url().toString(QUrl::RemoveUserInfo);
     #endif
 
     QNetworkReply* reply = QNetworkAccessManager::get(req);
@@ -537,7 +529,12 @@ QNetworkReply* QWebdav::propfind(const QString& path, const QByteArray& query, i
         }
     }
 
+    qDebug() << "===>>> AMOUNT: " << amount << endl;
+    qDebug() << "===>>> OFFSET: " << offset << endl;
+    qDebug() << "===>>> LOAD PARTIAL: " << reqUrl << endl;
+
     req.setUrl(reqUrl);
+    req.setRawHeader("Host", m_baseUrl.host().toLatin1());
     req.setRawHeader("Depth", depth == 2 ? QString("infinity").toUtf8() : QString::number(depth).toUtf8());
 
     return createRequest("PROPFIND", req, query);
