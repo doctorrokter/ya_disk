@@ -138,8 +138,9 @@ Page {
                                 if (!spinner.running) {
                                     if (root.hasNext) {
                                         spinner.start();
-                                        var offset = root.pageSize * root.page;
-                                        loadPath(root.dirName, root.path, root.pageSize, offset, true);
+                                        var currPageSize = _app.currentPageSize();
+                                        var offset = currPageSize * root.page;
+                                        loadPath(root.dirName, root.path, currPageSize, offset, true);
                                         root.page++;
                                     }
                                 }
@@ -215,7 +216,7 @@ Page {
                 onTriggered: {
                     var data = dataModel.data(indexPath);
                     if (data.dir) {
-                        loadPath(data.name, data.path, root.pageSize, 0, false);
+                        loadPath(data.name, data.path, _app.currentPageSize(), 0, false);
                     } else {
                         spinner.start();
                         openFile(data.name, data.path);
@@ -662,7 +663,7 @@ Page {
     
     function appendData(data) {
         if (data) {
-            root.hasNext = data.length === root.pageSize;
+            root.hasNext = data.length === _app.currentPageSize();
             data.forEach(function(f) {
                 dataModel.append(f);
                 root.loadPreview(f);

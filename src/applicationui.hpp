@@ -30,8 +30,11 @@
 #include <bb/system/InvokeManager>
 #include <bb/system/InvokeRequest>
 #include <QNetworkAccessManager>
+#include <bb/cascades/DropDown>
+#include <bb/cascades/Option>
 
 using namespace bb::system;
+using namespace bb::cascades;
 
 namespace bb
 {
@@ -59,6 +62,8 @@ public:
     Q_INVOKABLE void initWebdav();
     Q_INVOKABLE bool copyToClipboard(const QString& str);
     Q_INVOKABLE void logout();
+    Q_INVOKABLE void initPageSizes(bb::cascades::DropDown* dropDown);
+    Q_INVOKABLE int currentPageSize() const;
 
 Q_SIGNALS:
     void cardDone();

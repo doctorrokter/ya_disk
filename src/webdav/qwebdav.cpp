@@ -523,15 +523,9 @@ QNetworkReply* QWebdav::propfind(const QString& path, const QByteArray& query, i
     QUrl reqUrl(m_baseUrl);
     reqUrl.setPath(absolutePath(path));
     if (amount != 0) {
+        reqUrl.addQueryItem("offset", QString::number(offset));
         reqUrl.addQueryItem("amount", QString::number(amount));
-        if (offset != 0) {
-            reqUrl.addQueryItem("offset", QString::number(offset));
-        }
     }
-
-    qDebug() << "===>>> AMOUNT: " << amount << endl;
-    qDebug() << "===>>> OFFSET: " << offset << endl;
-    qDebug() << "===>>> LOAD PARTIAL: " << reqUrl << endl;
 
     req.setUrl(reqUrl);
     req.setRawHeader("Host", m_baseUrl.host().toLatin1());

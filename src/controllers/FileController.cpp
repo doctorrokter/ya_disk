@@ -17,6 +17,7 @@
 #include <bb/data/XmlDataAccess>
 #include <QFileInfo>
 #include "../webdav/qwebdavitem.h"
+#include "../config/AppConfig.hpp"
 
 using namespace bb::system;
 using namespace bb::data;
@@ -43,7 +44,9 @@ void FileController::initWebdav(QWebdav* webdav, QWebdavDirParser* parser) {
     Q_ASSERT(res);
     Q_UNUSED(res);
 
-    loadPath("/", 25);
+    int amount = AppConfig::getStatic("amount_per_request").toInt();
+
+    loadPath("/", amount == 0 ? PAGE_SIZE : amount);
 }
 
 void FileController::loadPath(const QString& path, const int& amount, const int& offset) {

@@ -114,6 +114,22 @@ Page {
                 
                 Container {
                     horizontalAlignment: HorizontalAlignment.Fill
+                    topPadding: ui.du(2.5)
+                    leftPadding: ui.du(2.5)
+                    rightPadding: ui.du(2.5)
+                    bottomPadding: ui.du(2.5)
+                    DropDown {
+                        id: pageSizeDropdown
+                        title: qsTr("Amount of items per request") + Retranslate.onLocaleOrLanguageChanged
+                        
+                        onSelectedOptionChanged: {
+                            _appConfig.set("amount_per_request", selectedOption.value);
+                        }
+                    }
+                }
+                
+                Container {
+                    horizontalAlignment: HorizontalAlignment.Fill
                     minHeight: ui.du(20)
                 }
             }
@@ -140,5 +156,6 @@ Page {
         adjustTheme();
         adjustAskBeforeDeleting();
         adjustDateTimeFormat();
+        _app.initPageSizes(pageSizeDropdown);
     }
 }

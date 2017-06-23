@@ -4,7 +4,7 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="189"/>
+        <location filename="../src/applicationui.cpp" line="190"/>
         <source>Success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,94 +12,94 @@
 <context>
     <name>DirPage</name>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="154"/>
-        <location filename="../assets/pages/DirPage.qml" line="207"/>
+        <location filename="../assets/pages/DirPage.qml" line="155"/>
+        <location filename="../assets/pages/DirPage.qml" line="208"/>
         <source>files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="177"/>
+        <location filename="../assets/pages/DirPage.qml" line="178"/>
         <source>Move</source>
         <translation type="unfinished">Переместить</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="190"/>
+        <location filename="../assets/pages/DirPage.qml" line="191"/>
         <source>Download</source>
         <translation type="unfinished">Скачать</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="209"/>
+        <location filename="../assets/pages/DirPage.qml" line="210"/>
         <source>file</source>
         <translation type="unfinished">файл</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="211"/>
+        <location filename="../assets/pages/DirPage.qml" line="212"/>
         <source>None selected</source>
         <translation type="unfinished">Ничего не выбрано</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="286"/>
+        <location filename="../assets/pages/DirPage.qml" line="287"/>
         <source>Enter folder name</source>
         <translation type="unfinished">Введите название папки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="300"/>
+        <location filename="../assets/pages/DirPage.qml" line="301"/>
         <source>Public URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="307"/>
-        <location filename="../assets/pages/DirPage.qml" line="332"/>
+        <location filename="../assets/pages/DirPage.qml" line="308"/>
+        <location filename="../assets/pages/DirPage.qml" line="333"/>
         <source>Confirm the deleting</source>
         <translation type="unfinished">Подтвердите удаление</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="308"/>
-        <location filename="../assets/pages/DirPage.qml" line="333"/>
+        <location filename="../assets/pages/DirPage.qml" line="309"/>
+        <location filename="../assets/pages/DirPage.qml" line="334"/>
         <source>This action cannot be undone. Continue?</source>
         <translation type="unfinished">Это действите не может быть отменено. Продолжаем?</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="311"/>
-        <location filename="../assets/pages/DirPage.qml" line="336"/>
+        <location filename="../assets/pages/DirPage.qml" line="312"/>
+        <location filename="../assets/pages/DirPage.qml" line="337"/>
         <source>Don&apos;t ask again</source>
         <translation type="unfinished">Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="361"/>
+        <location filename="../assets/pages/DirPage.qml" line="362"/>
         <source>Create folder</source>
         <translation type="unfinished">Создать папку</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="381"/>
+        <location filename="../assets/pages/DirPage.qml" line="382"/>
         <source>Upload</source>
         <translation type="unfinished">Загрузить</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="403"/>
+        <location filename="../assets/pages/DirPage.qml" line="404"/>
         <source>Uploads</source>
         <translation type="unfinished">Загрузки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="413"/>
+        <location filename="../assets/pages/DirPage.qml" line="414"/>
         <source>Downloads</source>
         <translation type="unfinished">Закачки</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="432"/>
-        <location filename="../assets/pages/DirPage.qml" line="593"/>
+        <location filename="../assets/pages/DirPage.qml" line="433"/>
+        <location filename="../assets/pages/DirPage.qml" line="594"/>
         <source>List</source>
         <translation type="unfinished">Список</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="434"/>
-        <location filename="../assets/pages/DirPage.qml" line="597"/>
+        <location filename="../assets/pages/DirPage.qml" line="435"/>
+        <location filename="../assets/pages/DirPage.qml" line="598"/>
         <source>Grid</source>
         <translation type="unfinished">Сетка</translation>
     </message>
     <message>
-        <location filename="../assets/pages/DirPage.qml" line="494"/>
         <location filename="../assets/pages/DirPage.qml" line="495"/>
+        <location filename="../assets/pages/DirPage.qml" line="496"/>
         <source>GB</source>
         <translation type="unfinished">ГБ</translation>
     </message>
@@ -382,6 +382,11 @@
         <location filename="../assets/pages/SettingsPage.qml" line="104"/>
         <source>Localized</source>
         <translation type="unfinished">Локализованный</translation>
+    </message>
+    <message>
+        <location filename="../assets/pages/SettingsPage.qml" line="123"/>
+        <source>Amount of items per request</source>
+        <translation type="unfinished">Количество элементов на запрос</translation>
     </message>
 </context>
 <context>

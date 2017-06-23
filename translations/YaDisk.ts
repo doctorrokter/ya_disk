@@ -19,6 +19,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,6 +32,10 @@
     </message>
     <message>
         <source>Enter folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -55,6 +63,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -64,18 +76,6 @@
     </message>
     <message>
         <source>GB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -284,6 +284,10 @@
     </message>
     <message>
         <source>Localized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Amount of items per request</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

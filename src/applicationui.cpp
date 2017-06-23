@@ -27,6 +27,7 @@
 #include <QVariantMap>
 #include <QDir>
 #include <QFile>
+#include <QList>
 #include <bb/data/JsonDataAccess>
 #include <bb/system/Clipboard>
 #include <QNetworkReply>
@@ -274,4 +275,31 @@ void ApplicationUI::flushToken() {
     m_settings.remove("access_token");
     m_settings.remove("expires_in");
     m_settings.remove("expires_time_stamp");
+}
+
+void ApplicationUI::initPageSizes(bb::cascades::DropDown* dropDown) {
+    if (!dropDown) {
+        return;
+    }
+
+    int amountPerRequest = AppConfig::getStatic("amount_per_request").toInt();
+
+    QList<int> pageSizes;
+    pageSizes << 10 << 15 << 20 << 25 << 30 << 35 << 40 << 45 << 50;
+    foreach(int ps, pageSizes) {
+        Option *option = new Option();
+        option->setText(QString::number(ps));
+        option->setValue(ps);
+
+        if ((amountPerRequest == 0 && ps == PAGE_SIZE) || (amountPerRequest == ps)) {
+            option->setSelected(true);
+        }
+
+        dropDown->add(option);
+    }
+}
+
+int ApplicationUI::currentPageSize() const {
+    int amount = AppConfig::getStatic("amount_per_request").toInt();
+    return amount == 0 ? PAGE_SIZE : amount;
 }
