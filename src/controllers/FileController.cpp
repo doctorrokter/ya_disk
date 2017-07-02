@@ -439,9 +439,9 @@ void FileController::onPublicMade() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
     QByteArray bytes = reply->readAll();
 
-#ifdef DEBUG_WEBDAV
-    qDebug() << "FileController ===>>> publish " << bytes.data() << endl;
-#endif
+    #ifdef DEBUG_WEBDAV
+        qDebug() << "FileController ===>>> publish " << bytes.data() << endl;
+    #endif
 
     XmlDataAccess xda;
     QVariantMap map = xda.loadFromBuffer(bytes, "/d:multistatus/d:response/d:propstat/d:prop").toMap();

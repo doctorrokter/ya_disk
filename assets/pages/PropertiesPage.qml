@@ -12,7 +12,7 @@ Page {
     property int size: 0
     property int contentSize: 0
     property date lastModified: new Date()
-    property string publicUrl: "wfwerwe"
+    property string publicUrl: ""
     
     signal propertiesDone()
     
@@ -186,17 +186,17 @@ Page {
     }
     
     function cleanUp() {
-        _fileController.previewLoaded.disconnect(root.setPreview);
+        _fileController.previewLoader.loaded.disconnect(root.setPreview);
         _fileController.publicityChecked.disconnect(root.setPublicUrl);
     }
     
     onCreationCompleted: {
-        _fileController.previewLoaded.connect(root.setPreview);
+        _fileController.previewLoader.loaded.connect(root.setPreview);
         _fileController.publicityChecked.connect(root.setPublicUrl);
     }
     
     onPathChanged: {
-        _fileController.loadPreview(root.name, root.path);
+        _fileController.previewLoader.load(root.name, root.path);
         _fileController.checkPublicity(root.path, root.dir);
     }
     
